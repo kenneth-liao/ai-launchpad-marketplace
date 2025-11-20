@@ -1,0 +1,13 @@
+{
+"name": "ai-launchpad",
+"owner": {
+"name": "Kenny Liao"
+},
+"plugins": [
+{
+  "name": "yt-content-strategist",
+  "source": "./yt-content-strategist",
+  "description": "A plugin to research, ideate, and plan YouTube videos"
+}
+]
+}
