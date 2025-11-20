@@ -116,6 +116,26 @@ Create a new plan file in `./youtube/` with:
 - Recommended combinations
 - Next steps for production
 
+### Step 7: Finalize Plan with User's Feedback
+
+After generating the complete plan, present a high-level summary of the plan to the user with your overall recommendation. Once you get the user's final selection, update the plan with the user's final selection.
+
+In the final selection, include the following:
+- **Title**: [Selected title]
+- **Thumbnails**: 
+   - ![Thumbnail A](/path/to/thumbnail_a.png)
+      Thumbnail A Description
+   - ![Thumbnail B](/path/to/thumbnail_b.png)
+      Thumbnail B Description
+   - ![Thumbnail C](/path/to/thumbnail_c.png)
+      Thumbnail C Description
+- **Hook**: [Selected hook strategy]
+- **Rationale**: [Why this combination works]
+- **Pros**: [Strengths]
+- **Cons**: [Potential weaknesses]
+
+Thumbnails should be the actual generated images embedded in the markdown file. Note, if you have not already, generate variations of the selected thumbnail for AB testing. A final selection should **ALWAYS** have 3 thumbnails to test. 
+
 ## Output Structure
 
 Create a new plan file at: `./youtube/episode/[episode_number]_[topic_short_name]/plan.md`
@@ -155,6 +175,22 @@ The plan file should contain:
 
 ### Option 2: [Name]
 ...
+
+## Final Selection
+
+### Selected Option: [Name]
+- **Title**: [Title]
+- **Thumbnails**: 
+   - ![Thumbnail A](/path/to/thumbnail_a.png)
+      Thumbnail A Description
+   - ![Thumbnail B](/path/to/thumbnail_b.png)
+      Thumbnail B Description
+   - ![Thumbnail C](/path/to/thumbnail_c.png)
+      Thumbnail C Description
+- **Hook**: [Hook strategy]
+- **Rationale**: [Why this combination works]
+- **Pros**: [Strengths]
+- **Cons**: [Potential weaknesses]
 
 ## Skills Used Verification
 - ✅ youtube-title skill invoked
