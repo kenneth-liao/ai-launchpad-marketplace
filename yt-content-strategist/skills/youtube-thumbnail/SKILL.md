@@ -85,7 +85,7 @@ If a company logo is not locally available, you can search for it online and dow
 
 ### Generating Thumbnail Concepts
 
-Once you have generated an initial thumbnail concept or prompt, you **MUST** use the `Thumbnail Reviewer` agent to review the concept and provide feedback. The reviewer will provide a critique and suggest improvements. Refine the prompt before proceeding to generate the thumbnail.
+Once you have generated an initial thumbnail concept or prompt, you **MUST** use the `Thumbnail Reviewer` agent to review the concept and provide feedback. The reviewer will provide a critique and suggest improvements. Consider the reviewer's feedback before proceeding and regenerate if necessary. **DO NOT** go through the generate-review-regenerate loop more than **ONCE**.
 
 ### Generating Thumbnails from Scratch
 
@@ -131,7 +131,7 @@ thumbkit edit \
 
 Because you can edit a base image with Thumbkit, you can iteratively modify/improve a previously generated thumbnail. For example, if you've generated a thumbnail but want to change the color scheme, you can pass the generated thumbnail's absolute path as a reference image and ask NanoBanana to make the necessary updates.
 
-Always review generated thumbnails to ensure they meet the complete design requirements and original intent. If not, suggest improvements to the user and ask if they want you to iterate. 
+Always review generated thumbnails to ensure they meet the complete design requirements and original intent. Only have the thumbnail reviewed **ONCE**. If not, suggest improvements to the user and ask if they want you to iterate. 
 
 ## User Assets
 
