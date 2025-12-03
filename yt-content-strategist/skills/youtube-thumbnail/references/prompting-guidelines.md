@@ -273,7 +273,5 @@ Be aware of these model constraints:
 | Languages | EN, es-MX, fr-FR, de-DE, ja-JP, ko-KR, pt-BR, zh-CN, and more | Same |
 
 **General limitations (both models):**
-- No audio or video input support
-- Model may not always generate the exact number of images requested
 - For best text rendering, generate the text content first, then request the image with that text
 - All generated images include a SynthID watermark
