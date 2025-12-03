@@ -1,6 +1,6 @@
 ---
 name: youtube-thumbnail
-description: "Skill for creating and editing Youtube thumbnails that are optimized for click-through rate. Use when the user asks to create a thumbnail from scratch or edit an existing thumbnail."
+description: "Skill for creating and editing Youtube thumbnails that are optimized for click-through rate. This skill should not be used directly, instead use the Thumbnail Designer subagent who can also invoke this skill. Use when the user asks to create a thumbnail from scratch or edit an existing thumbnail."
 ---
 
 # YouTube Thumbnail Skill

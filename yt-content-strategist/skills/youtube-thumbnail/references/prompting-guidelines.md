@@ -1,8 +1,28 @@
 # Prompting Guide and Strategies
 
-Mastering Gemini 2.5 Flash (NanoBanana) Image Generation starts with one fundamental principle:
+Mastering Gemini image generation starts with one fundamental principle:
 
 > **Describe the scene, don't just list keywords.** The model's core strength is its deep language understanding. A narrative, descriptive paragraph will almost always produce a better, more coherent image than a list of disconnected words.
+
+---
+
+## Model Selection
+
+**Gemini 3 Pro Image Preview (Nano Banana Pro)** is the default and recommended model. Use it for most tasks.
+
+| Feature | Pro (Default) | Flash |
+|---------|---------------|-------|
+| Resolution | 1K / 2K / 4K | 1K only |
+| Max Input Images | 14 | 3 |
+| Text Rendering | Advanced | Good |
+| "Thinking" Process | Yes (refines composition) | No |
+| Google Search Grounding | Yes | No |
+| Speed | Slower | Faster |
+
+**When to use Flash instead:**
+- High-volume, low-latency tasks where speed matters more than quality
+- Simple generations that don't need advanced features
+- Cost-sensitive batch operations
 
 ---
 
@@ -71,14 +91,87 @@ A minimalist composition featuring a single [subject] positioned in the
 
 ### 6. Sequential Art (Comic Panel / Storyboard)
 
-Builds on character consistency and scene description to create panels for visual storytelling.
+Builds on character consistency and scene description to create panels for visual storytelling. **Best with Pro model** for accurate text and complex compositions.
 
 **Template:**
 ```
-A single comic book panel in a [art style] style. In the foreground,
-[character description and action]. In the background, [setting details].
-The panel has a [dialogue/caption box] with the text "[Text]". The lighting
-creates a [mood] mood. [Aspect ratio].
+Make a [number] panel comic in a [art style] style. Put the character in
+a [type of scene]. [Additional style details like contrast, inks, colors].
+```
+
+---
+
+## Gemini 3 Pro-Specific Features
+
+These features are only available with the Pro model.
+
+### 1. Character Consistency (360° Views)
+
+Create consistent multi-angle views of the same character by including previously generated images in follow-up prompts.
+
+**Template:**
+```
+A studio portrait of [person/character] against [background],
+[looking forward/in profile looking right/from behind/etc.]
+```
+
+**Tip:** For complex poses, include a reference image showing the desired pose along with your character reference.
+
+### 2. Sketch-to-Photo ("Bring to Life")
+
+Upload a rough sketch and transform it into a polished, realistic image.
+
+**Template:**
+```
+Turn this rough [medium] sketch of a [subject] into a [style description]
+photo. Keep the [specific features] from the sketch but add
+[new details/materials/lighting].
+```
+
+**Example prompt:**
+```
+Turn this rough pencil sketch of a futuristic car into a polished photo of
+the finished concept car in a showroom. Keep the sleek lines and low profile
+from the sketch but add metallic blue paint and neon rim lighting.
+```
+
+### 3. High-Resolution Output (2K/4K)
+
+Pro can generate images at 1K (default), 2K, or 4K resolution. Use higher resolutions for:
+- Professional assets requiring fine detail
+- Large format displays or prints
+- Zoom-in-able content
+
+**Note:** Higher resolutions use more tokens (1K: ~1210 tokens, 4K: ~2000 tokens).
+
+### 4. Multi-Image Composition (Up to 14 References)
+
+Combine multiple reference images to create complex compositions:
+- Up to **6 high-fidelity object images** to include in the final image
+- Up to **5 human images** for character consistency
+
+**Template:**
+```
+Create [description of final scene] using:
+- The [element] from the first image
+- The [element] from the second image
+- The person from the third image wearing [description]
+The final composition should be [style/mood description].
+```
+
+### 5. Google Search Grounding
+
+Pro can use Google Search to incorporate real-time data into images.
+
+**Use cases:**
+- Current weather visualizations
+- Recent events or news-based imagery
+- Up-to-date data visualizations (stock charts, statistics)
+
+**Example prompt:**
+```
+Create an infographic showing the current weather forecast for
+San Francisco for the next 5 days.
 ```
 
 ---
@@ -166,3 +259,21 @@ Instead of saying "no cars," describe the desired scene positively: "an empty, d
 
 ### Control the Camera
 Use photographic and cinematic language to control the composition. Terms like `wide-angle shot`, `macro shot`, `low-angle perspective`.
+
+---
+
+## Limitations
+
+Be aware of these model constraints:
+
+| Constraint | Flash | Pro |
+|------------|-------|-----|
+| Max input images | 3 | 14 (6 objects + 5 humans recommended) |
+| Output resolution | 1K only | 1K / 2K / 4K |
+| Languages | EN, es-MX, fr-FR, de-DE, ja-JP, ko-KR, pt-BR, zh-CN, and more | Same |
+
+**General limitations (both models):**
+- No audio or video input support
+- Model may not always generate the exact number of images requested
+- For best text rendering, generate the text content first, then request the image with that text
+- All generated images include a SynthID watermark
