@@ -73,12 +73,12 @@ If a company logo is not locally available, you can search for it online and dow
 
 ### Proven Designs
 
-If you know the video title/subject, you can search youtube for related OUTLIER videos. **Focus on OUTLIERS** because they are already proven to work well and very likely have high click-through rates. Videos are outliers if they have a high amount of views compared to the subscriber count of the channel. For example, if a channel has less than 5000 subscribers and a video has 10,000+ views, that video is an outlier.
+If you know the video title/subject, you can search youtube for related OUTLIER videos. **Focus on OUTLIERS** because they are already proven to work well and very likely have high click-through rates. Videos are outliers if they have a high amount of views compared to the subscriber count of the channel. For example, if a video has 10,000+ views from a channel with less than 5000 subscribers, that video is an outlier.
 
 Once you have a list of outlier videos, you can access their thumbnails and use them to style transfer.
 
 Here's an URL example of a standard definition thumbnail for a video with id "rmvDxxNubIg":
-`https://img.youtube.com/vi/rmvDxxNubIg/sddefault.jpg`. You can download the image using curl to `./youtube/downloads/`, and then read the image file to understand it. Use it as a reference image when using for style transfer.
+`https://img.youtube.com/vi/rmvDxxNubIg/sddefault.jpg`. You can download the image using curl to `./youtube/downloads/outliers/`, and then read the image file to understand it. Use it as a reference image when using for style transfer.
 
 ## Workflows
 
