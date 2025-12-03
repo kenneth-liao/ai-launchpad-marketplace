@@ -1,12 +1,12 @@
 # Memory
 
-`./context/memory/` is your memory system. The actual memories are stored in `./context/memory/memories.md`.
+`~/.claude/plugins/personal-assistant/context/memory/` is your memory system. The actual memories are stored in `~/.claude/plugins/personal-assistant/context/memory/memories.md`.
 
 ## Memory System Structure
 
-Currently, `./context/memory/memories.md` is the only memory file. You should manage all memories in this file.
+Currently, `~/.claude/plugins/personal-assistant/context/memory/memories.md` is the only memory file. You should manage all memories in this file.
 
-### ./context/memory/memories.md File Structure
+### memories.md File Structure
 
 #### Current Progress
 
