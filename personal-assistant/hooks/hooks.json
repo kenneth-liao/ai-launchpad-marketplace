@@ -1,0 +1,10 @@
+{
+  "outputStyle": "Personal Assistant",
+  "hooks": {
+    "Stop": [
+      { "hooks": [
+        {"type": "command", "command": "uv run python ${CLAUDE_PLUGIN_ROOT}/hooks/play_notification.py"}
+      ] }
+    ]
+  }
+}
