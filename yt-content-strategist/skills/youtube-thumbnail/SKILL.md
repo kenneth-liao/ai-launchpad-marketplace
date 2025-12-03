@@ -9,9 +9,9 @@ This skill enables generation of high-performing YouTube thumbnails optimized fo
 
 ## Thumbkit
 
-This skill uses Thumbkit, a CLI tool for generating and editing high-performing YouTube thumbnails. Thumbkit is built on top of Gemini 2.5 Flash (NanoBanana) image generation model. 
+This skill uses Thumbkit, a CLI tool for generating and editing high-performing YouTube thumbnails. Thumbkit is built on top of the Gemini 2.5 Flash (NanoBanana) image generation model. 
 
-Thumbkit is **required** for this skill. Assume Thumbkit has been installed as a uv tool and is available globally on the user's system. If Thumbkit is not installed, please install it before proceeding.
+Thumbkit is **required** for this skill. Assume Thumbkit has been installed as a uv tool and is available globally on the user's system. If Thumbkit is not installed, you **MUST** install it before proceeding.
 
 ### Testing Installation
 
@@ -81,11 +81,18 @@ If a company logo is not locally available, you can search for it online and dow
 ❌ **WRONG**: "add the Python logo"
 ✓ **CORRECT**: Use `/absolute/path/to/python-logo.png` as a reference image
 
+### Proven Designs
+
+If you know the video title/subject, you can search youtube for related, high-performing videos. You can access their thumbnails and use them to style transfer.
+
+Here's an URL example of a standard definition thumbnail for a video with id "rmvDxxNubIg":
+`https://img.youtube.com/vi/rmvDxxNubIg/sddefault.jpg`. You can download the image using curl to `./youtube/downloads/`, and then read the image file to understand it. Use it as a base image when using for style transfer.
+
 ## Workflows
 
 ### Generating Thumbnail Concepts
 
-Once you have generated an initial thumbnail concept or prompt, you **MUST** use the `Thumbnail Reviewer` agent to review the concept and provide feedback. The reviewer will provide a critique and suggest improvements. Consider the reviewer's feedback before proceeding and regenerate if necessary. **DO NOT** go through the generate-review-regenerate loop more than **ONCE**.
+Once you have generated an initial thumbnail concept or prompt, you **MUST** use the `Thumbnail Reviewer` agent to review the concept and provide feedback. The reviewer will provide a critique and suggest improvements. Consider the reviewer's feedback and incorporate it before proceeding. **DO NOT** go through the generate-review-regenerate loop more than **ONCE**.
 
 ### Generating Thumbnails from Scratch
 
