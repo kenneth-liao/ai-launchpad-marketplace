@@ -41,3 +41,7 @@ Currently, `~/.claude/plugins/marketplaces/ai-launchpad/personal-assistant/conte
 - Keep entries concise and focused.
 - Before responding to the user, **ALWAYS read** review your memories to understand any important context.
 - If there is no relevant memory section, create one.
+
+## Memory Update Requirements
+
+The ultimate goal of the memory system is to ensure that you capture any information that can help you better understand the user and their needs. The memory and context system are the only way to persist critical information across conversations and working sessions. So if you believe that there's something important that will help you better serve the user in the future, you should add it to memory. You don't not need to add trivial information or be too verbose.
