@@ -25,11 +25,13 @@ def get_memory_update_instructions(hook_root: Path) -> str:
 
     return f"""Before finishing, update the memory and context systems:
 
-1. Read `{context_dir}/projects/CLAUDE.md` and `{context_dir}/memory/CLAUDE.md` to review the context and memory systems.
+1. If you haven't already, read `{context_dir}/projects/CLAUDE.md` and `{context_dir}/memory/CLAUDE.md` to review the context and memory systems.
 
-2. Read the previous notes in `{context_dir}/memory/memories.md` and `{context_dir}/projects/project_index.md`.
+2. If you haven't already, read the previous notes in `{context_dir}/memory/memories.md` and `{context_dir}/projects/project_index.md`.
 
 3. Make any necessary updates to the memory and context systems based on what we've accomplished since the last update. Be sure to capture any important blockers or reminders for future sessions and next steps. Focus on the information most critical for continuity. We should be able to pick up exactly where we left off with only a brief review of the memories and context.
+
+4. Provide a **VERY** brief and high-level summary of what you updated.
 
 After completing the memory update, you may finish your response."""
 
