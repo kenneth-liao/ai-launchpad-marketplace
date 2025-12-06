@@ -13,6 +13,11 @@
       "name": "personal-assistant",
       "source": "./personal-assistant",
       "description": "A plugin to turn Claude Code into your personal assistant"
+    },
+    {
+      "name": "research",
+      "source": "./research",
+      "description": "A plugin to add research capabilities to Claude Code"
     }
   ]
 }
