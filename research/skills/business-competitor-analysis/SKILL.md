@@ -162,7 +162,7 @@ Save the output to a markdown file with the template structure below.
 
 ## Executive Summary
 
-[2-3 paragraph synthesis of competitive landscape. Include: market position of subject company relative to competitors, key competitive advantages and vulnerabilities, most significant competitive threats. Every claim must reference a source using format [Source N].]
+[2-3 paragraph synthesis of competitive landscape. Include: market position of subject company relative to competitors, key competitive advantages and vulnerabilities, most significant competitive threats. Every claim must reference a source using format [Source N](#Sources).]
 
 ---
 
@@ -177,9 +177,9 @@ Save the output to a markdown file with the template structure below.
 - Technology maturity: [Early adopter/mainstream/conservative]
 
 **Pain Points & Goals:**
-- [Pain point 1 with description] [Source N]
-- [Pain point 2 with description] [Source N]
-- [Pain point 3 with description] [Source N]
+- [Pain point 1 with description] [Source N](#Sources)
+- [Pain point 2 with description] [Source N](#Sources)
+- [Pain point 3 with description] [Source N](#Sources)
 - Current alternatives: [What customers use today without this product]
 - Decision criteria: [What matters most when evaluating solutions]
 
@@ -189,9 +189,9 @@ Save the output to a markdown file with the template structure below.
 - Buying process: [Typical purchase timeline and stakeholders]
 
 **Market Sizing (if discoverable):**
-- Total addressable market: [TAM estimate] [Source N]
-- Serviceable addressable market: [SAM for realistic target] [Source N]
-- Market growth: [YoY growth rate or projections] [Source N]
+- Total addressable market: [TAM estimate] [Source N](#Sources)
+- Serviceable addressable market: [SAM for realistic target] [Source N](#Sources)
+- Market growth: [YoY growth rate or projections] [Source N](#Sources)
 
 ---
 
@@ -213,19 +213,19 @@ Save the output to a markdown file with the template structure below.
 ## Market Gaps & Opportunities
 
 ### Underserved Customer Segments
-- **[Gap 1]:** [Description of customer segment or use case competitors miss] [Source N]
-- **[Gap 2]:** [Description] [Source N]
+- **[Gap 1]:** [Description of customer segment or use case competitors miss] [Source N](#Sources)
+- **[Gap 2]:** [Description] [Source N](#Sources)
 
 ### Feature/Capability Gaps
-- **[Gap 1]:** [Functionality that no competitor provides well] [Source N]
-- **[Gap 2]:** [Description] [Source N]
+- **[Gap 1]:** [Functionality that no competitor provides well] [Source N](#Sources)
+- **[Gap 2]:** [Description] [Source N](#Sources)
 
 ### Positioning/Business Model Gaps
-- **[Gap 1]:** [Market position or business model no one claims] [Source N]
-- **[Gap 2]:** [Description] [Source N]
+- **[Gap 1]:** [Market position or business model no one claims] [Source N](#Sources)
+- **[Gap 2]:** [Description] [Source N](#Sources)
 
 ### Strategic Implications
-[1-2 sentences on how these gaps create opportunity for the subject company or reveal market evolution trends] [Source N]
+[1-2 sentences on how these gaps create opportunity for the subject company or reveal market evolution trends] [Source N](#Sources)
 
 ---
 
@@ -233,15 +233,15 @@ Save the output to a markdown file with the template structure below.
 
 ### [Competitor 1 Name]
 
-**Overview:** [1-2 sentences on what they do and who they serve] [Source N]
+**Overview:** [1-2 sentences on what they do and who they serve] [Source N](#Sources)
 
-**Market Positioning:** [How they position themselves, key messaging themes] [Source N]
+**Market Positioning:** [How they position themselves, key messaging themes] [Source N](#Sources)
 
-**Pricing & Business Model:** [Pricing structure, tiers, model] [Source N]
+**Pricing & Business Model:** [Pricing structure, tiers, model] [Source N](#Sources)
 
-**Key Products/Features:** [Core offerings, standout capabilities] [Source N]
+**Key Products/Features:** [Core offerings, standout capabilities] [Source N](#Sources)
 
-**Funding & Scale:** [Funding history, company size indicators] [Source N]
+**Funding & Scale:** [Funding history, company size indicators] [Source N](#Sources)
 
 **Competitive Threat Level:** [High/Medium/Low] — [1 sentence justification]
 
@@ -254,26 +254,26 @@ Save the output to a markdown file with the template structure below.
 ## SWOT Analysis: [Subject Company]
 
 ### Strengths
-- [Strength 1 with supporting evidence] [Source N]
-- [Strength 2 with supporting evidence] [Source N]
-- [Strength 3 with supporting evidence] [Source N]
+- [Strength 1 with supporting evidence] [Source N](#Sources)
+- [Strength 2 with supporting evidence] [Source N](#Sources)
+- [Strength 3 with supporting evidence] [Source N](#Sources)
 
 ### Weaknesses
-- [Weakness 1 based on competitive gaps] [Source N]
-- [Weakness 2 based on competitive gaps] [Source N]
-- [Weakness 3 based on competitive gaps] [Source N]
+- [Weakness 1 based on competitive gaps] [Source N](#Sources)
+- [Weakness 2 based on competitive gaps] [Source N](#Sources)
+- [Weakness 3 based on competitive gaps] [Source N](#Sources)
 
 ### Opportunities
-- [Opportunity 1 based on market/competitor analysis] [Source N]
-- [Opportunity 2 based on market/competitor analysis] [Source N]
-- [Opportunity 3 based on market/competitor analysis] [Source N]
+- [Opportunity 1 based on market/competitor analysis] [Source N](#Sources)
+- [Opportunity 2 based on market/competitor analysis] [Source N](#Sources)
+- [Opportunity 3 based on market/competitor analysis] [Source N](#Sources)
 
 ### Competitive Moats & Defensibility
 
 Identify what makes the subject company's competitive advantages sustainable and difficult to replicate:
 
-- **[Moat Type 1]:** [Description of the moat] — [Why it's defensible: time, cost, network effects, etc.] [Source N]
-- **[Moat Type 2]:** [Description] — [Why defensible] [Source N]
+- **[Moat Type 1]:** [Description of the moat] — [Why it's defensible: time, cost, network effects, etc.] [Source N](#Sources)
+- **[Moat Type 2]:** [Description] — [Why defensible] [Source N](#Sources)
 
 Common moat types: network effects, data moats, brand moats, regulatory moats, cost advantages, integration depth, specialization/focus, cultural/geographic expertise, switching costs.
 
@@ -287,13 +287,13 @@ Common moat types: network effects, data moats, brand moats, regulatory moats, c
 - **Description:** [What could happen]
 - **Likelihood:** [High/Medium/Low] — [Brief justification]
 - **Impact:** [High/Medium/Low] — [Potential damage if occurs]
-- **Mitigation:** [Specific actions to reduce threat] [Source N]
+- **Mitigation:** [Specific actions to reduce threat] [Source N](#Sources)
 
 #### [Threat 2 Title]
 - **Description:** [What could happen]
 - **Likelihood:** [High/Medium/Low] — [Brief justification]
 - **Impact:** [High/Medium/Low] — [Potential damage if occurs]
-- **Mitigation:** [Specific actions to reduce threat] [Source N]
+- **Mitigation:** [Specific actions to reduce threat] [Source N](#Sources)
 
 ### Medium to Long-Term Threats (12+ months)
 
@@ -301,7 +301,7 @@ Common moat types: network effects, data moats, brand moats, regulatory moats, c
 - **Description:** [What could happen]
 - **Likelihood:** [High/Medium/Low] — [Brief justification]
 - **Impact:** [High/Medium/Low] — [Potential damage if occurs]
-- **Mitigation:** [Specific actions to reduce threat] [Source N]
+- **Mitigation:** [Specific actions to reduce threat] [Source N](#Sources)
 
 *Note: Timeframes and likelihood estimates are flexible. Adapt based on industry velocity and market dynamics.*
 
@@ -311,9 +311,9 @@ Common moat types: network effects, data moats, brand moats, regulatory moats, c
 
 Based on this analysis, consider:
 
-1. **[Recommendation 1]:** [Actionable recommendation with rationale tied to findings] [Source N]
-2. **[Recommendation 2]:** [Actionable recommendation with rationale tied to findings] [Source N]
-3. **[Recommendation 3]:** [Actionable recommendation with rationale tied to findings] [Source N]
+1. **[Recommendation 1]:** [Actionable recommendation with rationale tied to findings] [Source N](#Sources)
+2. **[Recommendation 2]:** [Actionable recommendation with rationale tied to findings] [Source N](#Sources)
+3. **[Recommendation 3]:** [Actionable recommendation with rationale tied to findings] [Source N](#Sources)
 
 ---
 
