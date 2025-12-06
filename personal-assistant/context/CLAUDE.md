@@ -18,8 +18,10 @@ The `~/.claude/plugins/marketplaces/ai-launchpad/personal-assistant/context/` sy
 - **ALWAYS** consider what context may be relevant and read the relevant files. 
 - Bias towards reading context rather than not.
 
-<MANDATORY_READING>
-You **MUST** read the following context files now before proceeding:
+<REQUIRED>
+Determine if the user's message/request requires additional context. If the user's message is a simple question that can be answered with no additional context, you can simply respond directly.
+
+If the user's message requires additional context, read the following context files before proceeding:
 1. `~/.claude/plugins/marketplaces/ai-launchpad/personal-assistant/context/memory/CLAUDE.md`
 2. `~/.claude/plugins/marketplaces/ai-launchpad/personal-assistant/context/projects/CLAUDE.md`
-</MANDATORY_READING>
+</REQUIRED>
