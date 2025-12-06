@@ -1,0 +1,9 @@
+{
+"name": "research",
+"description": "A plugin to add research capabilities to Claude Code",
+"version": "1.0.0",
+"author": {
+"name": "Kenny Liao (The AI Launchpad)",
+"url": "https://www.youtube.com/@KennethLiao"
+}
+}
