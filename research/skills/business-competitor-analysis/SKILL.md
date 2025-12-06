@@ -1,6 +1,6 @@
 ---
 name: business-competitor-analysis
-description: Perform comprehensive competitor analysis for any business. Accepts either direct business details or a website URL to extract business information. Produces an executive-summary markdown report with market positioning, pricing/business model, product features, funding/company size, SWOT analysis, and competitive matrix. All findings are data-grounded with inline source references. Use when the user asks to analyze competitors, understand competitive landscape, compare a business to alternatives, or perform market research.
+description: Perform comprehensive competitor analysis for any business. Accepts either direct business details or a website URL to extract business information. Produces an executive-summary markdown report with target customer profile, market positioning, pricing/business model, product features, funding/company size, SWOT analysis, and competitive matrix. All findings are data-grounded with inline source references. Use when the user asks to analyze competitors, understand competitive landscape, compare a business to alternatives, or perform market research.
 ---
 
 # Competitor Analysis Skill
