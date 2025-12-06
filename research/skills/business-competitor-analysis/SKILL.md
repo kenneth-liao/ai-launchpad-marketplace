@@ -147,6 +147,10 @@ Generate markdown report following the exact structure below.
 
 ## Output Template
 
+<REQUIRED>
+Save the output to a markdown file with the template structure below.
+</REQUIRED>
+
 ```markdown
 # Competitive Analysis: [Subject Company Name]
 
