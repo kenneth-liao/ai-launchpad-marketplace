@@ -4,7 +4,7 @@ UserPromptSubmit hook to load initial context into Claude's context window.
 Context is loaded as a system reminder (see claude-trace).
 
 Context is stored in ~/.claude/.context/ (external to the plugin).
-Use the /setup-context-system command to initialize the context directory.
+Use the /personal-assistant:setup command to initialize the context directory and output style.
 """
 
 import json
@@ -23,14 +23,15 @@ def get_context_or_setup_instructions() -> str:
     context_path = CONTEXT_DIR / "CLAUDE.md"
 
     if not context_path.exists():
-        return f"""# Context System Not Initialized
+        return f"""# Personal Assistant Not Set Up
 
-The personal assistant context system has not been set up yet.
+The personal assistant plugin has not been set up yet.
 
-1. Ask the user if they want to set up the context system to persist context across conversations.
-2. **ONLY** if you receive an explicit confirmation, run the `/setup-context-system` command to initialize your context directory at:
-`{CONTEXT_DIR}`
-3. Validate that the context files were created correctly.
+1. Ask the user if they want to set up the personal assistant (context system + output style).
+2. **ONLY** if you receive an explicit confirmation, run the `/personal-assistant:setup` command to:
+   - Set the output style to personal-assistant
+   - Initialize the context directory at `{CONTEXT_DIR}`
+3. Validate that setup completed correctly.
 
 This only needs to be done once. Your context will persist across plugin updates. You can then continue addressing the user's message.
 """

@@ -1,12 +1,32 @@
 ---
-description: Initialize the personal assistant context system. Run this once after installing the plugin.
+description: Set up the personal assistant plugin. Run this once after installing the plugin.
 ---
 
-# Context System Setup
+# Personal Assistant Setup
 
-Initialize the context system by copying the template files to your user context directory.
+Set up the personal assistant plugin with context system and output style.
 
-## Instructions
+## Step 1: Set Output Style
+
+Update Claude's settings to use the personal assistant output style.
+
+Read the current settings:
+
+```bash
+cat ~/.claude/settings.json
+```
+
+Then update the `outputStyle` field to `"personal-assistant:Personal Assistant"`. If the file doesn't exist or is empty, create it with this content:
+
+```json
+{
+  "outputStyle": "personal-assistant:Personal Assistant"
+}
+```
+
+If the file exists, merge the `outputStyle` field into the existing settings (preserve other settings).
+
+## Step 2: Initialize Context System
 
 ### ⚠️ First, check if context already exists
 
@@ -14,7 +34,7 @@ Initialize the context system by copying the template files to your user context
 ls ~/.claude/.context/
 ```
 
-- **If the directory exists**: Your context is already set up. Do NOT overwrite it or you'll lose your saved context. Do NOT proceed if the directory already exists. You will overwrite the user's context which will result in a **CRITICAL FAILURE**!
+- **If the directory exists**: Context is already set up. Do NOT overwrite it or you'll lose saved context. **CRITICAL: Do NOT proceed with the copy if the directory already exists!**
 - **If the directory doesn't exist**: Proceed with setup below.
 
 ### Fresh Install (only if directory doesn't exist)
@@ -59,7 +79,8 @@ Your context is stored **outside** the plugin directory so that:
 
 ## After Setup
 
-Once initialized, the context system works automatically:
+Once initialized:
+- Output style is active (restart Claude Code to apply)
 - Context is loaded on every user message
 - Context updates are prompted after each response
 - Your personalized data stays safe from plugin updates

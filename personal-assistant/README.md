@@ -26,15 +26,15 @@ You can also do this interactively by running `/plugin`.
 
 3. Restart Claude Code for the changes to take effect.
 
-4. **Initialize the context system** (first time only):
+4. **Set up the personal assistant** (first time only):
 
 ```bash
-/setup-context-system
+/personal-assistant:setup
 ```
 
-This copies the context templates to `~/.claude/.context/` where your personal context will be stored.
+This sets the output style and copies context templates to `~/.claude/.context/`.
 
-You should now have access to the context system and notification sounds. The plugin's output style will automatically activate.
+You should now have access to the context system and notification sounds.
 
 ## Plugin Structure
 
@@ -44,7 +44,7 @@ personal-assistant/
 │   └── plugin.json                # Plugin metadata
 ├── README.md                      # Plugin documentation
 ├── commands/                      # Slash commands
-│   ├── setup-context-system.md    # Initialize context system
+│   ├── setup.md                   # Set up the personal assistant
 │   └── update-context.md          # Manually trigger context update
 ├── context-template/              # Context templates (copied to user dir)
 │   ├── CLAUDE.md                  # Main context instructions
@@ -98,13 +98,15 @@ Quick reference for your projects:
 
 ## Commands
 
-### /setup-context-system
+### /personal-assistant:setup
 
-Initialize the context system by copying templates to `~/.claude/.context/`. Run this once after installing the plugin.
+Set up the personal assistant plugin. Run this once after installing the plugin. This command:
+1. Sets the output style to `personal-assistant`
+2. Initializes the context system at `~/.claude/.context/`
 
 **Important:** This command will warn you if context already exists to prevent overwriting your data.
 
-### /update-context
+### /personal-assistant:update-context
 
 Manually trigger a context update based on the current conversation. Claude will review the conversation and update relevant context files.
 
