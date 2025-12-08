@@ -1,33 +1,30 @@
 #!/usr/bin/env python3
 """
-Stop hook to trigger memory updates after each Claude response.
-Blocks Claude from stopping until it updates the memory/context systems.
+Stop hook to trigger context updates after each Claude response.
+Blocks Claude from stopping until it updates the context system.
+
+Context is stored in ~/.claude/.claude-context/ (external to the plugin).
 """
 
 import json
 import sys
 from pathlib import Path
 
-
-def get_hook_root() -> Path:
-    """
-    Get the root directory for the hook's context system.
-    Uses the hook file's location to find the sibling 'context' folder.
-    """
-    hook_dir = Path(__file__).resolve().parent  # hooks/
-    hook_root = hook_dir.parent  # personal-assistant/ (or whatever it's named)
-    return hook_root
+# User's context directory (external to plugin, persists across updates)
+CONTEXT_DIR = Path.home() / ".claude" / ".context"
 
 
-def get_context_update_instructions(hook_root: Path) -> str:
+def get_context_update_instructions() -> str:
     """Generate context update instructions with correct paths."""
-    context_dir = hook_root / "context"
+    # Check if context system is initialized
+    if not CONTEXT_DIR.exists():
+        return """Context system not initialized. Run /setup-context-system first."""
 
     return f"""Before finishing, update the context system:
 
-If you haven't already, read `{context_dir}/context-update.md` to understand the requirements for a context update.
+If you haven't already, read `{CONTEXT_DIR}/context-update.md` to understand the requirements for a context update.
 
-If a context update is necessary, complete the update according to the instructions in `{context_dir}/context-update.md`.
+If a context update is necessary, complete the update according to the instructions in `{CONTEXT_DIR}/context-update.md`.
 
 After completing the context update or if no update is necessary, you may finish your response."""
 
@@ -48,10 +45,9 @@ def main() -> None:
         sys.exit(0)
 
     # Block Claude and instruct it to update context
-    hook_root = get_hook_root()
     output = {
         "decision": "block",
-        "reason": get_context_update_instructions(hook_root)
+        "reason": get_context_update_instructions()
     }
     print(json.dumps(output))
     sys.exit(0)

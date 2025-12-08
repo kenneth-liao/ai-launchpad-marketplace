@@ -4,6 +4,7 @@ description: These are explicit rules learned from past mistakes or user correct
 update_policy: 
 - ADD rules when user corrects behavior or expresses frustration about an action (no permission needed)
 - Only REMOVE rules when user explicitly rescinds them (no permission needed)
+- Add new sections as needed (no permission needed)
 rule_format:
 - ❌ NEVER [action] [context if needed] - [reason/origin if helpful]
 - ✅ ALWAYS [action] [context if needed]

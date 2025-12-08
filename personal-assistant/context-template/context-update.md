@@ -27,7 +27,7 @@ Before adding ANY context, ask:
 
 1. **Task completion logs** - "✅ Completed X, ✅ Completed Y"
 2. **Research summaries** - Store in project docs, reference the path only
-3. **Session-specific details** - Goes in `session/current.md`
+3. **Session-specific details** - Goes in `~/.claude/.context/session/current.md`
 4. **Duplicated info** - If it's in project README, don't repeat it
 
 ---
@@ -35,14 +35,14 @@ Before adding ANY context, ask:
 ## Update Steps
 
 ### 1. Session Context
-Update `session/current.md` with:
+Update `~/.claude/.context/session/current.md` with:
 - Current focus (what we're working on)
 - Active tasks in progress
 - Any blockers
 - Notes for next session
 
 ### 2. Correction Detection (Self-Improvement)
-If user corrected any behavior this session, **IMMEDIATELY** add a rule to `core/rules.md`:
+If user corrected any behavior this session, **IMMEDIATELY** add a rule to `~/.claude/.context/core/rules.md`:
 
 | User Says | Interpretation | Add to rules.md |
 |-----------|----------------|-----------------|
@@ -55,17 +55,17 @@ If user corrected any behavior this session, **IMMEDIATELY** add a rule to `core
 
 ### 3. Preference/Workflow Learning
 If new preference or workflow learned:
-→ Update `core/preferences.md` or `core/workflows.md`
+→ Update `~/.claude/.context/core/preferences.md` or `~/.claude/.context/core/workflows.md`
 → **REPLACE** old preference if it contradicts (don't accumulate)
 → Brief notification: "Noted preference for X"
 
 ### 4. Identity Updates
 If new personal/professional info learned:
-→ Update `core/identity.md`
+→ Update `~/.claude/.context/core/identity.md`
 
 ### 5. Project Status
 If project status changed:
-→ Update `projects/project_index.md`
+→ Update `~/.claude/.context/projects/project_index.md`
 
 ---
 
@@ -73,12 +73,14 @@ If project status changed:
 
 | File | Update Policy |
 |------|---------------|
-| `core/identity.md` | Update when new identity info shared |
-| `core/preferences.md` | **REPLACE** when new preference stated |
-| `core/workflows.md` | Update when workflow learned/changed |
-| `core/rules.md` | **ADD** when correction detected; only remove if explicitly rescinded |
-| `session/current.md` | Update every session; clear on major context switch |
-| `projects/project_index.md` | Update when project status changes; archive completed projects |
+| `~/.claude/.context/core/identity.md` | Update when new identity info shared |
+| `~/.claude/.context/core/preferences.md` | **REPLACE** when new preference stated |
+| `~/.claude/.context/core/workflows.md` | Update when workflow learned/changed |
+| `~/.claude/.context/core/rules.md` | **ADD** when correction detected; only remove if explicitly rescinded |
+| `~/.claude/.context/session/current.md` | Update every session; clear on major context switch |
+| `~/.claude/.context/projects/project_index.md` | Update when project status changes; archive completed projects |
+
+For all core/ files **ONLY**: Add new sections as needed.
 
 ---
 
