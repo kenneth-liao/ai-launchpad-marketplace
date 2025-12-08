@@ -61,7 +61,7 @@ def main() -> None:
 
     # Block Claude and instruct it to update context
     output = {
-        "decision": "approve",
+        "decision": "block",
         "reason": instructions
     }
     print(json.dumps(output))
