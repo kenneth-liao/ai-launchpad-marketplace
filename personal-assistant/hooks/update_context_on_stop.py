@@ -14,11 +14,12 @@ from pathlib import Path
 CONTEXT_DIR = Path.home() / ".claude" / ".context"
 
 
-def get_context_update_instructions() -> str:
-    """Generate context update instructions with correct paths."""
-    # Check if context system is initialized
+def get_context_update_instructions() -> str | None:
+    """Generate context update instructions with correct paths.
+    Returns None if context system is not initialized.
+    """
     if not CONTEXT_DIR.exists():
-        return """Personal assistant and context system not initialized. Wait for user to confirm setting up with /personal-assistant:setup first. If user does not want to proceed with setup. Ignore this message and continue helping the user."""
+        return None
 
     return f"""<system_reminder>
 If you haven't already, read `{CONTEXT_DIR}/context-update.md` to understand the requirements for a context update.
@@ -45,10 +46,22 @@ def main() -> None:
         # Let Claude stop - context update already happened this turn
         sys.exit(0)
 
+    # Get context update instructions (None if not initialized)
+    instructions = get_context_update_instructions()
+
+    if instructions is None:
+        # Context system not set up - let Claude continue without blocking
+        output = {
+            "decision": "continue",
+            "reason": "Personal assistant output style and context system not setup. Continue."
+        }
+        print(json.dumps(output))
+        sys.exit(0)
+
     # Block Claude and instruct it to update context
     output = {
         "decision": "block",
-        "reason": get_context_update_instructions()
+        "reason": instructions
     }
     print(json.dumps(output))
     sys.exit(0)
