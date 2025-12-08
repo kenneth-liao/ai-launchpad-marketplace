@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Skill(personal-assistant:skill-creator)"
-    ],
-    "deny": [],
-    "ask": []
-  }
-}

@@ -11,6 +11,9 @@ wheels/
 venv/
 env/
 
+# Claude
+.claude/
+
 # MacOS
 .DS_Store
 
