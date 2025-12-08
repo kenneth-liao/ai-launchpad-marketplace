@@ -91,10 +91,10 @@ Your context is stored **outside** the plugin directory so that:
 
 ## After Setup
 
-Once initialized:
+Let the user know:
+- The output style is active (no need to restart Claude Code)
 - Context is loaded on every user message
 - Context updates are prompted after each response
-
-<REQUIRED>
-The output style is not active until the user restarts Claude Code. Prompt the user to restart Claude Code now to activate the output style. Otherwise, if they decide to continue, the context system will work correctly but the output style will not be active.
-</REQUIRED>
+- The user should see the status line now showing `personal-assistant:Personal Assistant`
+- The user can change the output style any time with `/output-style` or status line with `/statusline`.
+- The user can also completely disable the personal assistant plugin in the `/plugin` menu.
