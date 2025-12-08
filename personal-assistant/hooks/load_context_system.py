@@ -27,10 +27,11 @@ def get_context_or_setup_instructions() -> str:
 
 The personal assistant context system has not been set up yet.
 
-Run the `/setup-context-system` command to initialize your context directory at:
+1. Run the `/setup-context-system` command to initialize your context directory at:
 `{CONTEXT_DIR}`
+2. Validate that the context files were created correctly.
 
-This only needs to be done once. Your context will persist across plugin updates.
+This only needs to be done once. Your context will persist across plugin updates. You can then continue.
 """
 
     try:
