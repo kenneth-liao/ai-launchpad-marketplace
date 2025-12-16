@@ -29,6 +29,7 @@ Before adding ANY context, ask:
 2. **Research summaries** - Store in project docs, reference the path only
 3. **Session-specific details** - Goes in `~/.claude/.context/session/current.md`
 4. **Duplicated info** - If it's in project README, don't repeat it
+5. **Git history** - If it can be found from `git log`, don't add it
 
 ---
 
