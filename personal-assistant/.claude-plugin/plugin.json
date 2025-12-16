@@ -1,7 +1,7 @@
 {
 "name": "personal-assistant",
 "description": "A plugin to turn Claude Code into your personal assistant",
-"version": "1.5.4",
+"version": "1.5.5",
 "author": {
 "name": "Kenny Liao (The AI Launchpad)",
 "url": "https://www.youtube.com/@KennethLiao"
