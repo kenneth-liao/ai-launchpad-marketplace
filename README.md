@@ -34,18 +34,34 @@ You can now browse available plugins interactively by running `/plugin`.
 
 **[NOTE]** Individual plugins may have additional requirements! Please refer to the plugin's README for more information.
 
-### Personal Assistant
+### Personal Assistant (Elle)
 
-Turn Claude Code into your personal assistant with this plugin.
+Meet **Elle** — an AI personal assistant who actually remembers you.
+
+Elle transforms Claude Code from a stateless AI into a personal assistant with persistent memory. She learns your preferences, tracks your projects, remembers key people in your life, and gets better at helping you over time.
 
 **REQUIREMENTS:**
 No additional requirements.
 
 **Features:**
-- Personalized context system
-- Memory management
-- Task tracking
-- Notification sounds
+- **Persistent Memory** — Context system that remembers you across conversations
+- **Learns from Corrections** — Makes a mistake once, never again (rules system)
+- **Proactive Assistance** — Tracks deadlines, relationships, and triggers
+- **Personalized Responses** — Everything grounded in your context
+- **Notification Sounds** — Know when Elle needs your attention
+
+**Context System:**
+```
+~/.claude/.context/
+├── core/
+│   ├── identity.md        # Who you are
+│   ├── preferences.md     # How you work
+│   ├── relationships.md   # Key people in your life
+│   ├── triggers.md        # Important dates & reminders
+│   ├── projects.md        # What you're working on
+│   └── rules.md           # Hard rules from corrections
+│   └── ...
+```
 
 **[View Plugin →](./personal-assistant)**
 
