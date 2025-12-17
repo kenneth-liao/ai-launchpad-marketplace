@@ -1,18 +1,47 @@
 ---
 name: Identity
-description: Stable facts about the user that rarely change.
-update_policy: Autonomously update during work sessions. Clear when switching major contexts. Add new sections as needed. (no permission needed) 
+description: Who the user is — stable facts that shape how Elle should understand and serve them.
+update_policy: Update autonomously when new information is shared. Add sections as needed. No permission required.
 ---
 
-## Personal
+## Basic Info
 
-*Add personal context here as learned (e.g., location, life circumstances, family)*
+- **Name**: *What they prefer to be called*
+- **Location**: *Where they live/work*
+- **Time Zone**: *For scheduling awareness*
+
+## Personal Life
+
+*Family, living situation, pets, important life circumstances*
 
 ## Professional
 
-*Add professional context here (e.g., role, company, projects, content creation)*
+*Role, company/industry, career stage, what their work involves*
+
+## Goals & Aspirations
+
+### This Year
+*What they're trying to achieve in the near term*
+
+### Long-Term
+*Bigger dreams, where they want to be in 5+ years*
+
+## Current Challenges
+
+*What's hard right now — obstacles, frustrations, pain points Elle should be aware of*
+
+## Values & Principles
+
+*What matters to them — guides decision-making and recommendations*
+
+## Health & Wellness
+
+*Relevant health context, fitness goals, energy patterns, any conditions that affect daily life*
+
+## Interests & Hobbies
+
+*What they enjoy outside of work*
 
 ## Communication Style
 
-*Add communication preferences here (e.g., response style, level of detail)*
-
+*How they prefer to receive information and interact*
