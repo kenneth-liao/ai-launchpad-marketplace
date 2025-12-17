@@ -1,8 +1,8 @@
 # Context Update Instructions
 
-This file is read by the Stop hook. It describes how to update ALL context files.
+This file describes how to maintain Elle's memory. Update context **continuously** as you learn new things about the user.
 
-Context updates are **autonomous** - just do them without asking permission.
+Context updates are **autonomous** — just do them without asking permission.
 
 ## Core Principle
 
@@ -27,7 +27,7 @@ Before adding ANY context, ask:
 
 1. **Task completion logs** - "✅ Completed X, ✅ Completed Y"
 2. **Research summaries** - Store in project docs, reference the path only
-3. **Session-specific details** - Goes in `~/.claude/.context/session/current.md`
+3. **Session-specific details** - Goes in `~/.claude/.context/core/session.md`
 4. **Duplicated info** - If it's in project README, don't repeat it
 5. **Git history** - If it can be found from `git log`, don't add it
 
@@ -36,7 +36,7 @@ Before adding ANY context, ask:
 ## Update Steps
 
 ### 1. Session Context
-Update `~/.claude/.context/session/current.md` with:
+Update `~/.claude/.context/core/session.md` with:
 - Current focus (what we're working on)
 - Active tasks in progress
 - Any blockers
@@ -66,7 +66,23 @@ If new personal/professional info learned:
 
 ### 5. Project Status
 If project status changed:
-→ Update `~/.claude/.context/projects/project_index.md`
+→ Update `~/.claude/.context/core/projects.md`
+
+### 6. Relationships
+If new person mentioned or relationship context learned:
+→ Update `~/.claude/.context/core/relationships.md`
+→ Include: name, relationship, relevant context, important dates
+
+### 7. Triggers & Important Dates
+If important date, deadline, or recurring check-in learned:
+→ Update `~/.claude/.context/core/triggers.md`
+→ Include: date, event/deadline, action needed
+
+### 8. Journal (Session Log)
+At the end of notable sessions, append to `~/.claude/.context/core/journal.md`:
+→ Date, what was accomplished, notable decisions or context
+→ Keep entries brief — anything important should be promoted to relevant core file
+→ Add entries at the TOP (newest first)
 
 ---
 
@@ -74,14 +90,17 @@ If project status changed:
 
 | File | Update Policy |
 |------|---------------|
-| `~/.claude/.context/core/identity.md` | Update when new identity info shared |
-| `~/.claude/.context/core/preferences.md` | **REPLACE** when new preference stated |
-| `~/.claude/.context/core/workflows.md` | Update when workflow learned/changed |
-| `~/.claude/.context/core/rules.md` | **ADD** when correction detected; only remove if explicitly rescinded |
-| `~/.claude/.context/session/current.md` | Update every session; clear on major context switch |
-| `~/.claude/.context/projects/project_index.md` | Update when project status changes; archive completed projects |
+| `core/identity.md` | Update when new identity info shared |
+| `core/preferences.md` | **REPLACE** when new preference stated |
+| `core/workflows.md` | Update when workflow learned/changed |
+| `core/relationships.md` | **ADD** people as mentioned; update context as learned |
+| `core/triggers.md` | **ADD** dates/deadlines; remove when passed or irrelevant |
+| `core/projects.md` | Update when project status changes; archive completed |
+| `core/rules.md` | **ADD** when correction detected; only remove if explicitly rescinded |
+| `core/session.md` | Update every session; clear on major context switch |
+| `core/journal.md` | **APPEND** notable sessions at TOP; periodically prune old entries |
 
-For all core/ files **ONLY**: Add new sections as needed.
+All files are in `~/.claude/.context/`. Add new sections as needed.
 
 ---
 
@@ -100,8 +119,11 @@ Brief notifications, not permission-seeking:
 | Type | Action | Trigger |
 |------|--------|---------|
 | Preferences | **Replace** in place | New preference contradicts old |
+| Relationships | **Add** new people; update context | Person mentioned or context learned |
+| Triggers | **Add** then **remove** when passed | Date/deadline learned; date passes |
 | Projects | **Archive** to bottom section | Project completes |
 | Session | **Clear** | Major context switch |
+| Journal | **Append** at top; **prune** periodically | Notable session ends; file gets long |
 | Rules | **Keep forever** | Only remove on explicit user request |
 
 ---
