@@ -20,7 +20,7 @@ Before adding ANY context, ask:
 | ✅ Pass - Add It | ❌ Fail - Skip It |
 |------------------|-------------------|
 | "User prefers uv over pip" | "Installed dependencies with uv" |
-| "User's wife is doing IVF" | "Researched IVF clinics" |
+| "User is training for marathon" | "Researched running shoes" |
 | "EQL Ivy uses Supabase" | "Deployed v2.3.1 to Render" |
 
 ## What NEVER Goes in Context

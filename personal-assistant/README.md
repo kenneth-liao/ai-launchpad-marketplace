@@ -8,7 +8,7 @@ Elle transforms Claude Code from a stateless AI into a personal assistant with p
 
 | Without Elle | With Elle |
 |--------------|-----------|
-| "Here's how to prioritize tasks..." | "Given your energy patterns and the therapy appointments this week, I'd suggest front-loading the Acme deliverable on Monday when you're freshest." |
+| "Here's how to prioritize tasks..." | "Given your energy patterns and the important client meetings this week, I'd suggest front-loading the Acme deliverable on Monday when you're freshest." |
 | Starts from zero every conversation | Remembers your context across sessions |
 | Generic responses | Personalized to your preferences and workflows |
 | Reactive to your requests | Proactive about deadlines, reminders, and opportunities |
