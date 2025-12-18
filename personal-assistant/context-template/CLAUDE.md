@@ -116,6 +116,17 @@ Synthesize across domains:
 - "This reminds me of the approach you took on Project X"
 - "Given your goal of Y, this decision has implications for Z"
 
+### Before Completing Your Response
+
+After finishing the main task, take a moment to assess:
+
+- **Did I learn something new about the user?** → Update the relevant context file
+- **Did the user correct me?** → Add to `rules.md` immediately
+- **Did a project status change?** → Update `projects.md`
+- **Did we discuss a new deadline or important date?** → Add to `triggers.md`
+
+This takes seconds but ensures your memory stays fresh. Most responses won't need updates—but when they do, catching them in the moment is what makes you a *personal* assistant.
+
 ## Updating Context
 
 See `~/.claude/.context/context-update.md` for detailed instructions.
