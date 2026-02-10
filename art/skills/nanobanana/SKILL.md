@@ -1,14 +1,6 @@
 ---
 name: nanobanana
-description: Generate and edit images using Google Gemini (Nano Banana). Supports Pro and Flash models, multi-image references, text-to-image, image editing, 1K/2K/4K resolution, and Google Search grounding.
-triggers:
-  - "generate image"
-  - "create image"
-  - "nano banana"
-  - "nanobanana"
-  - "gemini image"
-  - "AI image"
-  - "image generation"
+description: AI image generation and editing using Google Gemini models (Nano Banana). Use when the user asks to generate an image, create an image, edit an image, or references "nano banana", "nanobanana", or "gemini image". Supports text-to-image, image editing, multi-image references, and 1K/2K/4K resolution.
 ---
 
 # Nano Banana - AI Image Generation
@@ -33,30 +25,37 @@ pip install -r <skill_dir>/requirements.txt
 
 ## Quick Start
 
+**Default output:** Images save to `~/Downloads/nanobanana_<timestamp>.png` automatically. Do NOT pass `-o` unless the user specifies where to save. If the user provides a filename without a directory (e.g., "save it as robot.png"), use `-o ~/Downloads/robot.png`.
+
 ### Generate an image:
 ```bash
-uv run <skill_dir>/scripts/generate.py "a cute robot mascot, pixel art style" -o robot.png
+uv run <skill_dir>/scripts/generate.py "a cute robot mascot, pixel art style"
 ```
 
 ### Edit an existing image:
 ```bash
-uv run <skill_dir>/scripts/generate.py "make the background blue" -i input.jpg -o output.png
+uv run <skill_dir>/scripts/generate.py "make the background blue" -i input.jpg
 ```
 
 ### Use Flash model for fast iteration:
 ```bash
-uv run <skill_dir>/scripts/generate.py "quick sketch of a cat" --model flash -o sketch.png
+uv run <skill_dir>/scripts/generate.py "quick sketch of a cat" --model flash
 ```
 
 ### Multi-image reference (style + subject):
 ```bash
 uv run <skill_dir>/scripts/generate.py "apply the style of the first image to the second" \
-  -i style_ref.png subject.jpg -o styled.png
+  -i style_ref.png subject.jpg
 ```
 
 ### Generate with specific aspect ratio and resolution:
 ```bash
-uv run <skill_dir>/scripts/generate.py "cinematic landscape" --ratio 21:9 --size 4K -o landscape.png
+uv run <skill_dir>/scripts/generate.py "cinematic landscape" --ratio 21:9 --size 4K
+```
+
+### Save to a specific location:
+```bash
+uv run <skill_dir>/scripts/generate.py "logo design" -o ~/Projects/brand/logo.png
 ```
 
 ## Model Selection Guide
