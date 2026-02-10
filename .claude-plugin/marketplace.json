@@ -20,6 +20,11 @@
       "description": "A plugin to add research capabilities to Claude Code"
     },
     {
+      "name": "art",
+      "source": "./art",
+      "description": "A plugin to add art capabilities to Claude Code"
+    },
+    {
       "name": "mcp-launchpad",
       "source": "./mcp-launchpad",
       "description": "MCP Launchpad - A unified CLI for discovering and managing MCP servers with automatic environment variable loading"

@@ -1,0 +1,9 @@
+{
+"name": "art",
+"description": "A plugin to add art capabilities to Claude Code",
+"version": "1.0.1",
+"author": {
+"name": "Kenny Liao (The AI Launchpad)",
+"url": "https://www.youtube.com/@KennethLiao"
+}
+}
