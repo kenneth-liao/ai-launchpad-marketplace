@@ -389,6 +389,20 @@ When generating new assets:
 4. **Always pair with the text prompt** from the Style Language Map — references and text work together, neither alone is sufficient
 5. **For new element types** not in the index, use the 2 references that share the most visual properties with what you're creating
 
+### User-Provided References
+
+> Include this subsection only if Phase 0 collected user reference images.
+> List each reference with a brief note on what style properties it anchors.
+> These are stored in `design-system/references/` and serve as supplementary style anchors.
+
+| File | Source | Key Style Properties |
+|------|--------|---------------------|
+| `references/ref-01-{{description}}.png` | {{Where it came from — e.g., "existing brand asset", "inspiration from [source]"}} | {{What this reference anchors — e.g., "color palette, illustration style, character proportions"}} |
+| `references/ref-02-{{description}}.png` | {{source}} | {{properties}} |
+
+> Add more rows as needed. User references supplement the generated library —
+> they're especially useful when creating new asset types not covered by the 8 standard elements.
+
 ### Extending the Library
 
 When new assets are generated that represent a style not yet covered:

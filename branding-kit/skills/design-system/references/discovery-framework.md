@@ -11,6 +11,37 @@ Each dimension includes:
 
 ---
 
+## Reference Analysis → Smart Defaults Mapping
+
+When Phase 0 provides user references, use this mapping to generate smart defaults for each dimension. The reference analysis extracts visual properties; this table maps those properties to the closest discovery option.
+
+| Dimension | What to Look For in References | Smart Default Logic |
+|-----------|-------------------------------|-------------------|
+| 1. Use Cases | Image aspect ratios and content types present | If mostly square images → social media; if 16:9 → slides/web; if mixed → multi-select the observed formats. **Note:** Use cases are intent-driven, so this is the weakest default — always ask. |
+| 2. Vibe | Color temperature, contrast levels, whitespace density, shape roundness | Warm colors + rounded shapes → "Warm & approachable". High contrast + angular → "Bold & energetic". Muted + spacious → "Clean & modern". Dark backgrounds + dramatic → "Dark & sophisticated". |
+| 3. Medium | Whether references contain illustrations, photos, abstract art, or mixed | Straightforward — match what's visually present. If all illustrations → "Mostly illustrated". If photos → "Photography-forward". If both → "Mixed media". |
+| 4. Illustration Style | Line quality, fill approach, dimensionality | Clean edges + solid fills → "Flat vector". Visible strokes + organic imperfections → "Hand-drawn". Depth + perspective → "3D / isometric". Layered textures → "Collage". |
+| 5. Color Strategy | Number of distinct colors, palette distribution | 1-2 colors + neutrals → "Monochrome with accent". Warm naturals → "Earth tones". Blues/grays → "Cool & professional". 4+ distinct colors → "Full vibrant". |
+| 6. Accent Color | The most prominent non-neutral color | Extract the dominant accent hex code directly. Present it as "Based on your references, your accent color appears to be **[color name] ([hex])** — want to keep this?" with the option to use the extracted value or choose a different one. |
+| 7. Base Tone | Background color of reference images | Extract the dominant background color. Match to closest option. |
+| 8. Line Work | Stroke weight, edge quality, outline presence | Thick strokes → "Thick, rounded, friendly". Thin precise strokes → "Thin, precise, clean". Loose strokes → "Sketchy, loose, expressive". No visible outlines → "No outlines / shape-based". |
+| 9. Composition | Element density, focal point placement, whitespace ratio | Lots of space → "Minimal". Grid-like → "Balanced & structured". Off-center energy → "Asymmetric & dynamic". Packed with detail → "Dense & detailed". |
+| 10. Anti-Patterns | What's absent from all references (implicit avoidance) | This dimension is harder to infer — present observations like "None of your references use gradients, which suggests you may want to avoid them" but don't auto-select. |
+
+**Presentation format for smart defaults:**
+
+When presenting a question with a smart default, use this structure:
+> **[Question text]**
+> *Based on your references, I'd suggest: **[Option name]** — [1-sentence reason citing what was observed in the references].*
+> [Then present all options normally so the user can override]
+
+If references are ambiguous or mixed for a dimension:
+> **[Question text]**
+> *Your references show a mix of [X] and [Y] here — which direction do you want to lean?*
+> [Present all options without a pre-selection]
+
+---
+
 ## Dimension 1: Primary Use Cases
 
 **Question:** "What will you primarily use this art style for?"

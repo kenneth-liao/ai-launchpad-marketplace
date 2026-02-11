@@ -312,3 +312,51 @@ When using the nanobanana skill with reference images:
 
 - When intentionally exploring a new visual direction within the design system
 - When the reference library doesn't have a relevant match (generate the new type, then add it to the library)
+
+---
+
+## Using User-Provided References
+
+If Phase 0 collected user reference images (brand assets, inspiration images, website screenshots), these are distinct from the generated Reference Library and have their own usage rules.
+
+### User References vs. Generated References
+
+| Aspect | User-Provided References | Generated Reference Library |
+|--------|--------------------------|----------------------------|
+| Purpose | Style anchoring — "make it look like THIS" | Consistency anchoring — "keep it matching the system" |
+| When available | From Phase 0 onward | After Phase 4 completes |
+| Priority during Phase 4 | **Primary** — use these to anchor the initial generation | N/A (doesn't exist yet) |
+| Priority after Phase 4 | **Secondary** — use when generated refs don't cover the need | **Primary** — these ARE the system |
+| Location | `design-system/references/` | `design-system/` (numbered 01-08) |
+
+### During Phase 4 (Initial Asset Generation)
+
+User references are most valuable here because the generated library doesn't exist yet:
+
+1. **Select 1-2 user references** that best match the element being generated
+2. Provide them to nanobanana as style reference images
+3. In the prompt, add: "Match the visual style, color palette, and artistic approach of the reference image while following the design system specifications below."
+4. The text prompt (from the design system) provides the specific details; the reference image provides the overall visual feel
+5. If user references conflict with discovery answers (e.g., reference shows gradients but user chose "no gradients"), **the discovery answers take priority** — the user explicitly chose those preferences
+
+### Reference Selection Guide for Phase 4
+
+| Element Being Generated | Best User Reference To Use |
+|------------------------|---------------------------|
+| Hero character / mascot | Any reference showing characters, mascots, or figures |
+| Concept icon | Any reference showing icons, symbols, or simple objects |
+| Framework diagram | Any reference showing diagrams, flows, or connected elements |
+| Social media asset | Any reference from social media contexts |
+| Background texture | Any reference with notable texture or background treatment |
+| Sticker / badge | Any reference showing compact, standalone elements |
+| Pattern element | Any reference showing patterns, scattered elements, or decorative motifs |
+| Character scene | Any reference showing characters in context or scenes |
+
+If no user reference matches the element type, generate without a reference image — rely on the text prompt and Style Language Map alone.
+
+### After Phase 4 (Future Asset Generation)
+
+Once the 8-image Reference Library exists, prefer it over user references for routine generation. User references remain useful when:
+- Creating something the generated library doesn't cover
+- The user wants to pull a specific quality from the original inspiration that the generated library didn't fully capture
+- Generating for a new use case not represented in the existing system

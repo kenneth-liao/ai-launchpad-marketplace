@@ -3,21 +3,66 @@ name: design-system
 description: Create comprehensive visual design systems through guided discovery. Defines brand aesthetics (colors, typography, illustration style, composition rules) via interactive questionnaire, generates a complete style guide document, and produces all visual assets for a style board using the nanobanana skill. Use when users want to create, update, or refresh a visual design system or art style guide.
 ---
 
-# Design System Skill
+# Design System Generator
 
 Create complete visual design systems from scratch through guided discovery, documentation, and AI-generated asset production.
 
 ## Workflow Overview
 
-Execute these 5 phases in strict order. Never skip phases. Each phase builds on the previous.
+Execute these 6 phases in strict order. Phase 0 is optional (skip if user has no references). Never skip Phases 1-5. Each phase builds on the previous.
 
 | Phase | Name | Action | Output |
 |-------|------|--------|--------|
+| 0 | Reference Input | Collect + analyze user reference images | Visual analysis + smart defaults for discovery |
 | 1 | Discovery | Interactive questionnaire | User preferences across 10 dimensions |
 | 2 | Synthesis | Analyze + name the style | Style name, core principles, full spec |
 | 3 | Documentation | Generate style guide | `{style-name}-design-system.md` |
 | 4 | Asset Generation | Generate images via nanobanana | 8 PNG style board elements |
 | 5 | Assembly | Organize + present | Complete `design-system/` directory |
+
+---
+
+## Phase 0: Reference Input (Optional)
+
+Before starting discovery, ask the user if they have existing visual references to anchor the design system. References dramatically improve consistency by grounding the system in concrete examples rather than abstract descriptions alone.
+
+**Opening prompt:** "Before we start defining your design system, do you have any existing visual references? These could be brand assets you already use, inspiration images, or examples of styles you like. This is optional — we can build entirely from scratch too."
+
+**Supported input modes:**
+
+| Mode | How to Provide | What Happens |
+|------|---------------|--------------|
+| Folder path | User provides a path like `~/brand-assets/` or `./images/` | Read all image files in the folder (PNG, JPG, SVG, WebP). Limit to 10 most relevant if more are provided. |
+| Individual files | User provides one or more file paths | Read each image directly. |
+| Website URL | User provides a URL like `https://mybrand.com` | Use WebFetch to capture the page, then analyze the visual design (colors, typography, layout, imagery style). |
+| Direct paste | User pastes or drags images into the conversation | Analyze the images as provided. |
+| Skip | User says they have no references | Proceed directly to Phase 1 with no smart defaults. |
+
+**Analysis protocol:**
+
+For each reference image or website, extract and document:
+
+1. **Dominant colors** — Identify the 3-5 most prominent colors with approximate hex codes. Note which appear to be background, primary, and accent.
+2. **Line work / rendering style** — Is it illustrated or photographic? If illustrated: line weight (thick/thin), edge quality (clean/sketchy), fill approach (flat/gradient/outline-only).
+3. **Composition patterns** — Spacing density, focal point placement, symmetry, use of whitespace.
+4. **Medium / aesthetic** — Flat vector, hand-drawn, 3D, photographic, collage, abstract, etc.
+5. **Mood / emotional tone** — What feeling does it convey? Warm, corporate, playful, dark, etc.
+6. **Character style** (if characters present) — Proportions, facial detail level, body style, identifying features.
+7. **What's NOT present** — Notable absences that may indicate intentional anti-patterns (no gradients, no photography, no text, etc.).
+
+**After analysis, present a summary:**
+> "Here's what I'm seeing across your references: **[2-3 sentence synthesis of the dominant visual patterns — colors, style, mood, composition]**. I'll use this to suggest defaults during the discovery questionnaire, but you can override any suggestion."
+
+**Smart defaults:**
+- Store the analysis results as `reference_analysis`
+- During Phase 1, for each dimension where the reference analysis provides a clear signal, pre-select the closest matching option and note: *"Based on your references, I'd suggest: **[option]** — [brief reason from analysis]. Does this match your intent?"*
+- If the references are ambiguous for a dimension (e.g., mixed styles across images), present all options without a default and note the ambiguity: *"Your references show a mix of [X] and [Y] — which direction do you want to lean?"*
+- The user always has full control — smart defaults are suggestions, not decisions
+
+**Reference images are preserved for later use:**
+- Copy user-provided reference images to `design-system/references/` during Phase 5
+- These become part of the Reference Library alongside the 8 generated style board images
+- During Phase 4 asset generation, user references can be provided to nanobanana as style anchors
 
 ---
 
@@ -31,6 +76,7 @@ Load the full question bank from [references/discovery-framework.md](references/
 - Ask questions in dimension order (they build on each other)
 - Present 3-4 options per question with clear descriptions
 - Allow multi-select where the framework indicates
+- **If Phase 0 produced smart defaults**, pre-select the suggested option and include the reasoning. Still present all options — the user decides.
 - After each answer, give a brief 1-sentence acknowledgment contextualizing the choice, then move to the next question
 - Adapt later questions based on earlier answers (the framework specifies when to skip or modify questions)
 - Complete ALL dimensions before moving to Phase 2
@@ -119,8 +165,9 @@ Generate 8 style board elements using the **nanobanana** skill. Build prompts us
 1. Write a detailed narrative prompt following the templates in prompt-engineering.md
 2. Embed the exact hex codes, line style, and composition rules from the design system
 3. Specify the correct aspect ratio from the table above
-4. Use the nanobanana skill to generate the image
-5. Save the output to the `design-system/` directory with a descriptive filename
+4. **If Phase 0 provided user references**, select the 1-2 most relevant reference images for this element type and provide them to nanobanana as style anchors (see prompt-engineering.md "Using User-Provided References" section)
+5. Use the nanobanana skill to generate the image
+6. Save the output to the `design-system/` directory with a descriptive filename
 
 **Prompt construction rules:**
 - Write as descriptive narrative paragraphs (NOT keyword lists)
@@ -160,7 +207,11 @@ design-system/
 ├── 05-background-texture.png
 ├── 06-sticker-badge.png
 ├── 07-pattern-element.png
-└── 08-character-scene.png
+├── 08-character-scene.png
+└── references/              ← only if Phase 0 provided user references
+    ├── ref-01-{description}.png
+    ├── ref-02-{description}.png
+    └── ...
 ```
 
 **Final steps:**
