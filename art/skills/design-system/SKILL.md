@@ -1,5 +1,5 @@
 ---
-name: design-system-generator
+name: design-system
 description: Create comprehensive visual design systems through guided discovery. Defines brand aesthetics (colors, typography, illustration style, composition rules) via interactive questionnaire, generates a complete style guide document, and produces all visual assets for a style board using the nanobanana skill. Use when users want to create, update, or refresh a visual design system or art style guide.
 ---
 
