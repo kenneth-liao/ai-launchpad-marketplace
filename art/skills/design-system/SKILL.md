@@ -3,7 +3,7 @@ name: design-system
 description: Create comprehensive visual design systems through guided discovery. Defines brand aesthetics (colors, typography, illustration style, composition rules) via interactive questionnaire, generates a complete style guide document, and produces all visual assets for a style board using the nanobanana skill. Use when users want to create, update, or refresh a visual design system or art style guide.
 ---
 
-# Design System Generator
+# Design System Skill
 
 Create complete visual design systems from scratch through guided discovery, documentation, and AI-generated asset production.
 
@@ -59,11 +59,13 @@ After all 10 dimensions are answered, synthesize into a coherent design system.
 2. Identify the dominant aesthetic thread connecting the choices
 3. Generate a memorable 2-3 word **style name** using the naming convention below
 4. Define 3-4 **core principles** — short imperative phrases with explanations
-5. Build the complete **color palette** — 6 colors with hex codes, role names, and usage descriptions
+5. Build the complete **color palette** — 6 colors with hex codes, role names, usage descriptions, AND natural language AI descriptions (see template)
 6. Calculate **color ratios** based on strategy (see ratio guide in template)
-7. Specify **line work**, **illustration**, **typography**, and **composition** rules
-8. Define **application guidelines** for each use case from Dimension 1
-9. List explicit **anti-patterns** from Dimension 10 plus any that conflict with chosen directions
+7. Build the **Style Language Map** — translate every technical spec (colors, line work, fill, texture, composition, mood) into copy-paste-ready natural language phrases for prompt use. This is critical for AI generation consistency.
+8. Specify **line work**, **illustration**, **typography**, and **composition** rules
+9. Define the **Character System** — archetype, proportions, facial features, consistent identifiers, and fidelity levels (see template). This ensures any character generated later matches the established look.
+10. Define **application guidelines** for each use case from Dimension 1
+11. List explicit **anti-patterns** from Dimension 10 plus any that conflict with chosen directions
 
 **Style Naming Convention:**
 Combine a texture word + a color/mood word. The name should evoke the visual feel in 2-3 words.
@@ -164,9 +166,17 @@ design-system/
 **Final steps:**
 1. List all generated files with brief descriptions
 2. Display the style board layout diagram (from the design system document)
-3. Ask the user: "Want to regenerate or adjust any elements?"
-4. Offer to generate additional element types or variations
-5. If the user is satisfied, confirm the design system is complete
+3. **Establish the Reference Library** — present the 8 generated images as canonical style references. Explain that these images should be provided as style references when generating future assets (using nanobanana's multi-image reference capability) to maintain visual consistency beyond what text prompts alone achieve.
+4. **Run the Verification Checklist** against each generated image:
+   - Does the color palette match? (check accent color, base tone, ink colors)
+   - Is the line weight/style consistent with the design system spec?
+   - Does the composition follow the defined rules?
+   - Are anti-patterns absent?
+   - Does the overall mood match the Style Language Map?
+   Flag any images that fail verification and offer to regenerate them.
+5. Ask the user: "Want to regenerate or adjust any elements?"
+6. Offer to generate additional element types or variations
+7. If the user is satisfied, confirm the design system is complete
 
 ---
 

@@ -30,17 +30,24 @@ When building prompts, substitute these variables from the completed design syst
 | Variable | What It Is | Example Value |
 |----------|-----------|---------------|
 | `{base_color}` | Background color name + hex | "warm cream (#FAF8F5)" |
+| `{base_color_desc}` | Natural language description from Style Language Map | "warm cream like aged linen paper" |
 | `{primary_ink}` | Main stroke/text color + hex | "charcoal black (#2D2D2D)" |
+| `{primary_ink_desc}` | Natural language description | "deep charcoal like soft 6B pencil" |
 | `{secondary_ink}` | Supporting detail color + hex | "warm gray (#8C8C8C)" |
 | `{light_tone}` | Subtle background element color + hex | "soft gray (#D4D0CB)" |
 | `{accent_color}` | Pop/highlight color + hex | "electric teal (#00BFA6)" |
-| `{line_style}` | Full line work description | "thick, rounded brush pen strokes with slightly imperfect, organic edges" |
+| `{accent_color_desc}` | Natural language description | "vivid electric teal like tropical water" |
+| `{line_style}` | Full line work description from Style Language Map | "thick, rounded brush pen strokes with slightly imperfect, organic edges" |
 | `{tool_metaphor}` | Artistic tool reference | "as if sketched in a premium notebook" |
 | `{style_descriptor}` | Overall aesthetic in a phrase | "hand-drawn sketchbook-style" |
-| `{fill_approach}` | How shapes are filled | "outline-only with no fill" or "flat solid fills" |
-| `{composition_rule}` | Spatial approach | "centered with generous whitespace on all sides" |
+| `{fill_approach}` | How shapes are filled, from Style Language Map | "outline-only with no fill" or "flat solid fills" |
+| `{texture_quality}` | Surface/paper feel from Style Language Map | "subtle paper grain texture, like a premium Moleskine page" |
+| `{composition_rule}` | Spatial approach from Style Language Map | "centered with generous whitespace on all sides" |
+| `{overall_mood}` | Overall mood phrase from Style Language Map | "warm, approachable, and quietly confident" |
 | `{feel}` | Emotional descriptors | "warm, approachable, and inviting" |
 | `{exclusions}` | Standard exclusions | "No text, no gradients, no other colors, no complex backgrounds" |
+
+**Important:** For color variables, always use BOTH the hex code AND the natural language description in prompts. The hex code provides precision; the natural language description helps the AI model understand the intended feel. Example: "on a warm cream (#FAF8F5) background — the color of aged linen paper." Pull all `_desc` values directly from the **Style Language Map** section of the design system document to ensure consistency across all prompts.
 
 ---
 
@@ -53,8 +60,10 @@ When building prompts, substitute these variables from the completed design syst
 
 **Template:**
 ```
-A {style_descriptor} illustration of a friendly, simple {character_type} on a {base_color} background. The {character_type} is drawn with {line_style} — {tool_metaphor}. {Specific character details: body shape, proportions, expression, pose}. The {character_type} is {fill_approach}, except for a single {accent_color} {accent_element} — the only color accent in the entire image. The composition is {composition_rule}. The style is {feel} — not pixel-perfect or computer-generated. No other objects, no text, no gradients. Square format.
+A {style_descriptor} illustration of {INSERT CHARACTER PROMPT FRAGMENT FROM DESIGN SYSTEM} on a {base_color_desc} ({base_color}) background. {tool_metaphor}. {Additional pose/action details for this specific image}. The composition is {composition_rule}. The texture has {texture_quality}. The overall mood is {overall_mood} — not pixel-perfect or computer-generated. No other objects, no text, no gradients. Square format.
 ```
+
+**Note:** Always insert the **Character Prompt Fragment** from the design system's Character System section. Do NOT write a new character description — use the pre-written fragment verbatim for consistency.
 
 **Character type suggestions by vibe:**
 - Clean & modern: geometric robot, abstract mascot, simple animal
@@ -157,8 +166,10 @@ A collection of small, simple {style_descriptor} doodle icons scattered loosely 
 
 **Template:**
 ```
-A minimalist {style_descriptor} illustration of a simple {character_description — e.g., "human figure"} {doing_action — e.g., "sitting at a laptop computer"}, centered on a {base_color} background. The figure is drawn with {line_style}. {Character details: head shape, facial features, posture, clothing style}. {Key prop/object} shows a single {accent_color} {accent_detail — e.g., "glowing rectangle on the screen"} — the only color in the entire illustration. {Fill approach — e.g., "The figure and laptop are drawn with outline-only style, no complex shading or fills."}. The character is positioned {placement} with {spacing description}. The style is {feel}. Square format.
+A minimalist {style_descriptor} illustration of {INSERT CHARACTER PROMPT FRAGMENT FROM DESIGN SYSTEM} {doing_action — e.g., "sitting at a laptop computer"}, centered on a {base_color_desc} ({base_color}) background. {Key prop/object} shows a single {accent_color} {accent_detail — e.g., "glowing rectangle on the screen"} — the only color in the entire illustration beyond the character's identifier. {Fill approach — e.g., "The figure and laptop are drawn with outline-only style, no complex shading or fills."}. The character is positioned {placement} with {spacing description}. The texture has {texture_quality}. The overall mood is {overall_mood}. Square format.
 ```
+
+**Note:** Insert the **Character Prompt Fragment** verbatim. For scene-specific details (action, props), add those AFTER the fragment — never modify the fragment itself.
 
 ---
 
@@ -199,6 +210,47 @@ A minimalist {style_descriptor} illustration of a simple {character_description 
 
 ---
 
+## Character Consistency Protocol
+
+Maintaining a consistent character across multiple generated images is one of the hardest challenges in AI image generation. Follow this protocol rigorously.
+
+### The Character Prompt Fragment
+
+The design system document contains a **Character Prompt Fragment** — a pre-written paragraph describing the character in full detail. This fragment is the single source of truth for character appearance.
+
+**Rules:**
+1. **Copy the fragment verbatim** into every prompt that includes the character. Do not paraphrase, abbreviate, or "improve" it. Exact repetition = consistency.
+2. **Place it immediately after the subject declaration** in the prompt anatomy (after component 1, before component 3).
+3. **Never add new character details** not in the fragment. If you describe the character wearing a hat in one prompt but the fragment doesn't mention a hat, the character will drift.
+4. **Never omit identifiers.** The fragment specifies 2-3 consistent identifiers (scarf, glasses, antenna, etc.) that MUST appear every time.
+
+### Character at Different Fidelity Levels
+
+The design system defines three fidelity levels: Hero, Standard, and Spot. When generating at reduced fidelity:
+
+- **Hero (full detail):** Use the complete Character Prompt Fragment unchanged.
+- **Standard (moderate):** Use the fragment but add "simplified" before the character description. Keep all identifiers. Allow facial features to reduce.
+- **Spot (minimal):** Describe only the silhouette shape and 1 primary identifier. Example: "a small rounded robot silhouette with a tiny teal scarf, drawn as a simple shape."
+
+### Character + Reference Images
+
+For maximum character consistency:
+1. Always provide `01-hero-character.png` as a style reference when generating any image containing the character
+2. In the prompt, add: "The character should match the appearance in the reference image exactly."
+3. For scene illustrations, also provide `08-character-scene.png` to show how the character sits within a composition
+
+### Common Character Drift Problems
+
+| Problem | Cause | Fix |
+|---------|-------|-----|
+| Character changes proportions | Fragment not copied verbatim | Re-copy exact fragment text |
+| Accent color appears on wrong element | Accent rule not explicit enough | Add "the ONLY accent color is the [item]" |
+| Character gains unwanted details | Extra descriptors in prompt | Remove any character description not in the fragment |
+| Character loses identifiers at small size | Using Hero fragment for Spot context | Switch to Spot-level description |
+| Character style doesn't match rest of image | Line style not referenced | Include `{line_style}` description in the character portion too |
+
+---
+
 ## Adapting Templates by Style
 
 ### For Photography-Forward Styles:
@@ -227,3 +279,36 @@ Invert the color language:
 - "Light" elements become the contrast elements
 - Accent color reads differently on dark — may need to adjust brightness
 - Add atmospheric descriptors ("dramatic", "cinematic", "atmospheric lighting")
+
+---
+
+## Using the Reference Library
+
+After the initial 8 style board elements are generated, they form a **Reference Library** — a set of canonical images that anchor the visual style for all future asset creation.
+
+### When to Use Reference Images
+
+Always provide reference images alongside text prompts when generating new assets. Text prompts alone produce consistent-ish results; text prompts + reference images produce highly consistent results.
+
+### How to Select References
+
+1. **Match by element type** — Use the Reference Image Index in the design system document to find the closest reference for what you're creating
+2. **Use 1-2 references max** — More than 2 dilutes the style signal and can confuse the model
+3. **Prioritize the reference that shares the most visual properties** with your target output:
+   - Creating a new character? Use `01-hero-character.png` + `08-character-scene.png`
+   - Creating a new icon? Use `02-concept-icon.png`
+   - Creating a new diagram? Use `03-framework-diagram.png`
+   - Creating a decorative element? Use `06-sticker-badge.png` + `07-pattern-element.png`
+
+### How to Combine References with Prompts
+
+When using the nanobanana skill with reference images:
+1. Provide the reference image(s) as input
+2. Write the text prompt using variables from the Style Language Map (ensures text and image references align)
+3. In the prompt, add: "Match the illustration style, line weight, and color treatment of the reference image."
+4. Keep all other prompt components (subject, composition, exclusions, format) as usual
+
+### When NOT to Use References
+
+- When intentionally exploring a new visual direction within the design system
+- When the reference library doesn't have a relevant match (generate the new type, then add it to the library)

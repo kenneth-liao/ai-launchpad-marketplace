@@ -30,14 +30,14 @@ Fill all `{{placeholder}}` values based on discovery answers and synthesis. Remo
 
 ## Color Palette
 
-| Role | Color | Hex | Usage |
-|------|-------|-----|-------|
-| Base | {{Base color name}} | `{{#hex}}` | Backgrounds, canvas, negative space |
-| Primary Ink | {{Primary color name}} | `{{#hex}}` | Primary line work, text, headings |
-| Secondary Ink | {{Secondary color name}} | `{{#hex}}` | Secondary details, captions, annotations |
-| Light / Subtle | {{Subtle color name}} | `{{#hex}}` | Background elements, texture, dividers |
-| Accent | {{Accent color name}} | `{{#hex}}` | Highlights, CTAs, key focal elements |
-| Accent Dark | {{Accent dark name}} | `{{#hex}}` | Hover states, emphasis, depth |
+| Role | Color | Hex | AI Description | Usage |
+|------|-------|-----|----------------|-------|
+| Base | {{Base color name}} | `{{#hex}}` | {{Natural language — e.g., "warm cream like aged linen paper"}} | Backgrounds, canvas, negative space |
+| Primary Ink | {{Primary color name}} | `{{#hex}}` | {{Natural language — e.g., "deep charcoal like soft pencil lead"}} | Primary line work, text, headings |
+| Secondary Ink | {{Secondary color name}} | `{{#hex}}` | {{Natural language — e.g., "dusty warm gray like weathered stone"}} | Secondary details, captions, annotations |
+| Light / Subtle | {{Subtle color name}} | `{{#hex}}` | {{Natural language — e.g., "barely-there gray like faint pencil smudge"}} | Background elements, texture, dividers |
+| Accent | {{Accent color name}} | `{{#hex}}` | {{Natural language — e.g., "vivid electric teal like tropical water"}} | Highlights, CTAs, key focal elements |
+| Accent Dark | {{Accent dark name}} | `{{#hex}}` | {{Natural language — e.g., "deep saturated teal like ocean depth"}} | Hover states, emphasis, depth |
 
 > Color naming guide by strategy:
 > - Monochrome + accent: Use "Ink" terminology (Primary Ink, Secondary Ink)
@@ -47,6 +47,11 @@ Fill all `{{placeholder}}` values based on discovery answers and synthesis. Remo
 >
 > Accent Dark should be a darker shade of the Accent color (reduce lightness by ~15-20%).
 > Light/Subtle should be a very muted version between Base and Primary Ink.
+>
+> AI Description guide: Write each color description as a human would perceive it — a sensory,
+> evocative phrase that an AI image generator can interpret. Use material/nature metaphors
+> ("like aged paper", "like wet ink", "like morning fog"). These descriptions are used directly
+> in image generation prompts alongside hex codes for maximum accuracy.
 
 ### Color Ratios
 
@@ -55,6 +60,36 @@ Fill all `{{placeholder}}` values based on discovery answers and synthesis. Remo
 - **{{X}}%** {{Base/whitespace description}}
 - **{{Y}}%** {{Primary + secondary work description}}
 - **{{Z}}%** {{Accent color description}}
+
+---
+
+## Style Language Map
+
+> This section translates every technical specification into natural language for AI image generation.
+> When constructing prompts, use these descriptions instead of (or alongside) raw values.
+> Every entry must be filled — this is the bridge between the design system and consistent AI output.
+>
+> Populate each row by converting the technical spec into a sensory, descriptive phrase.
+> These exact phrases should be copy-pasted into prompts for consistency.
+
+| Attribute | Technical Value | Prompt Language |
+|-----------|----------------|-----------------|
+| Base color | `{{#hex}}` | "{{evocative description — e.g., warm cream like handmade paper}}" |
+| Primary ink | `{{#hex}}` | "{{e.g., deep charcoal like soft 6B pencil}}" |
+| Secondary ink | `{{#hex}}` | "{{e.g., muted warm gray like graphite smudge}}" |
+| Light tone | `{{#hex}}` | "{{e.g., whisper-light gray like erased pencil marks}}" |
+| Accent color | `{{#hex}}` | "{{e.g., vivid electric teal like backlit glass}}" |
+| Accent dark | `{{#hex}}` | "{{e.g., deep saturated teal like ocean at dusk}}" |
+| Line style | {{weight + quality}} | "{{tool metaphor — e.g., drawn with a thick felt-tip brush pen, slightly uneven like real hand strokes}}" |
+| Edge treatment | {{corners + endings}} | "{{e.g., soft rounded corners with tapered line endings, nothing sharp or mechanical}}" |
+| Fill approach | {{fill method}} | "{{e.g., clean flat fills with no gradients or shading, like paper cut-outs}}" |
+| Texture quality | {{surface feel}} | "{{e.g., subtle paper grain texture, like a premium Moleskine page}}" |
+| Composition | {{spatial approach}} | "{{e.g., centered with vast breathing room, like a single thought on an empty page}}" |
+| Overall mood | {{emotional tone}} | "{{e.g., warm, approachable, and quietly confident — like a handwritten note from a friend}}" |
+
+> When writing prompts, use the **Prompt Language** column verbatim. This ensures every generated
+> image shares identical style descriptions, which is the single biggest driver of visual consistency
+> across AI-generated assets.
 
 ---
 
@@ -92,6 +127,76 @@ Fill all `{{placeholder}}` values based on discovery answers and synthesis. Remo
 - {{Base canvas description}}
 - {{Optional texture and its opacity (be specific: "10% opacity grid lines")}}
 - {{Complexity rule — what's allowed and what's too much}}
+
+---
+
+## Character System
+
+> This section defines a reusable character specification so that every character generated
+> across different assets, sessions, and prompts maintains a consistent look.
+> Skip this section only if the style is Abstract/geometric with no characters.
+>
+> The character system should be derived from the illustration style, line work, and vibe
+> choices during discovery. Synthesize a coherent character that embodies the brand aesthetic.
+
+### Character Archetype
+
+- **Type:** {{Character type — e.g., "simplified human figure", "rounded robot mascot", "abstract geometric figure", "stylized animal"}}
+- **Personality:** {{1-2 sentence personality description that informs pose and expression — e.g., "curious and optimistic, always leaning forward or reaching toward something"}}
+
+### Proportions
+
+- **Head-to-body ratio:** {{e.g., "1:3 (large head, compact body) for friendly appeal" or "1:5 (realistic proportions) for professional tone"}}
+- **Body shape:** {{e.g., "rounded, bean-shaped torso" or "geometric, rectangular build" or "simple stick-figure limbs with circular joints"}}
+- **Limb style:** {{e.g., "thick rounded arms, no visible hands — ends in simple curves" or "thin line limbs with dot joints"}}
+- **Overall scale:** {{e.g., "compact and sticker-like, fits in a circle" or "tall and narrow, vertical emphasis"}}
+
+### Facial Features
+
+- **Detail level:** {{e.g., "minimal — two dot eyes, no mouth" or "simple — dot eyes, curved smile line" or "moderate — eyes, small nose, expressive mouth"}}
+- **Expression range:** {{e.g., "neutral to gently happy — no extreme expressions" or "wide range — surprise, delight, focus, curiosity"}}
+- **Identifying marks:** {{e.g., "none" or "small round glasses" or "antenna on head" or "distinctive hair tuft"}}
+
+### Consistent Identifiers
+
+> These elements MUST appear on the character in every generation to maintain identity.
+> Choose 2-3 identifiers that are simple enough for AI to reproduce reliably.
+
+- **Identifier 1:** {{e.g., "always wears a small {{accent_color}} scarf/bandana"}}
+- **Identifier 2:** {{e.g., "has a circular head with two antenna dots"}}
+- **Identifier 3:** {{e.g., "carries a small {{accent_color}} object (book, tool, etc.)"}}
+
+### Accent Color on Characters
+
+- **Rule:** {{How accent color appears on the character — e.g., "exactly ONE element on the character is {{accent_color}} — this is the scarf/bandana. No other accent color on the character."}}
+- **Forbidden:** {{What NOT to do — e.g., "Never color the entire character in accent. Never use accent on both clothing AND accessories."}}
+
+### Fidelity Levels
+
+> Define how the character simplifies or elaborates at different sizes/contexts.
+
+| Level | When Used | Description |
+|-------|-----------|-------------|
+| Hero | Large, featured illustrations (style board, hero images) | {{Full detail — all identifiers present, clear facial features, complete body}} |
+| Standard | Medium context (social posts, diagrams, scenes) | {{Moderate detail — key identifiers present, simplified features}} |
+| Spot | Small or supporting roles (icons, pattern elements, backgrounds) | {{Minimal — recognizable silhouette only, 1 identifier, basic shape}} |
+
+### Character Prompt Fragment
+
+> This is a reusable text block to copy-paste into any prompt that includes the character.
+> It should be a single paragraph that can be inserted after the subject declaration.
+
+```
+{{Full character description paragraph — combine archetype, proportions, facial features,
+identifiers, and accent rule into a single cohesive paragraph. Example:
+"The character is a small, rounded robot with a 1:3 head-to-body ratio and a bean-shaped
+torso. Its head is a perfect circle with two simple dot eyes and no mouth. It has thick,
+rounded arms that end in simple curves — no visible hands. The robot always wears a small
+electric teal (#00BFA6) scarf, which is the only accent color on the character. Its body is
+drawn in charcoal (#2D2D2D) outline-only style with the same thick brush pen strokes used
+throughout the design system. The overall feel is compact and friendly, like a character
+from a premium notebook margin sketch."}}
+```
 
 ---
 
@@ -253,3 +358,40 @@ Fill all `{{placeholder}}` values based on discovery answers and synthesis. Remo
 
 Each cell showcases a different application of the style, demonstrating consistency across use cases while the overall board proves the system works as a cohesive visual language.
 ```
+
+---
+
+## Reference Library
+
+> The 8 generated style board images serve as canonical style references for all future asset creation.
+> When generating new images in this style, provide the relevant reference image(s) to the AI tool
+> to anchor visual consistency beyond what text prompts alone can achieve.
+
+### Reference Image Index
+
+| File | Use As Reference When... | Key Style Anchors It Provides |
+|------|--------------------------|-------------------------------|
+| `01-hero-character.png` | Creating any character, mascot, or figure | Character proportions, line weight, accent placement on characters, fill approach |
+| `02-concept-icon.png` | Creating icons, symbols, or single-object illustrations | Icon scale, stroke consistency, accent color treatment, negative space usage |
+| `03-framework-diagram.png` | Creating diagrams, flows, infographics, or connected elements | Connector style, node rendering, layout spacing, annotation treatment |
+| `04-social-media-asset.png` | Creating social content, thumbnails, or standalone visuals | Composition for square format, visual impact at small sizes, color balance |
+| `05-background-texture.png` | Creating backgrounds, textures, or ambient visuals | Texture density, background subtlety, how elements sit against the base color |
+| `06-sticker-badge.png` | Creating badges, stamps, compact UI elements, or decorative accents | Compact composition, transparency treatment, accent framing style |
+| `07-pattern-element.png` | Creating repeating patterns, decorative borders, or scattered elements | Element density, doodle complexity, spacing rhythm, secondary color usage |
+| `08-character-scene.png` | Creating scene illustrations, contextual images, or storytelling visuals | Character-in-context rendering, prop style, scene composition, environmental detail level |
+
+### How to Use References
+
+When generating new assets:
+1. **Identify the closest reference** from the index above based on what you're creating
+2. **Provide it as a style reference image** to the AI generation tool alongside the text prompt
+3. **Use 1-2 references max** per generation — too many references dilute the style signal
+4. **Always pair with the text prompt** from the Style Language Map — references and text work together, neither alone is sufficient
+5. **For new element types** not in the index, use the 2 references that share the most visual properties with what you're creating
+
+### Extending the Library
+
+When new assets are generated that represent a style not yet covered:
+- Save them to the `design-system/` directory with a descriptive filename
+- Add an entry to this reference index
+- Note what style anchors the new reference provides
