@@ -2,6 +2,24 @@
 
 Fill all `{{placeholder}}` values based on discovery answers and synthesis. Remove ALL template instructions (lines starting with `>`) and all `{{placeholder}}` markers before saving the final document. The output must read as a polished, self-contained style guide.
 
+## Contents
+
+- Output Document Structure (the full template with placeholders)
+  - Core Principles
+  - Color Palette
+  - Style Language Map
+  - Line Work
+  - Illustration Style
+  - Character System
+  - Typography Direction
+  - Composition Rules
+  - Application Guidelines
+  - What This Style Is NOT
+  - Consistency Enforcement
+  - Nano Banana Prompt Library
+  - Style Board Layout
+  - Reference Library
+
 ---
 
 ## Output Document Structure

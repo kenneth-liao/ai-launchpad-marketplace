@@ -9,6 +9,21 @@ Each dimension includes:
 - Adaptation notes (how earlier answers modify this question)
 - Impact notes (what this answer determines downstream)
 
+## Contents
+
+- Reference Analysis → Smart Defaults Mapping
+- Dimension 1: Primary Use Cases
+- Dimension 2: Overall Vibe
+- Dimension 3: Medium Preference
+- Dimension 4: Illustration Style
+- Dimension 5: Color Strategy
+- Dimension 6: Accent Color
+- Dimension 7: Base Tone
+- Dimension 8: Line Work & Edges
+- Dimension 9: Composition
+- Dimension 10: Anti-Patterns
+- Post-Discovery Checkpoint
+
 ---
 
 ## Reference Analysis → Smart Defaults Mapping

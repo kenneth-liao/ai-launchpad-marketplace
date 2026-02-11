@@ -2,6 +2,18 @@
 
 How to construct effective Nano Banana prompts for generating style-consistent design system elements.
 
+## Contents
+
+- Core Principle
+- Prompt Anatomy
+- Variable Reference
+- Element Templates
+- Nano Banana Best Practices
+- Character Consistency Protocol
+- Adapting Templates by Style
+- Using the Reference Library
+- Using User-Provided References
+
 ## Core Principle
 
 Nano Banana (Google Gemini image generation) responds best to **descriptive narrative paragraphs**. Write prompts as if describing a scene to a skilled illustrator — not as comma-separated keyword lists.

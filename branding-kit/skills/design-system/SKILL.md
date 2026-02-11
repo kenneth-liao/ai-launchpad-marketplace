@@ -1,6 +1,6 @@
 ---
 name: design-system
-description: Create comprehensive visual design systems through guided discovery. Defines brand aesthetics (colors, typography, illustration style, composition rules) via interactive questionnaire, generates a complete style guide document, and produces all visual assets for a style board using the nanobanana skill. Use when users want to create, update, or refresh a visual design system or art style guide.
+description: Use when users want to create, update, or refresh a visual design system or art style guide. Produces a complete style guide document with color palette, typography, illustration rules, character system, and an 8-element style board generated via the art:nanobanana skill.
 ---
 
 # Design System Generator
@@ -18,7 +18,7 @@ Execute these phases in strict order. Output Location must be asked first. Phase
 | 1 | Discovery | Interactive questionnaire | User preferences across 10 dimensions |
 | 2 | Synthesis | Analyze + name the style | Style name, core principles, full spec |
 | 3 | Documentation | Generate style guide | `{style-name}-design-system.md` |
-| 4 | Asset Generation | Generate images via nanobanana | 8 PNG style board elements |
+| 4 | Asset Generation | Generate images via art:nanobanana | 8 PNG style board elements |
 | 5 | Assembly | Organize + present | Complete design system directory |
 
 ---
@@ -178,11 +178,19 @@ Generate the complete design system document using the template from [references
 - The document must be fully self-contained — anyone reading it should be able to produce on-brand visuals without additional context
 - Include the complete Nano Banana prompt library (8 prompts) in the document
 
+**Verification:** After writing the document, read it back and check:
+- No unfilled `{{placeholder}}` markers remain
+- All sections from the template are present
+- All 6 color palette entries have hex codes
+- The Nano Banana prompt library has all 8 prompts
+- The Style Language Map is complete (no empty categories)
+- If any issues found, fix and re-write before proceeding to Phase 4
+
 ---
 
 ## Phase 4: Asset Generation
 
-Generate 8 style board elements using the **nanobanana** skill. Build prompts using the templates and best practices from [references/prompt-engineering.md](references/prompt-engineering.md).
+Generate 8 style board elements using the **art:nanobanana** skill. Build prompts using the templates and best practices from [references/prompt-engineering.md](references/prompt-engineering.md).
 
 **Required elements (generate in this order):**
 
@@ -202,7 +210,7 @@ Generate 8 style board elements using the **nanobanana** skill. Build prompts us
 2. Embed the exact hex codes, line style, and composition rules from the design system
 3. Specify the correct aspect ratio from the table above
 4. **If Phase 0 provided user references**, select the 1-2 most relevant reference images for this element type and provide them to nanobanana as style anchors (see prompt-engineering.md "Using User-Provided References" section)
-5. Use the nanobanana skill to generate the image
+5. Use the art:nanobanana skill to generate the image
 6. Save the output to the `{output_dir}` directory with a descriptive filename
 
 **Prompt construction rules:**
