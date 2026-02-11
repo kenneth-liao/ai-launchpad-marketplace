@@ -239,6 +239,26 @@ For maximum character consistency:
 2. In the prompt, add: "The character should match the appearance in the reference image exactly."
 3. For scene illustrations, also provide `08-character-scene.png` to show how the character sits within a composition
 
+### The Unwanted Facial Features Problem
+
+AI generators (especially Gemini) frequently add noses, eyebrows, ears, and other facial details to characters that are supposed to be minimal (dot-eyes-only). This is the single most common consistency failure.
+
+**Prevention protocol:**
+1. **Always state what IS there before what is NOT:** "The face has ONLY two dot eyes and a curved smile — absolutely NO nose, NO eyebrows, NO ears, NO additional facial features"
+2. **Include the prohibition in EVERY prompt** that contains a character, even if it feels repetitive
+3. **Use the word "absolutely"** before the prohibition — it signals emphasis to the model
+4. **List each forbidden feature individually** — "NO nose, NO eyebrows, NO ears" is more effective than "no other facial features"
+5. **Provide a reference image** showing the correct minimal face. When using multiple references, always include at least one with a close-up of the correct facial treatment
+6. **After generation, verify the face** against the design system's facial features rules. Regenerate immediately if extra features appear — don't compromise.
+
+### Companion Character Consistency (Duo Systems)
+
+When the character system includes a companion (e.g., an AI orb, a sidekick creature):
+1. **Use separate prompt fragments** for the primary character and companion — don't merge them
+2. **State the accent color rule explicitly:** "The companion is the ONLY [accent color] element in the entire image — nothing else is [accent color]"
+3. **Define the companion's state** for each specific image (working, following, excited, etc.) rather than leaving it generic
+4. **Size relationship:** Always specify the companion's size relative to the primary character (e.g., "one-fifth the size of the Builder's head")
+
 ### Common Character Drift Problems
 
 | Problem | Cause | Fix |
@@ -248,6 +268,8 @@ For maximum character consistency:
 | Character gains unwanted details | Extra descriptors in prompt | Remove any character description not in the fragment |
 | Character loses identifiers at small size | Using Hero fragment for Spot context | Switch to Spot-level description |
 | Character style doesn't match rest of image | Line style not referenced | Include `{line_style}` description in the character portion too |
+| Character gains unwanted features (nose, eyebrows) | Prohibition not explicit enough | Add "absolutely NO nose, NO eyebrows, NO ears" and provide a reference image with correct face |
+| Companion missing or wrong size | Companion not described in prompt | Always include the companion prompt fragment alongside the primary character fragment |
 
 ---
 
@@ -272,6 +294,26 @@ Add dimensional language:
 - Include material descriptions ("matte plastic", "soft clay", "frosted glass")
 - Describe lighting direction and shadow behavior
 - Reference depth and perspective explicitly
+
+### For Printmaking Styles (Linocut, Risograph, Woodblock, Screenprint):
+Replace illustration language with print-process language:
+- "A bold linocut print illustration of..." instead of "A hand-drawn illustration of..."
+- Use "carved," "cut," "printed," "pressed" — NEVER "drawn," "sketched," or "pen strokes"
+- Describe the print process: "carved in bold, chunky lines with rough edges and visible carving texture, like a hand-cut linoleum block"
+- Add texture: "natural grain and slight ink-bleed texture throughout, like a hand-pressed block print"
+- For accent color, describe as an overprint: "rendered as a second-color overprint, slightly misregistered from the primary ink layer for printing authenticity"
+- High contrast is key: "high contrast with areas of solid ink and clean paper negative space"
+- Fills work differently: solid ink fills (for shoes, hats, shadows) are part of the carved aesthetic, unlike outline-only sketch styles
+
+**Additional prompt variables for printmaking:**
+
+| Variable | What It Is | Example Value |
+|----------|-----------|---------------|
+| `{print_process}` | Type of printmaking technique | "linocut block print" or "risograph print" or "woodblock print" |
+| `{carving_texture}` | How carved marks look | "rough carved edges and visible carving texture, like a hand-cut linoleum block" |
+| `{ink_texture}` | How ink transfers to paper | "natural grain and slight ink-bleed texture throughout" |
+| `{overprint_effect}` | How the accent color is printed | "a second-color overprint, slightly misregistered from the charcoal layer" |
+| `{solid_fill_areas}` | Where solid ink fills appear | "shoes, cap, and grounding shadow areas use solid charcoal fill" |
 
 ### For Dark/Moody Styles:
 Invert the color language:

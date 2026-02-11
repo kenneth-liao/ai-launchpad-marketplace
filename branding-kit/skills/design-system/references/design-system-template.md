@@ -84,6 +84,7 @@ Fill all `{{placeholder}}` values based on discovery answers and synthesis. Remo
 | Edge treatment | {{corners + endings}} | "{{e.g., soft rounded corners with tapered line endings, nothing sharp or mechanical}}" |
 | Fill approach | {{fill method}} | "{{e.g., clean flat fills with no gradients or shading, like paper cut-outs}}" |
 | Texture quality | {{surface feel}} | "{{e.g., subtle paper grain texture, like a premium Moleskine page}}" |
+| Print process | {{if printmaking style — overprint, registration, ink transfer}} | "{{e.g., the teal is a second-color overprint, slightly misregistered from the charcoal layer for printing authenticity}}" |
 | Composition | {{spatial approach}} | "{{e.g., centered with vast breathing room, like a single thought on an empty page}}" |
 | Overall mood | {{emotional tone}} | "{{e.g., warm, approachable, and quietly confident — like a handwritten note from a friend}}" |
 
@@ -138,11 +139,22 @@ Fill all `{{placeholder}}` values based on discovery answers and synthesis. Remo
 >
 > The character system should be derived from the illustration style, line work, and vibe
 > choices during discovery. Synthesize a coherent character that embodies the brand aesthetic.
+>
+> **Character system types:**
+> - **Solo:** One primary character (mascot, figure, creature)
+> - **Duo / Companion:** A primary character + a smaller companion character. The two have
+>   a relationship that tells the brand story (e.g., builder + AI assistant, explorer + guide).
+>   Each character has separate rules for appearance, accent color, and behavior.
+> - **Cast:** 3+ distinct characters that share a visual system but have unique identifiers.
+>
+> Ask the user during discovery: "Should your brand have one character, a character with a
+> companion/sidekick, or a small cast of characters?" Then adapt this section accordingly.
 
 ### Character Archetype
 
 - **Type:** {{Character type — e.g., "simplified human figure", "rounded robot mascot", "abstract geometric figure", "stylized animal"}}
 - **Personality:** {{1-2 sentence personality description that informs pose and expression — e.g., "curious and optimistic, always leaning forward or reaching toward something"}}
+- **System type:** {{Solo / Duo / Cast — if Duo or Cast, describe the relationship between characters}}
 
 ### Proportions
 
@@ -151,51 +163,105 @@ Fill all `{{placeholder}}` values based on discovery answers and synthesis. Remo
 - **Limb style:** {{e.g., "thick rounded arms, no visible hands — ends in simple curves" or "thin line limbs with dot joints"}}
 - **Overall scale:** {{e.g., "compact and sticker-like, fits in a circle" or "tall and narrow, vertical emphasis"}}
 
-### Facial Features
+### Facial Features — STRICT RULES
 
-- **Detail level:** {{e.g., "minimal — two dot eyes, no mouth" or "simple — dot eyes, curved smile line" or "moderate — eyes, small nose, expressive mouth"}}
-- **Expression range:** {{e.g., "neutral to gently happy — no extreme expressions" or "wide range — surprise, delight, focus, curiosity"}}
-- **Identifying marks:** {{e.g., "none" or "small round glasses" or "antenna on head" or "distinctive hair tuft"}}
+> **CRITICAL:** AI image generators frequently add unwanted facial features to simplified
+> characters, especially noses, eyebrows, and ears. You MUST define both what IS present
+> and what is FORBIDDEN. The forbidden list must be explicit and repeated in every prompt.
+
+- **ONLY these features:** {{List EXACTLY what appears on the face — e.g., "two small dot eyes and a small curved-line smile"}}
+- **ABSOLUTELY FORBIDDEN:** {{List every feature that must NOT appear — e.g., "No nose. No eyebrows. No ears. No hair. No eyelashes. No nostrils. No cheek marks. No freckles. No additional facial features of ANY kind."}}
+- **Enforcement language:** Always include this prohibition in EVERY prompt containing the character. State what IS there first, then what is NOT: "The face has ONLY [features] — absolutely NO [forbidden features]"
+- **Expression range:** {{e.g., "neutral to gently happy — expression communicated through posture, not facial complexity"}}
+- **Identifying marks:** {{e.g., "none on the face — identity comes from body shape and accessories"}}
 
 ### Consistent Identifiers
 
 > These elements MUST appear on the character in every generation to maintain identity.
 > Choose 2-3 identifiers that are simple enough for AI to reproduce reliably.
 
-- **Identifier 1:** {{e.g., "always wears a small {{accent_color}} scarf/bandana"}}
-- **Identifier 2:** {{e.g., "has a circular head with two antenna dots"}}
-- **Identifier 3:** {{e.g., "carries a small {{accent_color}} object (book, tool, etc.)"}}
+- **Identifier 1:** {{e.g., "always wears a baseball cap — the brim creates a distinctive silhouette"}}
+- **Identifier 2:** {{e.g., "forward-leaning posture — always engaged, never passive"}}
+- **Identifier 3:** {{e.g., "outline-only body with cream interior showing through"}}
 
 ### Accent Color on Characters
 
-- **Rule:** {{How accent color appears on the character — e.g., "exactly ONE element on the character is {{accent_color}} — this is the scarf/bandana. No other accent color on the character."}}
-- **Forbidden:** {{What NOT to do — e.g., "Never color the entire character in accent. Never use accent on both clothing AND accessories."}}
+- **Rule:** {{How accent color appears — e.g., "NO accent color on the primary character. The accent color lives entirely on the companion character."}}
+- **Forbidden:** {{What NOT to do — e.g., "Never color the entire character in accent. Never use accent on both the character AND the companion."}}
+
+> **For Duo/Companion systems:** Define accent rules for EACH character separately.
+> Typically, the accent color lives on only one of the two characters (usually the companion),
+> creating a clear visual hierarchy and making the accent color's role specific.
+
+### Companion Character (if Duo system)
+
+> Skip this subsection for Solo character systems.
+> For Duo systems, define the companion with the same rigor as the primary character.
+
+- **Concept:** {{What the companion represents — e.g., "the AI assistant", "the creative spark", "the guide"}}
+- **Appearance:** {{Shape, size relative to primary, color, facial features}}
+- **Accent color rule:** {{How the accent color lives on this character — e.g., "The companion IS the accent color — a solid teal orb"}}
+- **Facial features:** {{Same strict rules as primary — list what IS and what is FORBIDDEN}}
+
+#### Companion States
+
+> Define how the companion's position/behavior changes to communicate different moods or contexts.
+> This creates a visual vocabulary where the companion's state tells the viewer what kind of
+> content they're looking at, without needing words.
+
+| State | Companion Position/Behavior | When To Use |
+|-------|---------------------------|-------------|
+| {{State 1}} | {{Position and visual treatment}} | {{Content context}} |
+| {{State 2}} | {{Position and visual treatment}} | {{Content context}} |
+| {{State 3}} | {{Position and visual treatment}} | {{Content context}} |
+| {{State 4}} | {{Position and visual treatment}} | {{Content context}} |
+
+> Aim for 4-6 states. Each state should be visually distinct enough to read at small sizes.
+> Common state dimensions: position relative to primary character, size/brightness,
+> motion indicators (trail lines, radiating lines), emotional energy level.
 
 ### Fidelity Levels
 
-> Define how the character simplifies or elaborates at different sizes/contexts.
+> Define how characters simplify or elaborate at different sizes/contexts.
+> For Duo systems, define fidelity for BOTH characters.
 
-| Level | When Used | Description |
-|-------|-----------|-------------|
-| Hero | Large, featured illustrations (style board, hero images) | {{Full detail — all identifiers present, clear facial features, complete body}} |
-| Standard | Medium context (social posts, diagrams, scenes) | {{Moderate detail — key identifiers present, simplified features}} |
-| Spot | Small or supporting roles (icons, pattern elements, backgrounds) | {{Minimal — recognizable silhouette only, 1 identifier, basic shape}} |
+| Level | When Used | Primary Character | Companion (if Duo) |
+|-------|-----------|-------------------|-------------------|
+| Hero | Large, featured illustrations | {{Full detail — all identifiers present}} | {{Full detail — shape, eyes, glow/state indicators}} |
+| Standard | Medium context (social, diagrams) | {{Moderate — key identifiers, simplified body}} | {{Solid shape with eyes, minimal state indicators}} |
+| Spot | Small/supporting (icons, patterns) | {{Minimal — recognizable silhouette only}} | {{A single accent-colored dot}} |
 
-### Character Prompt Fragment
+### Character Prompt Fragments
 
-> This is a reusable text block to copy-paste into any prompt that includes the character.
-> It should be a single paragraph that can be inserted after the subject declaration.
+> These are reusable text blocks to copy-paste into any prompt that includes the characters.
+> Each should be a single paragraph. For Duo systems, provide separate fragments that can
+> be combined or used independently.
+>
+> **CRITICAL:** Include the facial feature prohibition in EVERY fragment.
+> The pattern is: "ONLY [features] — absolutely NO [forbidden list]"
+
+#### Primary Character (full prompt fragment)
 
 ```
-{{Full character description paragraph — combine archetype, proportions, facial features,
-identifiers, and accent rule into a single cohesive paragraph. Example:
-"The character is a small, rounded robot with a 1:3 head-to-body ratio and a bean-shaped
-torso. Its head is a perfect circle with two simple dot eyes and no mouth. It has thick,
-rounded arms that end in simple curves — no visible hands. The robot always wears a small
-electric teal (#00BFA6) scarf, which is the only accent color on the character. Its body is
-drawn in charcoal (#2D2D2D) outline-only style with the same thick brush pen strokes used
-throughout the design system. The overall feel is compact and friendly, like a character
-from a premium notebook margin sketch."}}
+{{Full character description paragraph — combine archetype, proportions, facial features
+(including FORBIDDEN list), identifiers, accent rule, and style rendering into one paragraph.}}
+```
+
+#### Companion Character (full prompt fragment — Duo systems only)
+
+```
+{{Full companion description paragraph — shape, size, color, facial features (including
+FORBIDDEN list), relationship to primary character, and accent color rule.}}
+```
+
+#### Combined (short version for tight prompts)
+
+```
+{{A 2-3 sentence condensed version containing both characters. Must still include the
+facial feature prohibition. Example: "A character wearing a baseball cap (round head,
+dot eyes, curved smile only — NO nose NO eyebrows NO ears) with a bean body in charcoal
+linocut style. A small teal glowing orb companion with tiny dot eyes floats nearby —
+the ONLY teal in the image."}}
 ```
 
 ---
@@ -261,6 +327,49 @@ from a premium notebook margin sketch."}}
 - {{Anti-pattern 4 with brief explanation}}
 - {{Anti-pattern 5 with brief explanation}}
 - {{Anti-pattern 6 with brief explanation}}
+
+---
+
+## Consistency Enforcement
+
+> This section documents known AI generation pitfalls and provides explicit rules to prevent them.
+> It should be populated based on issues encountered during Phase 4 asset generation AND
+> any known common problems for the chosen style.
+
+### Unwanted Feature Prevention
+
+> AI generators frequently add unwanted details to simplified characters (especially noses,
+> eyebrows, ears, and hair). Document the specific prohibition rules here so every future
+> prompt can reference them.
+
+1. **Always include the explicit prohibition** in every prompt: "{{forbidden features list from Facial Features section}}"
+2. **State what IS there first, then what is NOT:** "The face has ONLY {{allowed features}} — absolutely NO {{forbidden features}}"
+3. **Use reference images** from the Reference Library that show the correct level of detail
+4. **When providing multiple reference images**, always include at least one close-up character reference to anchor the facial detail level
+
+### Style Drift Prevention
+
+> Document the specific keywords and phrases that anchor the chosen style.
+> These must appear in every prompt to prevent the style from drifting toward generic defaults.
+
+1. **Always provide 1-2 reference images** from the Reference Library alongside text prompts
+2. **Required style keywords in every prompt:** {{List 2-3 keywords that anchor the style — e.g., "linocut" and "carved" for printmaking, or "brush pen" and "sketch" for hand-drawn}}
+3. **Required texture phrase:** {{The texture description from Style Language Map that must appear in every prompt}}
+4. **Forbidden style language:** {{Words to NEVER use because they pull toward the wrong style — e.g., for printmaking: never say "drawn" or "sketch", always say "carved" or "printed"}}
+5. **Required process phrase (if printmaking):** {{e.g., "second-color overprint slightly misregistered" for every accent element}}
+
+### Character Consistency Checklist
+
+> A verification checklist for every generated image. Run through this before finalizing.
+
+- [ ] {{Identifier 1 check — e.g., "Character has baseball cap with visible brim"}}
+- [ ] {{Facial features check — e.g., "Face has ONLY dot eyes + curved smile (no nose, no eyebrows, no ears)"}}
+- [ ] {{Body style check — e.g., "Body is outline-only with cream interior"}}
+- [ ] {{Posture check — e.g., "Posture is forward-leaning / active"}}
+- [ ] {{Companion check (if Duo) — e.g., "Companion is present and is the ONLY accent-colored element"}}
+- [ ] {{Accent color check — e.g., "No accent color appears anywhere except on the companion"}}
+- [ ] {{Style texture check — e.g., "Style texture is visible (carved edges, ink grain, etc.)"}}
+- [ ] {{Composition check — e.g., "Generous whitespace surrounds the composition"}}
 
 ---
 

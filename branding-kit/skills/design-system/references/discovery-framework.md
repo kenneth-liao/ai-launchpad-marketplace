@@ -20,7 +20,7 @@ When Phase 0 provides user references, use this mapping to generate smart defaul
 | 1. Use Cases | Image aspect ratios and content types present | If mostly square images → social media; if 16:9 → slides/web; if mixed → multi-select the observed formats. **Note:** Use cases are intent-driven, so this is the weakest default — always ask. |
 | 2. Vibe | Color temperature, contrast levels, whitespace density, shape roundness | Warm colors + rounded shapes → "Warm & approachable". High contrast + angular → "Bold & energetic". Muted + spacious → "Clean & modern". Dark backgrounds + dramatic → "Dark & sophisticated". |
 | 3. Medium | Whether references contain illustrations, photos, abstract art, or mixed | Straightforward — match what's visually present. If all illustrations → "Mostly illustrated". If photos → "Photography-forward". If both → "Mixed media". |
-| 4. Illustration Style | Line quality, fill approach, dimensionality | Clean edges + solid fills → "Flat vector". Visible strokes + organic imperfections → "Hand-drawn". Depth + perspective → "3D / isometric". Layered textures → "Collage". |
+| 4. Illustration Style | Line quality, fill approach, dimensionality, print texture | Clean edges + solid fills → "Flat vector". Visible strokes + organic imperfections → "Hand-drawn". Bold carved lines + ink grain + high contrast → "Printmaking". Depth + perspective → "3D / isometric". Layered textures → "Collage". |
 | 5. Color Strategy | Number of distinct colors, palette distribution | 1-2 colors + neutrals → "Monochrome with accent". Warm naturals → "Earth tones". Blues/grays → "Cool & professional". 4+ distinct colors → "Full vibrant". |
 | 6. Accent Color | The most prominent non-neutral color | Extract the dominant accent hex code directly. Present it as "Based on your references, your accent color appears to be **[color name] ([hex])** — want to keep this?" with the option to use the extracted value or choose a different one. |
 | 7. Base Tone | Background color of reference images | Extract the dominant background color. Match to closest option. |
@@ -109,6 +109,7 @@ If references are ambiguous or mixed for a dimension:
 |--------|-------------|
 | Flat vector / clean digital | Crisp edges, solid fills, geometric precision, modern and polished |
 | Hand-drawn / sketchy texture | Visible line work, organic imperfections, notebook or journal feel |
+| Printmaking (linocut, risograph, woodblock) | Bold carved lines, print texture, ink grain, overprint effects. Feels handcrafted and artisanal — like block-printed posters or zine art. High contrast, tactile, and trending in 2025-2026. |
 | 3D / isometric | Depth and dimension, rendered objects, spatial perspective |
 | Collage / mixed texture | Layered elements, paper textures, cut-out aesthetic, tactile |
 

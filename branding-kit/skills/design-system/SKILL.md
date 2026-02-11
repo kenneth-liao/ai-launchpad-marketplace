@@ -109,9 +109,10 @@ After all 10 dimensions are answered, synthesize into a coherent design system.
 6. Calculate **color ratios** based on strategy (see ratio guide in template)
 7. Build the **Style Language Map** — translate every technical spec (colors, line work, fill, texture, composition, mood) into copy-paste-ready natural language phrases for prompt use. This is critical for AI generation consistency.
 8. Specify **line work**, **illustration**, **typography**, and **composition** rules
-9. Define the **Character System** — archetype, proportions, facial features, consistent identifiers, and fidelity levels (see template). This ensures any character generated later matches the established look.
+9. Define the **Character System** — including system type (Solo, Duo/Companion, or Cast). For each character: archetype, proportions, **strict facial feature rules** (what IS present AND what is FORBIDDEN), consistent identifiers, and fidelity levels. For Duo systems: define companion appearance, states/behaviors, and which character owns the accent color. See template for full structure.
 10. Define **application guidelines** for each use case from Dimension 1
 11. List explicit **anti-patterns** from Dimension 10 plus any that conflict with chosen directions
+12. Create the **Consistency Enforcement** section — document unwanted feature prevention rules, style drift prevention keywords, and a character verification checklist (see template)
 
 **Style Naming Convention:**
 Combine a texture word + a color/mood word. The name should evoke the visual feel in 2-3 words.
@@ -224,6 +225,8 @@ design-system/
    - Does the composition follow the defined rules?
    - Are anti-patterns absent?
    - Does the overall mood match the Style Language Map?
+   - **Character facial features:** Do characters have ONLY the allowed features? Check for unwanted noses, eyebrows, ears, or other forbidden features. This is the most common failure — verify every face.
+   - **Companion character (if Duo system):** Is the companion present? Is it the correct size relative to the primary character? Is it the ONLY accent-colored element?
    Flag any images that fail verification and offer to regenerate them.
 5. Ask the user: "Want to regenerate or adjust any elements?"
 6. Offer to generate additional element types or variations
