@@ -9,16 +9,51 @@ Create complete visual design systems from scratch through guided discovery, doc
 
 ## Workflow Overview
 
-Execute these 6 phases in strict order. Phase 0 is optional (skip if user has no references). Never skip Phases 1-5. Each phase builds on the previous.
+Execute these phases in strict order. Output Location must be asked first. Phase 0 is optional (skip if user has no references). Never skip Phases 1-5. Each phase builds on the previous.
 
 | Phase | Name | Action | Output |
 |-------|------|--------|--------|
+| — | Output Location | Ask where to save the design system | `output_location` = "local" or "user" |
 | 0 | Reference Input | Collect + analyze user reference images | Visual analysis + smart defaults for discovery |
 | 1 | Discovery | Interactive questionnaire | User preferences across 10 dimensions |
 | 2 | Synthesis | Analyze + name the style | Style name, core principles, full spec |
 | 3 | Documentation | Generate style guide | `{style-name}-design-system.md` |
 | 4 | Asset Generation | Generate images via nanobanana | 8 PNG style board elements |
-| 5 | Assembly | Organize + present | Complete `design-system/` directory |
+| 5 | Assembly | Organize + present | Complete design system directory |
+
+---
+
+## Output Location
+
+Before anything else, ask the user where they want the design system saved. Use the AskUserQuestion tool:
+
+**Question:** "Where should this design system be saved?"
+
+| Option | Description |
+|--------|-------------|
+| Local project (current directory) | Saves to `./design-system/` in the current working directory. Best when this design system is specific to one project. |
+| User level (system-wide) | Saves to `~/.claude/.context/design-systems/{style-name-slug}/`. Available across all projects and conversations. Best for brand-wide design systems you'll reuse everywhere (e.g., your YouTube brand, your newsletter brand). |
+
+Store the choice as `output_location`.
+
+**Path resolution** (happens after Phase 2 when the style name is finalized):
+- **Local:** `{output_dir}` = `./design-system/`
+- **User level:** `{output_dir}` = `~/.claude/.context/design-systems/{style-name-slug}/`
+
+Where `{style-name-slug}` is the style name lowercased with spaces and special characters replaced by hyphens (e.g., "Ink & Ember" → `ink-and-ember`, "Neon Chalk" → `neon-chalk`).
+
+**User-level design systems** are organized so each style gets its own directory:
+```
+~/.claude/.context/design-systems/
+├── ink-and-ember/          ← YouTube brand
+│   ├── ink-and-ember-design-system.md
+│   ├── 01-hero-character.png
+│   └── ...
+├── paper-and-sage/         ← Newsletter brand
+│   ├── paper-and-sage-design-system.md
+│   ├── 01-hero-character.png
+│   └── ...
+```
 
 ---
 
@@ -133,7 +168,7 @@ Examples: "Ink & Teal", "Neon Chalk", "Warm Blueprint", "Velvet Ember", "Paper &
 
 Generate the complete design system document using the template from [references/design-system-template.md](references/design-system-template.md).
 
-**Output:** A markdown file saved to `design-system/{style-name}-design-system.md` in the project directory.
+**Output:** A markdown file saved to `{output_dir}/{style-name}-design-system.md` (see Output Location for path resolution).
 
 **Rules:**
 - Fill EVERY section — no placeholders or template markers in the final output
@@ -168,7 +203,7 @@ Generate 8 style board elements using the **nanobanana** skill. Build prompts us
 3. Specify the correct aspect ratio from the table above
 4. **If Phase 0 provided user references**, select the 1-2 most relevant reference images for this element type and provide them to nanobanana as style anchors (see prompt-engineering.md "Using User-Provided References" section)
 5. Use the nanobanana skill to generate the image
-6. Save the output to the `design-system/` directory with a descriptive filename
+6. Save the output to the `{output_dir}` directory with a descriptive filename
 
 **Prompt construction rules:**
 - Write as descriptive narrative paragraphs (NOT keyword lists)
@@ -181,14 +216,14 @@ Generate 8 style board elements using the **nanobanana** skill. Build prompts us
 
 **Naming convention for generated files:**
 ```
-design-system/01-hero-character.png
-design-system/02-concept-icon.png
-design-system/03-framework-diagram.png
-design-system/04-social-media-asset.png
-design-system/05-background-texture.png
-design-system/06-sticker-badge.png
-design-system/07-pattern-element.png
-design-system/08-character-scene.png
+{output_dir}/01-hero-character.png
+{output_dir}/02-concept-icon.png
+{output_dir}/03-framework-diagram.png
+{output_dir}/04-social-media-asset.png
+{output_dir}/05-background-texture.png
+{output_dir}/06-sticker-badge.png
+{output_dir}/07-pattern-element.png
+{output_dir}/08-character-scene.png
 ```
 
 ---
@@ -198,25 +233,29 @@ design-system/08-character-scene.png
 Organize all outputs and present the complete system to the user.
 
 **Final directory structure:**
+
+For **local** (`output_location` = local):
 ```
-design-system/
+./design-system/
 ├── {style-name}-design-system.md
 ├── 01-hero-character.png
-├── 02-concept-icon.png
-├── 03-framework-diagram.png
-├── 04-social-media-asset.png
-├── 05-background-texture.png
-├── 06-sticker-badge.png
-├── 07-pattern-element.png
+├── ...
 ├── 08-character-scene.png
 └── references/              ← only if Phase 0 provided user references
-    ├── ref-01-{description}.png
-    ├── ref-02-{description}.png
-    └── ...
+```
+
+For **user level** (`output_location` = user):
+```
+~/.claude/.context/design-systems/{style-name-slug}/
+├── {style-name}-design-system.md
+├── 01-hero-character.png
+├── ...
+├── 08-character-scene.png
+└── references/              ← only if Phase 0 provided user references
 ```
 
 **Final steps:**
-1. List all generated files with brief descriptions
+1. List all generated files with brief descriptions and the full output path
 2. Display the style board layout diagram (from the design system document)
 3. **Establish the Reference Library** — present the 8 generated images as canonical style references. Explain that these images should be provided as style references when generating future assets (using nanobanana's multi-image reference capability) to maintain visual consistency beyond what text prompts alone achieve.
 4. **Run the Verification Checklist** against each generated image:
@@ -231,6 +270,7 @@ design-system/
 5. Ask the user: "Want to regenerate or adjust any elements?"
 6. Offer to generate additional element types or variations
 7. If the user is satisfied, confirm the design system is complete
+8. **If user-level:** Remind the user that this design system is now available system-wide. In any future Claude Code session, they (or a future asset-generation skill) can reference it at `~/.claude/.context/design-systems/{style-name-slug}/`
 
 ---
 
@@ -253,4 +293,5 @@ If the user already has a design system document, read it first before starting.
 - If nanobanana generation fails, retry once with a simplified prompt
 - If the user is unhappy with a generated element, ask what specifically to change and regenerate with an adjusted prompt
 - If the user's preferences conflict (e.g., "minimalist" + "dense and detailed"), flag the tension during synthesis and ask which direction to prioritize
-- If the project has no `design-system/` directory, create it
+- If the output directory does not exist, create it (including parent directories for user-level paths)
+- If a design system with the same slug already exists at the user level, ask the user whether to overwrite or choose a different name
