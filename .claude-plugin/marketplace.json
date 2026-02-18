@@ -28,6 +28,36 @@
       "name": "branding-kit",
       "source": "./branding-kit",
       "description": "A plugin to add branding capabilities to Claude Code"
+    },
+    {
+      "name": "writing",
+      "source": "./writing",
+      "description": "A plugin for writing content in Kenny's authentic voice across all content types and platforms"
+    },
+    {
+      "name": "content-strategy",
+      "source": "./content-strategy",
+      "description": "A plugin for content research, title generation, and hook creation across all platforms"
+    },
+    {
+      "name": "visual-design",
+      "source": "./visual-design",
+      "description": "A plugin for creating visual assets including thumbnails and social media graphics"
+    },
+    {
+      "name": "youtube",
+      "source": "./youtube",
+      "description": "A plugin for YouTube content workflows — orchestrates research, writing, and design skills for video production"
+    },
+    {
+      "name": "newsletter",
+      "source": "./newsletter",
+      "description": "A plugin for newsletter content workflows — orchestrates research, writing, and design skills for newsletter production"
+    },
+    {
+      "name": "skill-factory",
+      "source": "./skill-factory",
+      "description": "A meta-plugin for creating new skills that conform to the composable skill architecture framework"
     }
   ]
 }
