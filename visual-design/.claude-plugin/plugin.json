@@ -1,0 +1,9 @@
+{
+  "name": "visual-design",
+  "description": "A plugin for creating visual assets including thumbnails and social media graphics",
+  "version": "1.0.0",
+  "author": {
+    "name": "Kenny Liao (The AI Launchpad)",
+    "url": "https://www.youtube.com/@KennethLiao"
+  }
+}
