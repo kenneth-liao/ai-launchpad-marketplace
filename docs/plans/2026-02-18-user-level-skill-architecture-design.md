@@ -26,6 +26,7 @@ Every skill is classified into exactly one of four categories:
 | **Personality** | How output sounds/feels (voice, tone) | Explicitly invoked by task skills that produce text | `voice` |
 | **Task** | Does one thing well (research, write, generate) | Invoked by orchestrators or directly by users | `copywriting`, `research`, `title`, `hook`, `thumbnail` |
 | **Orchestrator** | Sequences task skills for a platform-specific workflow | Invoked by users | `plan-video`, `plan-issue`, `repurpose-video` |
+| **Meta** | Creates/maintains other skills within the framework | Invoked when building new skills | `create-skill` |
 
 ---
 
@@ -138,6 +139,39 @@ newsletter/
     └── plan-issue/                 # ORCHESTRATOR — Full newsletter planning
         └── SKILL.md                # Sequences: research -> copywriting -> subject line -> social promo
 ```
+
+### Layer 3.5: System Plugin (framework maintenance)
+
+#### skill-factory/
+
+```
+skill-factory/                          # System Plugin — meta-skills for framework maintenance
+└── skills/
+    └── create-skill/                   # META — Create new skills within the framework
+        ├── SKILL.md                    # Enforces taxonomy, structure, composition patterns
+        └── references/
+            ├── taxonomy.md             # The four categories with decision criteria
+            ├── skill-template-task.md          # Starter template for Task skills
+            ├── skill-template-orchestrator.md  # Starter template for Orchestrator skills
+            ├── skill-template-knowledge.md     # Starter template for Knowledge skills
+            ├── skill-template-personality.md   # Starter template for Personality skills
+            └── composition-patterns.md # Reference chain patterns, voice hooks, brand hooks
+```
+
+**What `create-skill` does:**
+
+1. Asks what the skill needs to do
+2. Classifies it into one of the four categories (Knowledge, Personality, Task, Orchestrator)
+3. Determines which foundation plugin it belongs in (or if it needs a new orchestrator plugin)
+4. Invokes `skill-creator:skill-creator` for skill authoring best practices
+5. Invokes `superpowers:writing-skills` for skill file structure and quality
+6. Applies framework-specific rules on top:
+   - Task skills must include voice/brand reference chain hooks
+   - Orchestrator skills must be thin (delegate, don't implement)
+   - Platform-specific knowledge must live in `references/`, not in SKILL.md
+   - SKILL.md must stay under 500 lines (progressive disclosure)
+   - Flat structure enforced (max 2 levels)
+7. Places the skill in the correct plugin directory
 
 ### Layer 4: Existing Plugins (unchanged)
 
@@ -253,12 +287,13 @@ Explicit invocation. Deterministic. No relying on ambient activation.
 | `art` plugin | Keep | Unchanged |
 | `~/.claude/.context/` (Elle PA) | Keep | Unchanged — identity layer, not a skill |
 | `~/.claude/.context/design-systems/` | Keep | Referenced by branding-kit |
+| (new) `skill-factory` plugin | Create | `skill-factory/skills/create-skill/` — meta-skill for framework-consistent skill creation |
 
 ---
 
 ## Design Principles
 
-1. **Four skill categories, no exceptions.** Every skill is exactly one of: Knowledge, Personality, Task, or Orchestrator. If a skill is trying to be two things, split it.
+1. **Five skill categories, no exceptions.** Every skill is exactly one of: Knowledge, Personality, Task, Orchestrator, or Meta. If a skill is trying to be two things, split it.
 
 2. **Generalize the capability, specialize through references.** Task skills are content-type-agnostic. Platform-specific knowledge lives in `references/` files. Adding a new platform = adding a reference file, not a new skill.
 
@@ -273,6 +308,8 @@ Explicit invocation. Deterministic. No relying on ambient activation.
 7. **Flat structure — max 2 levels.** `plugin/skills/skill-name/` is the deepest nesting.
 
 8. **Three strikes, then generalize.** Don't pre-generalize. Extract shared patterns only when you see them repeated three times.
+
+9. **Self-maintaining system.** All new skills are created through the `skill-factory:create-skill` meta-skill, which enforces the taxonomy, composition patterns, and structural rules. The framework maintains its own consistency.
 
 ---
 
