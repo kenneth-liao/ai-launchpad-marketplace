@@ -1,5 +1,9 @@
 # YouTube Content Strategist
 
+> **DEPRECATED**: This plugin has been replaced by the composable skill architecture.
+> See: writing/, content-strategy/, visual-design/, youtube/ plugins.
+> This directory is kept for reference and will be removed in a future cleanup.
+
 This plugin contains a suite of skills, agents, and tools for researching, ideating, and planning YouTube videos. The skills are designed to work together to create a cohesive workflow for optimizing YouTube content performance.
 
 ## Requirements

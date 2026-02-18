@@ -5,11 +5,6 @@
   },
   "plugins": [
     {
-      "name": "yt-content-strategist",
-      "source": "./yt-content-strategist",
-      "description": "A plugin to research, ideate, and plan YouTube videos"
-    },
-    {
       "name": "personal-assistant",
       "source": "./personal-assistant",
       "description": "A plugin to turn Claude Code into your personal assistant"
