@@ -1,0 +1,9 @@
+{
+  "name": "writing",
+  "description": "A plugin for writing content in Kenny's authentic voice across all content types and platforms",
+  "version": "1.0.0",
+  "author": {
+    "name": "Kenny Liao (The AI Launchpad)",
+    "url": "https://www.youtube.com/@KennethLiao"
+  }
+}
