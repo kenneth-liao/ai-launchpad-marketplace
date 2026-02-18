@@ -1,6 +1,6 @@
 ---
 name: create-skill
-description: "Create new skills that conform to the composable skill architecture framework. This is a META skill — it classifies the skill, selects the right template, generates the skill following framework rules, and validates the output against architecture constraints."
+description: Create new skills that conform to the composable skill architecture framework. This is a META skill — it classifies the skill, selects the right template, generates the skill following framework rules, and validates the output against architecture constraints.
 ---
 
 # Create Skill

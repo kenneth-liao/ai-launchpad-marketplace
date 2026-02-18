@@ -1,6 +1,6 @@
 ---
 name: hook
-description: "Create retention-optimized opening hooks for any content type. Extends curiosity from title/headline, prevents common opening mistakes, and maximizes early engagement."
+description: Create retention-optimized opening hooks for any content type. Extends curiosity from title/headline, prevents common opening mistakes, and maximizes early engagement.
 ---
 
 # Hook Creation

@@ -1,6 +1,6 @@
 ---
 name: title
-description: "Generate optimized titles and headlines for any content type. Maximizes engagement through curiosity, complementarity with visual assets, and audience targeting."
+description: Generate optimized titles and headlines for any content type. Maximizes engagement through curiosity, complementarity with visual assets, and audience targeting.
 ---
 
 # Title Generation

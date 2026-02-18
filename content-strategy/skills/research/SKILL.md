@@ -1,6 +1,6 @@
 ---
 name: research
-description: "Conduct topic and competitor research for any content type. Analyzes existing content landscape, identifies gaps, and produces actionable insights. This is a generalized research skill — platform-specific tools and output locations are provided by orchestrator skills."
+description: Conduct topic and competitor research for any content type. Analyzes existing content landscape, identifies gaps, and produces actionable insights. This is a generalized research skill — platform-specific tools and output locations are provided by orchestrator skills.
 ---
 
 # Content Research

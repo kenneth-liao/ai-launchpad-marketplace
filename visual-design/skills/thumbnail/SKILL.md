@@ -1,6 +1,6 @@
 ---
 name: thumbnail
-description: "Create high-performing thumbnails and cover images for any platform. Uses Thumbkit for generation, follows proven design patterns for CTR optimization, and integrates with brand guidelines for consistency."
+description: Create high-performing thumbnails and cover images for any platform. Uses Thumbkit for generation, follows proven design patterns for CTR optimization, and integrates with brand guidelines for consistency.
 ---
 
 # Thumbnail Skill

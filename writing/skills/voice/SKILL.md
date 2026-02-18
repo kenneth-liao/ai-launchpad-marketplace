@@ -1,6 +1,6 @@
 ---
 name: voice
-description: "Apply Kenny Liao's authentic writing voice to any written content. This is a PERSONALITY skill — it transforms content produced by other skills into Kenny's voice. Invoke this skill explicitly from any task skill that produces written output."
+description: Apply Kenny Liao's authentic writing voice to any written content. This is a PERSONALITY skill — it transforms content produced by other skills into Kenny's voice. Invoke this skill explicitly from any task skill that produces written output.
 ---
 
 # Kenny's Writing Voice

@@ -1,6 +1,6 @@
 ---
 name: plan-issue
-description: "Orchestrate foundation skills to plan a complete newsletter issue including research, draft, subject line, opening hook, and social promotion posts. This is a thin orchestrator — it sequences skill invocations and manages the user review workflow."
+description: Orchestrate foundation skills to plan a complete newsletter issue including research, draft, subject line, opening hook, and social promotion posts. This is a thin orchestrator — it sequences skill invocations and manages the user review workflow.
 ---
 
 # Plan Newsletter Issue
