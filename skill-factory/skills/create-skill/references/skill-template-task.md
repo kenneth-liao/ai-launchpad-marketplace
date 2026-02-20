@@ -29,6 +29,72 @@ Use this skill when:
 - {Trigger condition 2}
 - {Trigger condition 3}
 
+## Prerequisites
+
+<!-- CONDITIONAL: Include this section only for script-bearing task skills. Remove for standard task skills. -->
+
+This skill requires [`uv`](https://docs.astral.sh/uv/) for zero-setup script execution.
+
+**Check:** Run `uv --version` to verify installation.
+
+**If not installed:**
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+## Scripts
+
+<!-- CONDITIONAL: Include this section only for script-bearing task skills. Remove for standard task skills. -->
+
+All executable scripts live in `scripts/` and use [PEP 723](https://peps.python.org/pep-0723/) inline dependencies for zero-setup execution:
+
+```python
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#     "{dependency-name}>=version",
+# ]
+# ///
+```
+
+**Execution:** Always use `uv run`, never raw `python3`:
+```bash
+uv run <skill_dir>/scripts/{script_name}.py [args]
+```
+
+**Why uv + PEP 723:** Zero setup (dependencies auto-install on first run), portable (no virtualenv management), reproducible (exact dependencies declared inline per script).
+
+### Script Conventions
+
+| Convention | Rule |
+|---|---|
+| Location | `scripts/` directory within skill |
+| Dependencies | PEP 723 inline block in every `.py` file |
+| Execution | `uv run` only, never `python3` directly |
+| Return format | Consistent dict: `{success, path/data, error, metadata}` |
+| CLI interface | argparse with clear `--help` |
+| Python API | Functions importable for downstream skill integration |
+| Error handling | Automatic retry with exponential backoff where appropriate |
+| Path handling | Absolute paths, auto-create output directories |
+
+### Downstream Integration
+
+Other skills consume script-bearing skills via two patterns:
+
+**CLI pattern** (simple, preferred):
+```bash
+uv run <skill_dir>/scripts/{script}.py "args" --flag value
+```
+
+**Python import pattern** (programmatic access):
+```python
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path("<skill_dir>/scripts")))
+from {script} import {function}
+result = {function}(args)
+```
+
 ## Content Type Resolution
 
 <!-- Include if the skill handles multiple content types. Omit for single-type skills. -->
@@ -90,6 +156,7 @@ When creating assets for The AI Launchpad, invoke `branding-kit:brand-guidelines
 5. **References for platform knowledge** -- Platform-specific patterns go in `references/`, not in SKILL.md.
 6. **Quality checklist is mandatory** -- Every task skill must include a verification checklist.
 7. **Under 500 lines** -- If SKILL.md exceeds this, move detailed content to reference files.
+8. **Script-bearing skills use uv** -- If the skill includes Python scripts, they must use PEP 723 inline dependencies and `uv run` execution. Never reference `python3` or `pip install` as the primary execution method.
 
 ## Examples from the System
 
@@ -98,3 +165,4 @@ When creating assets for The AI Launchpad, invoke `branding-kit:brand-guidelines
 - `content-strategy:hook` -- Forbidden patterns, hook patterns, quality verification
 - `content-strategy:research` -- Platform-agnostic design, subagent support, output structure
 - `visual-design:thumbnail` -- Skill integration (`art:nanobanana`), brand compliance, reference images
+- `art:nanobanana` -- Script-bearing task skill: `scripts/` directory, PEP 723 inline deps, uv prerequisite check, CLI + Python API
