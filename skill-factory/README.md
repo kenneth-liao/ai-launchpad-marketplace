@@ -27,6 +27,19 @@ Workflow:
 6. Validate against architecture constraints
 7. Place the skill in the correct plugin directory
 
+### integrate-skill (Meta Skill)
+
+Guided workflow for integrating existing skills from any source into the composable architecture. Analyzes source skills, decomposes content across the correct plugins, and delegates generation to create-skill.
+
+Workflow:
+1. Ingest source skill from any location
+2. Analyze and decompose using taxonomy decision tree
+3. Produce integration design doc with content split plan
+4. Get user approval before execution
+5. Execute integration (invoke create-skill for each piece)
+6. Verify against framework rules
+7. Propose cleanup and commit
+
 ## Directory Structure
 
 ```
@@ -35,15 +48,17 @@ skill-factory/
 │   └── plugin.json
 ├── README.md
 └── skills/
-    └── create-skill/
-        ├── SKILL.md
-        └── references/
-            ├── taxonomy.md
-            ├── skill-template-task.md
-            ├── skill-template-orchestrator.md
-            ├── skill-template-knowledge.md
-            ├── skill-template-personality.md
-            └── composition-patterns.md
+    ├── create-skill/
+    │   ├── SKILL.md
+    │   └── references/
+    │       ├── taxonomy.md
+    │       ├── skill-template-task.md
+    │       ├── skill-template-orchestrator.md
+    │       ├── skill-template-knowledge.md
+    │       ├── skill-template-personality.md
+    │       └── composition-patterns.md
+    └── integrate-skill/
+        └── SKILL.md
 ```
 
 ## References
