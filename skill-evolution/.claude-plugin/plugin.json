@@ -1,0 +1,9 @@
+{
+  "name": "skill-evolution",
+  "description": "A meta-plugin for self-improving skills over time. Captures session friction, identifies skill gaps and deficiencies, and writes improvement notes to auto-memory.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Kenny Liao (The AI Launchpad)",
+    "url": "https://www.youtube.com/@KennethLiao"
+  }
+}
