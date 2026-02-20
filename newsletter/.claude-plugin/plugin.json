@@ -1,7 +1,7 @@
 {
   "name": "newsletter",
   "description": "A plugin for newsletter content workflows — orchestrates research, writing, and design skills for newsletter production",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "Kenny Liao (The AI Launchpad)",
     "url": "https://www.youtube.com/@KennethLiao"

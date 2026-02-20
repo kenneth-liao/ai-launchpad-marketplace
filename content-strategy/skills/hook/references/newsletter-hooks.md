@@ -53,6 +53,40 @@ Opening: "It's not prompt engineering. It's not model selection. It's something 
 - **"Before we get into it..."** — Delays the value
 - **"This week I've been thinking about..."** — Vague, no hook. Start with the insight.
 
+## Additional Hook Techniques
+
+Pick ONE technique per issue. Rotate across issues for variety — readers notice if every issue opens the same way.
+
+### Relatable Problem
+Name a frustration the reader felt this week. The recognition creates an instant bond.
+- Subject: "Stuck in prompt debugging hell?"
+- Opening: "You know the loop. Change the prompt. Run it. Get garbage. Tweak one word. Run it again. Slightly different garbage. I spent all of Tuesday in this loop before I found the exit."
+
+### Question + Answer Tease
+Ask something the reader genuinely wants answered, then delay the answer just enough.
+- Subject: "What's the biggest AI agent mistake?"
+- Opening: "It's not prompt engineering. It's not model selection. It's something most developers do in the first 5 minutes of a new project."
+
+### "What Everyone Misses" (Double-Hook)
+Common observation + overlooked angle. Two hooks in one — validates what they know, then pivots.
+- Subject: "Everyone's building AI agents wrong"
+- Opening: "The tutorials all show the same pattern: give the agent a system prompt, connect it to tools, let it run. That pattern works — for demos. Production is a different game entirely."
+
+### Timestamp / Scene-Setting
+Drop the reader into a specific moment. Concrete details create vivid mental images.
+- Subject: "The 2am debugging session that changed everything"
+- Opening: "Last Tuesday at 2am, staring at a terminal full of failed assertions, I accidentally discovered something about Claude's context window that isn't in any documentation."
+
+### Surprising Number
+Lead with a stat that raises eyebrows. The number does the hooking — the explanation earns the read.
+- Subject: "7x more tokens than I expected"
+- Opening: "My agent team burned through 847,000 tokens on a task I estimated at 120,000. The bill wasn't the surprising part — it was *why* it happened."
+
+### The Stakes
+Frame why this matters right now. Urgency without fake urgency.
+- Subject: "The AI coding shift nobody's talking about"
+- Opening: "In the last 30 days, three separate tools launched that fundamentally change how AI writes code. If you're still using the January workflow, you're already behind."
+
 ## Patterns That Increase Read-Through Rate
 
 1. **Open loops early**: "I'll share the exact framework in section 3"

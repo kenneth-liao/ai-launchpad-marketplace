@@ -31,6 +31,22 @@ Orchestrates a complete newsletter issue plan from topic to publication-ready co
 Use the plan-issue skill to plan a newsletter about AI coding assistants
 ```
 
+### optimize-issue
+
+Orchestrates foundation skills to optimize an existing newsletter draft or write a full issue from an outline. Distinct from plan-issue — this skill starts from existing content rather than a topic.
+
+- Assesses input type (outline vs. rough draft) and routes to the appropriate workflow
+- Delegates drafting/optimization to `writing:copywriting`
+- Generates subject line options via `content-strategy:title`
+- Generates opening hook options via `content-strategy:hook`
+- Runs a pre-publish checklist before finalizing
+- Presents all options for user selection
+
+**Example usage:**
+```
+Use the optimize-issue skill to polish my newsletter draft
+```
+
 ## Plugin Structure
 
 ```
@@ -39,6 +55,10 @@ newsletter/
 │   └── plugin.json          # Plugin metadata
 ├── README.md                # Plugin documentation
 └── skills/
-    └── plan-issue/
-        └── SKILL.md         # Orchestrator skill definition
+    ├── plan-issue/
+    │   └── SKILL.md         # Orchestrator skill definition
+    └── optimize-issue/
+        ├── SKILL.md         # Orchestrator skill definition
+        └── references/
+            └── pre-publish-checklist.md
 ```

@@ -24,6 +24,17 @@ Create social media graphics and visual assets for any platform. Handles platfor
 - Enforces brand consistency through `branding-kit:brand-guidelines`
 - Covers social posts, newsletter headers, blog feature images, and course thumbnails
 
+### newsletter-visuals
+
+Audit a newsletter draft for visual opportunities, score and rank them by impact, and generate on-brand visual assets. Handles the full workflow from audit to generation.
+
+- Scores visual opportunities on clarity lift, engagement lift, and uniqueness (1-5 each)
+- Enforces hard rules: 10+ score threshold, max 5 visuals, 150-word spacing
+- Presents a visual brief for user approval before generating
+- Generates images using `art:nanobanana` with design system integration
+- Writes captions and alt text for each visual
+- Substack-specific rendering constraints in reference file
+
 ## Usage
 
 These skills are invoked by orchestrator skills or directly by the user. Platform-specific context (dimensions, safe zones, format requirements) can be provided by the calling orchestrator or resolved from the built-in platform specs.

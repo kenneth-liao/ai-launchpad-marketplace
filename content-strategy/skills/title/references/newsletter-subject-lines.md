@@ -13,30 +13,54 @@ Email subject lines compete in a crowded inbox. The subject line must create eno
 
 ## Subject Line Formulas
 
-### Curiosity-Driven
-- "I was wrong about AI agents"
-- "The tool I almost didn't share"
-- "This surprised me"
+### Specific Benefit
+Lead with the concrete outcome. The reader should know exactly what they'll get.
+- "The setting that cut my Claude costs 40%"
+- "3 prompts that replaced a 2-hour workflow"
 
-### Question Format
+### Curiosity Question
+Ask something the reader genuinely wants answered.
+- "Why your AI agent keeps forgetting everything"
 - "Are you making this AI mistake?"
 - "What if your agent could remember everything?"
 
-### Number/List Format
+### The Exact Thing
+Promise a specific, copy-paste asset.
+- "My exact CLAUDE.md template"
+- "The tool I almost didn't share"
+
+### Number + Outcome
+Combine a specific count with a tangible result.
 - "3 AI agent patterns worth stealing"
 - "5 mistakes killing your automation"
 
-### How-To with Twist
-- "How I accidentally built a $10K system"
+### Counterintuitive Claim
+Challenge a common assumption to create cognitive tension.
+- "Stop giving your AI agent more context"
+- "AI agents are broken. Here's proof."
 - "The wrong way to build AI agents (that works)"
 
-### Bold Claim
-- "AI agents are broken. Here's proof."
-- "Stop building AI agents like this"
+### Problem They Feel
+Name a frustration the reader experienced this week.
+- "Stuck in prompt debugging hell?"
+- "I was wrong about AI agents"
 
 ### Personal/Story
 - "I spent 40 hours on this so you don't have to"
 - "The email I almost didn't send"
+- "How I accidentally built a $10K system"
+
+### The Stranger Test
+
+After writing a subject line, apply this filter: **would you open this email from someone you've never heard of?** If the answer is no, the subject line relies on existing relationship rather than intrinsic curiosity. Rewrite it.
+
+### Always Generate 3 Options
+
+Never present a single subject line. Generate 3 options using different formulas and recommend the strongest with reasoning. Different formulas appeal to different reader psychology — giving options lets the author pick what fits the issue's tone.
+
+### Substack Dual-Purpose
+
+On Substack, the title serves as both the email subject line AND the web headline/SEO title. When they conflict, prioritize email open rate — that's where most subscribers see it. Aim under 60 characters for Google truncation.
 
 ## Preview Text Strategy
 

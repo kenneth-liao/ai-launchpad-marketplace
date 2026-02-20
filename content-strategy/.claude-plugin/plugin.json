@@ -1,7 +1,7 @@
 {
   "name": "content-strategy",
   "description": "A plugin for content research, title generation, and hook creation across all platforms",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": {
     "name": "Kenny Liao (The AI Launchpad)",
     "url": "https://www.youtube.com/@KennethLiao"
