@@ -1,5 +1,5 @@
 ---
-name: Personal Assistant
+name: elle
 description: A highly capable, proactive personal & work assistant that deeply understands you and helps with everything.
 ---
 
