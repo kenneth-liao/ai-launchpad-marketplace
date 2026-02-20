@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code Session Viewer</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+  --bg-card: #161b22;
+  --border: #30363d;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #484f58;
+  --gold: #e3b341;
+  --blue: #58a6ff;
+  --sidebar-width: 260px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+}
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.header-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.header-meta {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.header-meta span { white-space: nowrap; }
+.path-toggle {
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
+  transition: color 0.15s;
+}
+.path-toggle:hover { color: var(--text-secondary); }
+.header-path {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.header-path code {
+  font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.badge-team {
+  background: #1f6feb33;
+  color: var(--blue);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge-solo {
+  background: #e3b34133;
+  color: var(--gold);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.export-btn {
+  margin-left: auto;
+  background: #f0883e22;
+  border: 1px solid #f0883e55;
+  color: #f0883e;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.export-btn:hover {
+  background: #f0883e44;
+  color: #ffa657;
+}
+
+/* LAYOUT */
+.layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.sidebar-section h3 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.agent-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.15s;
+}
+.agent-item:hover { background: var(--bg-tertiary); }
+.agent-item.inactive { opacity: 0.35; }
+.agent-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.agent-name { color: var(--text-primary); }
+.agent-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-secondary);
+  transition: background 0.15s;
+}
+.filter-item:hover { background: var(--bg-tertiary); }
+.filter-item.active { color: var(--text-primary); }
+.filter-check {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.filter-item.active .filter-check {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: white;
+}
+
+
+/* TIMELINE */
+.timeline {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 24px;
+}
+.timeline-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 60px 20px;
+  font-size: 15px;
+}
+.event-count-bar {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  padding: 0 4px;
+}
+
+/* EVENT CARDS */
+.event-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.event-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+.event-badge {
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.event-agent {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.event-time {
+  margin-left: auto;
+  color: var(--text-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.event-body {
+  padding: 0 12px 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* Type-specific styles */
+.event-card.human_input { border-left-color: var(--gold); }
+.event-card.human_input .event-badge {
+  background: #e3b34122;
+  color: var(--gold);
+}
+
+.event-card.agent_text .event-badge {
+  color: white;
+  font-size: 11px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.event-card.send_message .event-badge.dm-sender {
+  color: white;
+  font-size: 11px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.dm-direction {
+  background: #1f6feb33;
+  color: var(--blue);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.dm-direction.broadcast {
+  background: #bc8cff33;
+  color: #bc8cff;
+}
+
+.event-card.tool_call .event-badge,
+.event-card.tool_result .event-badge {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.event-card.agent_thinking {
+  border-left-style: dashed;
+  opacity: 0.65;
+}
+.event-card.agent_thinking .event-badge {
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+}
+
+.event-card.system_event {
+  opacity: 0.5;
+  border-left-color: var(--text-muted);
+}
+.event-card.system_event .event-badge {
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+}
+
+/* Collapsible tool content */
+.event-card.tool_call .event-header,
+.event-card.tool_result .event-header {
+  cursor: pointer;
+  user-select: none;
+}
+.event-card.tool_call .event-header:hover,
+.event-card.tool_result .event-header:hover {
+  background: var(--bg-tertiary);
+}
+.tool-toggle {
+  color: var(--text-muted);
+  font-size: 11px;
+  transition: transform 0.15s;
+}
+.tool-toggle.expanded { transform: rotate(90deg); }
+
+.tool-preview {
+  padding: 0 12px 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+}
+
+.event-body pre {
+  font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--bg-primary);
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Markdown content styling */
+.md-content h1, .md-content h2, .md-content h3, .md-content h4 {
+  margin: 12px 0 6px;
+  color: var(--text-primary);
+}
+.md-content h1 { font-size: 20px; }
+.md-content h2 { font-size: 18px; }
+.md-content h3 { font-size: 16px; }
+.md-content p { margin: 4px 0; }
+.md-content code {
+  font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+  background: var(--bg-tertiary);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+.md-content pre code {
+  background: none;
+  padding: 0;
+}
+.md-content blockquote {
+  border-left: 3px solid var(--border);
+  padding-left: 12px;
+  color: var(--text-secondary);
+  margin: 6px 0;
+}
+.md-content ul, .md-content ol {
+  padding-left: 20px;
+  margin: 4px 0;
+}
+.md-content a {
+  color: var(--blue);
+  text-decoration: none;
+}
+.md-content a:hover { text-decoration: underline; }
+.md-content strong { color: var(--text-primary); }
+.md-content em { font-style: italic; }
+</style>
+</head>
+<body>
+<script>
+// --- SESSION DATA (replaced by generate.py) ---
+const SESSION_DATA = /*__SESSION_DATA__*/null;
+
+if (!SESSION_DATA) {
+  document.body.innerHTML = '<div style="padding:40px;color:#8b949e;text-align:center">No session data embedded. Run generate.py to create a viewer.</div>';
+  throw new Error("No session data");
+}
+
+// --- STATE ---
+const DEFAULT_VISIBLE = new Set(["human_input", "agent_text", "send_message"]);
+const ALL_TYPES = ["human_input", "agent_text", "send_message", "tool_call", "tool_result", "agent_thinking", "system_event"];
+const TYPE_LABELS = {
+  human_input: "Speech",
+  agent_text: "Speech",
+  send_message: "DMs",
+  tool_call: "Tool Calls",
+  tool_result: "Tool Results",
+  agent_thinking: "Thinking",
+  system_event: "System",
+};
+// Group human_input and agent_text under "Speech" for filtering
+const FILTER_GROUPS = [
+  { key: "speech", label: "Speech", types: ["human_input", "agent_text"] },
+  { key: "dms", label: "DMs", types: ["send_message"] },
+  { key: "tools", label: "Tool Calls", types: ["tool_call"] },
+  { key: "results", label: "Tool Results", types: ["tool_result"] },
+  { key: "thinking", label: "Thinking", types: ["agent_thinking"] },
+  { key: "system", label: "System", types: ["system_event"] },
+];
+
+const state = {
+  agents: new Set(SESSION_DATA.agents.map(a => a.id)),
+  typeGroups: new Set(["speech", "dms"]),
+  expandedTools: new Set(),
+};
+
+const agentMap = {};
+SESSION_DATA.agents.forEach(a => { agentMap[a.id] = a; });
+
+// --- MARKDOWN PARSER ---
+function parseMd(text) {
+  if (!text) return "";
+  const lines = text.split("\n");
+  let html = "";
+  let inCodeBlock = false;
+  let codeLines = [];
+  let inList = false;
+  let listType = "";
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    if (line.startsWith("```")) {
+      if (inCodeBlock) {
+        html += "<pre><code>" + escHtml(codeLines.join("\n")) + "</code></pre>";
+        codeLines = [];
+        inCodeBlock = false;
+      } else {
+        if (inList) { html += listType === "ul" ? "</ul>" : "</ol>"; inList = false; }
+        inCodeBlock = true;
+      }
+      continue;
+    }
+
+    if (inCodeBlock) {
+      codeLines.push(line);
+      continue;
+    }
+
+    // Headers
+    const hMatch = line.match(/^(#{1,4})\s+(.+)/);
+    if (hMatch) {
+      if (inList) { html += listType === "ul" ? "</ul>" : "</ol>"; inList = false; }
+      const level = hMatch[1].length;
+      html += `<h${level}>${inlineMd(hMatch[2])}</h${level}>`;
+      continue;
+    }
+
+    // Blockquote
+    if (line.startsWith("> ")) {
+      if (inList) { html += listType === "ul" ? "</ul>" : "</ol>"; inList = false; }
+      html += `<blockquote>${inlineMd(line.slice(2))}</blockquote>`;
+      continue;
+    }
+
+    // Unordered list
+    const ulMatch = line.match(/^[\s]*[-*]\s+(.+)/);
+    if (ulMatch) {
+      if (!inList || listType !== "ul") {
+        if (inList) html += listType === "ul" ? "</ul>" : "</ol>";
+        html += "<ul>";
+        inList = true;
+        listType = "ul";
+      }
+      html += `<li>${inlineMd(ulMatch[1])}</li>`;
+      continue;
+    }
+
+    // Ordered list
+    const olMatch = line.match(/^[\s]*\d+\.\s+(.+)/);
+    if (olMatch) {
+      if (!inList || listType !== "ol") {
+        if (inList) html += listType === "ul" ? "</ul>" : "</ol>";
+        html += "<ol>";
+        inList = true;
+        listType = "ol";
+      }
+      html += `<li>${inlineMd(olMatch[1])}</li>`;
+      continue;
+    }
+
+    // Close list if we hit a non-list line
+    if (inList && line.trim() === "") {
+      html += listType === "ul" ? "</ul>" : "</ol>";
+      inList = false;
+    }
+
+    // Paragraph / blank
+    if (line.trim() === "") {
+      html += "<br>";
+    } else {
+      html += `<p>${inlineMd(line)}</p>`;
+    }
+  }
+
+  if (inCodeBlock) {
+    html += "<pre><code>" + escHtml(codeLines.join("\n")) + "</code></pre>";
+  }
+  if (inList) {
+    html += listType === "ul" ? "</ul>" : "</ol>";
+  }
+  return html;
+}
+
+function inlineMd(text) {
+  let s = escHtml(text);
+  s = s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  s = s.replace(/\*(.+?)\*/g, "<em>$1</em>");
+  s = s.replace(/`(.+?)`/g, '<code>$1</code>');
+  s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+  return s;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+// --- TIME FORMATTING ---
+function fmtTime(ts) {
+  if (!ts) return "";
+  try {
+    const d = new Date(ts);
+    return d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+  } catch { return ""; }
+}
+
+function fmtDuration(seconds) {
+  if (seconds < 60) return `${seconds}s`;
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  if (m < 60) return `${m}m ${s}s`;
+  const h = Math.floor(m / 60);
+  return `${h}h ${m % 60}m`;
+}
+
+// --- INITIALS ---
+function getInitials(name) {
+  return name.split("-").map(w => w[0]).join("").toUpperCase().slice(0, 2);
+}
+
+// --- EVENT RENDERING ---
+function renderEvent(ev, idx) {
+  const agent = agentMap[ev.agentId] || { name: ev.agentName, color: "#8b949e" };
+  const time = fmtTime(ev.timestamp);
+  const borderColor = ev.type === "human_input" ? "var(--gold)" : agent.color;
+
+  let badge = "";
+  let body = "";
+  let headerExtra = "";
+  let headerAttrs = "";
+  let preview = "";
+
+  switch (ev.type) {
+    case "human_input":
+      badge = `<span class="event-badge">You</span>`;
+      body = `<div class="event-body md-content">${parseMd(ev.content)}</div>`;
+      break;
+
+    case "agent_text":
+      badge = `<span class="event-badge" style="background:${agent.color}">${getInitials(agent.name)}</span>`;
+      body = `<div class="event-body md-content">${parseMd(ev.content)}</div>`;
+      break;
+
+    case "send_message": {
+      const msgType = ev.metadata.messageType || "message";
+      const recip = ev.metadata.recipient || "?";
+      badge = `<span class="event-badge dm-sender" style="background:${agent.color}">${getInitials(agent.name)}</span>`;
+      if (msgType === "broadcast") {
+        headerExtra = `<span class="dm-direction broadcast">all agents</span>`;
+      } else {
+        headerExtra = `<span class="dm-direction">→ ${escHtml(recip)}</span>`;
+      }
+      if (ev.metadata.summary) {
+        headerExtra += ` <span style="color:var(--text-muted);font-size:12px">· ${escHtml(ev.metadata.summary)}</span>`;
+      }
+      body = `<div class="event-body md-content">${parseMd(ev.content)}</div>`;
+      break;
+    }
+
+    case "tool_call": {
+      const toolName = ev.metadata.toolName || "tool";
+      const isExpanded = state.expandedTools.has(idx);
+      badge = `<span class="event-badge">${escHtml(toolName)}</span>`;
+      headerExtra = `<span class="event-agent">${escHtml(agent.name)}</span>`;
+      headerAttrs = ` onclick="toggleTool(${idx})" style="cursor:pointer"`;
+      const arrow = isExpanded ? "expanded" : "";
+      badge = `<span class="tool-toggle ${arrow}">▶</span> ${badge}`;
+      if (!isExpanded) {
+        const previewText = ev.content.replace(/\n/g, " ").slice(0, 100);
+        preview = `<div class="tool-preview">${escHtml(previewText)}</div>`;
+        body = "";
+      } else {
+        body = `<div class="event-body"><pre>${escHtml(ev.content)}</pre></div>`;
+      }
+      break;
+    }
+
+    case "tool_result": {
+      const isExpanded = state.expandedTools.has(idx);
+      badge = `<span class="event-badge">result</span>`;
+      headerExtra = `<span class="event-agent">${escHtml(agent.name)}</span>`;
+      headerAttrs = ` onclick="toggleTool(${idx})" style="cursor:pointer"`;
+      const arrow = isExpanded ? "expanded" : "";
+      badge = `<span class="tool-toggle ${arrow}">▶</span> ${badge}`;
+      if (!isExpanded) {
+        const previewText = ev.content.replace(/\n/g, " ").slice(0, 100);
+        preview = `<div class="tool-preview">${escHtml(previewText)}</div>`;
+        body = "";
+      } else {
+        body = `<div class="event-body"><pre>${escHtml(ev.content)}</pre></div>`;
+      }
+      break;
+    }
+
+    case "agent_thinking":
+      badge = `<span class="event-badge">thinking</span>`;
+      headerExtra = `<span class="event-agent">${escHtml(agent.name)}</span>`;
+      body = `<div class="event-body"><pre>${escHtml(ev.content)}</pre></div>`;
+      break;
+
+    case "system_event":
+      badge = `<span class="event-badge">system</span>`;
+      body = `<div class="event-body" style="color:var(--text-muted);font-size:13px">${escHtml(ev.content)}</div>`;
+      break;
+  }
+
+  const tintStyle = ev.type === "send_message"
+    ? ` style="border-left-color:${agent.color};background:color-mix(in srgb, var(--bg-card) 92%, ${agent.color})"`
+    : ` style="border-left-color:${borderColor}"`;
+
+  return `<div class="event-card ${ev.type}"${tintStyle}>
+    <div class="event-header"${headerAttrs}>${badge}${headerExtra}<span class="event-time">${time}</span></div>
+    ${preview}${body}
+  </div>`;
+}
+
+// --- FILTERING ---
+function getVisibleTypes() {
+  const types = new Set();
+  for (const group of FILTER_GROUPS) {
+    if (state.typeGroups.has(group.key)) {
+      group.types.forEach(t => types.add(t));
+    }
+  }
+  return types;
+}
+
+function filterEvents() {
+  const visibleTypes = getVisibleTypes();
+
+  return SESSION_DATA.events.filter(ev => {
+    if (!state.agents.has(ev.agentId)) return false;
+    if (!visibleTypes.has(ev.type)) return false;
+    return true;
+  });
+}
+
+// --- RENDER ---
+function render() {
+  const filtered = filterEvents();
+
+  // Timeline
+  const timeline = document.getElementById("timeline");
+  const countBar = document.getElementById("event-count");
+  countBar.textContent = `Showing ${filtered.length} of ${SESSION_DATA.events.length} events`;
+
+  if (filtered.length === 0) {
+    timeline.innerHTML = '<div class="timeline-empty">No events match current filters.</div>';
+  } else {
+    // Map with original index for tool toggle tracking
+    const eventIndexMap = new Map();
+    SESSION_DATA.events.forEach((ev, i) => eventIndexMap.set(ev, i));
+    timeline.innerHTML = filtered.map(ev => renderEvent(ev, eventIndexMap.get(ev))).join("");
+  }
+
+  // Sidebar agents
+  const agentsList = document.getElementById("agents-list");
+  agentsList.innerHTML = SESSION_DATA.agents.map(a => {
+    const active = state.agents.has(a.id);
+    const count = SESSION_DATA.events.filter(e => e.agentId === a.id).length;
+    return `<div class="agent-item ${active ? "" : "inactive"}" onclick="toggleAgent('${a.id}')">
+      <div class="agent-dot" style="background:${a.color}"></div>
+      <span class="agent-name">${escHtml(a.name)}</span>
+      <span class="agent-count">${count}</span>
+    </div>`;
+  }).join("");
+
+  // Sidebar filters
+  const filtersList = document.getElementById("filters-list");
+  filtersList.innerHTML = FILTER_GROUPS.map(g => {
+    const active = state.typeGroups.has(g.key);
+    return `<div class="filter-item ${active ? "active" : ""}" onclick="toggleType('${g.key}')">
+      <div class="filter-check">${active ? "✓" : ""}</div>
+      <span>${g.label}</span>
+    </div>`;
+  }).join("");
+}
+
+// --- INTERACTIONS ---
+function toggleAgent(id) {
+  if (state.agents.has(id)) state.agents.delete(id);
+  else state.agents.add(id);
+  render();
+}
+
+function toggleType(key) {
+  if (state.typeGroups.has(key)) state.typeGroups.delete(key);
+  else state.typeGroups.add(key);
+  render();
+}
+
+function toggleTool(idx) {
+  if (state.expandedTools.has(idx)) state.expandedTools.delete(idx);
+  else state.expandedTools.add(idx);
+  render();
+}
+
+function togglePath() {
+  const el = document.getElementById("jsonl-path");
+  const toggle = document.querySelector(".path-toggle");
+  if (!el) return;
+  const visible = el.style.display !== "none";
+  el.style.display = visible ? "none" : "block";
+  toggle.textContent = visible ? "JSONL ▶" : "JSONL ▼";
+}
+
+
+// --- EXPORT ---
+async function exportMarkdown() {
+  const filtered = filterEvents();
+  const d = SESSION_DATA;
+
+  // Build header
+  const lines = [];
+  lines.push(`# Session: ${d.teamName || d.sessionId.slice(0, 8)}`);
+  lines.push("");
+  lines.push(`- **Type:** ${d.sessionType}`);
+  if (d.teamName) lines.push(`- **Team:** ${d.teamName}`);
+  lines.push(`- **Session:** ${d.sessionId}`);
+  lines.push(`- **Agents:** ${d.agents.map(a => a.name).join(", ")}`);
+  lines.push(`- **Duration:** ${fmtDuration(d.stats.durationSeconds)}`);
+  lines.push(`- **Events shown:** ${filtered.length} of ${d.stats.totalEvents}`);
+
+  // Show active filters
+  const activeGroups = FILTER_GROUPS.filter(g => state.typeGroups.has(g.key)).map(g => g.label);
+  const activeAgents = d.agents.filter(a => state.agents.has(a.id)).map(a => a.name);
+  lines.push(`- **Filters:** ${activeGroups.join(", ")}`);
+  lines.push(`- **Agents shown:** ${activeAgents.join(", ")}`);
+  lines.push("");
+  lines.push("---");
+  lines.push("");
+
+  // Render each event
+  for (const ev of filtered) {
+    const agent = agentMap[ev.agentId] || { name: ev.agentName || "unknown" };
+    const time = fmtTime(ev.timestamp);
+
+    switch (ev.type) {
+      case "human_input":
+        lines.push(`## [${time}] User`);
+        lines.push("");
+        lines.push(ev.content);
+        lines.push("");
+        break;
+
+      case "agent_text":
+        lines.push(`## [${time}] ${agent.name}`);
+        lines.push("");
+        lines.push(ev.content);
+        lines.push("");
+        break;
+
+      case "send_message": {
+        const msgType = ev.metadata.messageType || "message";
+        const recip = msgType === "broadcast" ? "ALL" : (ev.metadata.recipient || "?");
+        lines.push(`## [${time}] ${agent.name} → ${recip}`);
+        if (ev.metadata.summary) lines.push(`> ${ev.metadata.summary}`);
+        lines.push("");
+        lines.push(ev.content);
+        lines.push("");
+        break;
+      }
+
+      case "tool_call":
+        lines.push(`### [${time}] ${agent.name} — ${ev.metadata.toolName || "tool"}`);
+        lines.push("");
+        lines.push("```");
+        lines.push(ev.content);
+        lines.push("```");
+        lines.push("");
+        break;
+
+      case "tool_result":
+        lines.push(`### [${time}] ${agent.name} — result`);
+        lines.push("");
+        lines.push("```");
+        lines.push(ev.content);
+        lines.push("```");
+        lines.push("");
+        break;
+
+      case "agent_thinking":
+        lines.push(`### [${time}] ${agent.name} — thinking`);
+        lines.push("");
+        lines.push(`> ${ev.content.split("\n").join("\n> ")}`);
+        lines.push("");
+        break;
+
+      case "system_event":
+        lines.push(`*[${time}] system: ${ev.content}*`);
+        lines.push("");
+        break;
+    }
+  }
+
+  // Save file — use File System Access API to open a Save dialog
+  // so the user can save directly to .claude/output/ (the browser
+  // remembers the last-used directory for subsequent exports).
+  const slug = d.teamName || d.sessionId.slice(0, 8);
+  const filename = `${slug}-export.md`;
+  const content = lines.join("\n");
+
+  if (window.showSaveFilePicker) {
+    try {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: filename,
+        types: [{ description: "Markdown", accept: { "text/markdown": [".md"] } }],
+      });
+      const writable = await handle.createWritable();
+      await writable.write(content);
+      await writable.close();
+      return;
+    } catch (e) {
+      if (e.name === "AbortError") return; // user cancelled
+    }
+  }
+
+  // Fallback for browsers without File System Access API
+  const blob = new Blob([content], { type: "text/markdown" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// --- BUILD PAGE ---
+function buildPage() {
+  const d = SESSION_DATA;
+  const typeBadge = d.sessionType === "team"
+    ? `<span class="badge-team">TEAM</span>`
+    : `<span class="badge-solo">SOLO</span>`;
+  const teamLabel = d.teamName ? `${escHtml(d.teamName)} · ` : "";
+
+  const jsonlPath = d.leadJsonlPath || "";
+
+  document.body.innerHTML = `
+    <div class="header">
+      <div class="header-row">
+        <span class="header-title">${typeBadge} ${teamLabel}Session Viewer</span>
+        <button class="export-btn" onclick="exportMarkdown()">Export MD</button>
+      </div>
+      <div class="header-meta">
+        <span>ID: ${escHtml(d.sessionId)}</span>
+        <span>${d.stats.agentCount} agent${d.stats.agentCount > 1 ? "s" : ""}</span>
+        <span>${d.stats.totalEvents} events</span>
+        <span>${fmtDuration(d.stats.durationSeconds)}</span>
+        <span>${escHtml(d.project || "")}</span>
+        ${jsonlPath ? `<span class="path-toggle" onclick="togglePath()" title="Show JSONL path">JSONL ▶</span>` : ""}
+      </div>
+      ${jsonlPath ? `<div id="jsonl-path" class="header-path" style="display:none"><code>${escHtml(jsonlPath)}</code></div>` : ""}
+    </div>
+    <div class="layout">
+      <div class="sidebar">
+        <div class="sidebar-section">
+          <h3>Agents</h3>
+          <div id="agents-list"></div>
+        </div>
+        <div class="sidebar-section">
+          <h3>Event Types</h3>
+          <div id="filters-list"></div>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+        <div id="event-count" class="event-count-bar" style="padding:8px 28px 0"></div>
+        <div id="timeline" class="timeline"></div>
+      </div>
+    </div>`;
+
+  document.title = `${d.teamName || d.sessionId.slice(0, 8)} — Session Viewer`;
+  render();
+}
+
+buildPage();
+</script>
+</body>
+</html>
