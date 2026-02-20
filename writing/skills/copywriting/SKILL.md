@@ -20,6 +20,7 @@ Based on the user's request, determine which content type applies and load the c
 | Twitter/X post | `references/twitter.md` | Character limits, thread structure |
 | LinkedIn post | `references/linkedin.md` | Professional tone, post structure |
 | Substack Note | `references/substack-notes.md` | Short-form, engagement hooks |
+| YouTube community post | `references/youtube-community-post.md` | 288-char rule, templates, CTAs |
 
 If the content type is ambiguous, ask the user to clarify before proceeding.
 
