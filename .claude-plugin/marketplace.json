@@ -53,6 +53,16 @@
       "name": "skill-factory",
       "source": "./skill-factory",
       "description": "A meta-plugin for creating new skills that conform to the composable skill architecture framework"
+    },
+    {
+      "name": "skill-evolution",
+      "source": "./skill-evolution",
+      "description": "A meta-plugin for self-improving skills over time. Captures session friction and writes improvement notes to auto-memory."
+    },
+    {
+      "name": "agent-teams",
+      "source": "./agent-teams",
+      "description": "A plugin for Claude Code agent team workflows — session viewing, analysis, and best practice evaluation"
     }
   ]
 }
