@@ -36,6 +36,9 @@ Ask the user what the skill needs to do. Gather:
 
 If the user's description suggests the skill is trying to do two things, flag it immediately: "This sounds like two skills. The framework rule is: if it's trying to be two things, split it."
 
+If the skill is classified as a **Task** in Step 2, also ask:
+- **Scripts**: Does the skill include executable Python scripts (API wrappers, data processors, image generators)? If yes, this is a **script-bearing task skill** and will use the uv + PEP 723 architecture in Step 6.
+
 ### Step 2: Classify the Skill
 
 **MANDATORY**: Read `references/taxonomy.md` to classify the skill into one of five categories.
@@ -106,6 +109,13 @@ Based on the skill's category, load the appropriate template from `references/`:
 
 **MANDATORY**: Read the template file before generating the skill. The template defines the required sections and structure for the category.
 
+**For script-bearing task skills**: After loading `references/skill-template-task.md`, activate the conditional sections marked `<!-- CONDITIONAL -->`. These add:
+- Prerequisites section with `uv` check and install instructions
+- Scripts section with PEP 723 pattern and script conventions
+- Downstream Integration patterns for CLI and Python API consumption
+
+Use `art:nanobanana` as the reference implementation for this pattern.
+
 ### Step 7: Generate the Skill
 
 Generate the SKILL.md file following the template structure. For each section:
@@ -143,6 +153,16 @@ For **Task skills**:
 - [ ] Content Type Resolution table present (if skill handles multiple content types)
 - [ ] Quality checklist present
 - [ ] Does one thing well -- not trying to be two skills
+
+For **Script-bearing task skills** (in addition to standard Task validation):
+- [ ] `scripts/` directory exists in the skill directory
+- [ ] Every `.py` file in `scripts/` contains a PEP 723 inline dependency block (`# /// script`)
+- [ ] PEP 723 block includes `requires-python` version constraint
+- [ ] PEP 723 block includes `dependencies` list (can be empty `[]`)
+- [ ] SKILL.md never references `python3` as the primary execution method -- always `uv run`
+- [ ] Prerequisites section present with `uv` check and install instructions
+- [ ] Script return format documented (consistent dict structure)
+- [ ] CLI usage with `--help` documented in SKILL.md
 
 For **Orchestrator skills**:
 - [ ] Is a THIN orchestrator -- delegates to task skills, does not implement content generation
@@ -216,6 +236,7 @@ Before finalizing the skill creation:
 5. **Vague descriptions**: A frontmatter description like "Does stuff with content." The description determines when Claude uses the skill -- make it specific.
 6. **Wrong category**: Calling something a "task" when it actually sequences other skills (that's an orchestrator). Use the taxonomy decision tree.
 7. **Skipping validation**: Generating the skill and assuming it's correct. Always run the validation checklist.
+8. **Raw python3 in script-bearing skills**: Using `python3 script.py` instead of `uv run script.py`. The uv + PEP 723 pattern is the standard for zero-setup portability. Always use `uv run`.
 
 ## Example Execution
 
