@@ -13,7 +13,7 @@ Before testing, ensure you have:
 ### 1. Create `.env` file
 
 ```bash
-cd ai_launchpad/claude_code_module/ai-launchpad-marketplace/yt-content-strategist/servers/py-mcp-youtube-toolbox
+cd ai-launchpad-marketplace/youtube/servers/py-mcp-youtube-toolbox
 cp env.example .env
 ```
 
@@ -181,7 +181,7 @@ Here's the complete command to run the server with uvx:
 
 ```bash
 # Navigate to the server directory
-cd ai_launchpad/claude_code_module/ai-launchpad-marketplace/yt-content-strategist/servers/py-mcp-youtube-toolbox
+cd ai-launchpad-marketplace/youtube/servers/py-mcp-youtube-toolbox
 
 # Run the server
 uvx --directory . run server.py

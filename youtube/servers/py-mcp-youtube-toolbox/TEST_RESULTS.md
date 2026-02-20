@@ -42,7 +42,7 @@ The YouTube Toolbox MCP server has been successfully tested and is fully operati
 
 ```bash
 # Navigate to server directory
-cd ai_launchpad/claude_code_module/ai-launchpad-marketplace/yt-content-strategist/servers/py-mcp-youtube-toolbox
+cd ai-launchpad-marketplace/youtube/servers/py-mcp-youtube-toolbox
 
 # Run with uv
 uv run server.py

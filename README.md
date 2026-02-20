@@ -65,21 +65,20 @@ No additional requirements.
 
 **[View Plugin →](./personal-assistant)**
 
-### YouTube Content Strategist
+### YouTube
 
-A comprehensive plugin for researching, ideating, and planning YouTube videos with AI assistance.
+Orchestrate research, writing, and design skills to plan YouTube videos end-to-end.
 
 **REQUIREMENTS:**
-This plugin has 2 requirements! Please refer to the plugin's [README](./yt-content-strategist/README.md) for more information.
+This plugin requires a YouTube Data API key and a Gemini API key. Please refer to the plugin's [README](./youtube/README.md) for more information.
 
 **Features:**
-- Video topic research with competitive analysis
-- Title generation with proven formulas
-- Thumbnail concept creation and review
-- Video planning and hook development
+- Plan complete videos: research → titles → thumbnails → hooks → scripts
+- Repurpose video content into newsletters, social posts, and more
 - YouTube Analytics integration via MCP server
+- Thin orchestrator — delegates to writing, content-strategy, and visual-design plugins
 
-**[View Plugin →](./yt-content-strategist)**
+**[View Plugin →](./youtube)**
 
 ---
 
