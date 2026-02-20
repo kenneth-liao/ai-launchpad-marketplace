@@ -80,6 +80,21 @@ This plugin requires a YouTube Data API key and a Gemini API key. Please refer t
 
 **[View Plugin →](./youtube)**
 
+### Skill Evolution
+
+A meta-plugin for self-improving skills. Captures friction from working sessions and writes improvement notes to auto-memory.
+
+**REQUIREMENTS:**
+No additional requirements.
+
+**Features:**
+- **Real-time friction capture** — Detects user corrections and frustration mid-session
+- **Interactive retrospective** — `/retrospective` trigger reviews the session and presents findings
+- **Auto-memory integration** — Writes confirmed findings to MEMORY.md for immediate effect
+- **Skill improvement proposals** — Drafts proposed edits to existing skills for user review
+
+**[View Plugin →](./skill-evolution)**
+
 ---
 
 ## 👤 Author
