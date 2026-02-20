@@ -1,7 +1,7 @@
 {
   "name": "skill-factory",
   "description": "A meta-plugin for creating new skills that conform to the composable skill architecture framework",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": {
     "name": "Kenny Liao (The AI Launchpad)",
     "url": "https://www.youtube.com/@KennethLiao"

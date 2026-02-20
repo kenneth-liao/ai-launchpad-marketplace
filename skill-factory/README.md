@@ -11,6 +11,7 @@ As the skill ecosystem grows, consistency becomes critical. The skill-factory co
 - Include the required composition hooks (voice, brand compliance)
 - Are placed in the correct plugin
 - Stay within structural limits (SKILL.md under 500 lines, flat structure)
+- Use uv + PEP 723 for portable script execution (when skills include Python scripts)
 
 ## Skills
 
