@@ -25,6 +25,16 @@ Decision tree for classifying skills into the composable skill architecture's fi
 **Examples**: `writing:copywriting`, `content-strategy:research`, `content-strategy:title`, `content-strategy:hook`, `visual-design:thumbnail`, `visual-design:social-graphic`
 **Plugin home**: Foundation plugins (`writing/`, `content-strategy/`, `visual-design/`).
 
+#### Script-Bearing Task Skills
+
+Some task skills include executable Python scripts (API wrappers, data processors, image generators). These are still Task skills, but they require additional structure:
+
+**Key signal**: The skill's output depends on running Python scripts via `uv run`.
+**Additional requirements**: `scripts/` directory, PEP 723 inline dependencies, `uv` prerequisite check.
+**Example**: `art:nanobanana` — image generation via Python scripts with google-genai dependency.
+
+After classifying a skill as Task, ask: "Does this task skill include executable Python scripts?" If yes, apply the script-bearing variant during template application (Step 6).
+
 ### Orchestrator
 
 **What it is**: Sequences task skills for a platform-specific workflow. Thin by design -- delegates everything, implements nothing.
@@ -82,6 +92,6 @@ The composable architecture's power comes from small, focused skills that compos
 |---|---|---|---|
 | Knowledge | Information for other skills | Task/orchestrator skills (reference) | How to reference it |
 | Personality | Transformed content | Task skills (explicit invocation) | Anti-patterns, invocation docs |
-| Task | Content, visuals, analysis | Users or orchestrators | Voice hook, brand hook, quality checklist |
+| Task | Content, visuals, analysis | Users or orchestrators | Voice hook, brand hook, quality checklist. If script-bearing: `scripts/`, PEP 723, uv prerequisite |
 | Orchestrator | Workflow plan with selections | Users | Skill invocations, thin delegation |
 | Meta | New skills | Users (when building skills) | Framework validation |
