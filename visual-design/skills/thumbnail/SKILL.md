@@ -1,45 +1,24 @@
 ---
 name: thumbnail
-description: Create high-performing thumbnails and cover images for any platform. Uses Thumbkit for generation, follows proven design patterns for CTR optimization, and integrates with brand guidelines for consistency.
+description: Create high-performing thumbnails and cover images for any platform. Uses art:nanobanana for generation, follows proven design patterns for CTR optimization, and integrates with brand guidelines for consistency.
 ---
 
 # Thumbnail Skill
 
 This skill enables generation of high-performing thumbnails and cover images optimized for click-through rate (CTR). Thumbnails are designed to spark curiosity, complement titles, and compel viewers to click.
 
-## Thumbkit
+## Image Generation
 
-You have access to Thumbkit, a CLI tool for generating and editing high-performing thumbnails. You **MUST** use Thumbkit to generate and edit all thumbnails.
+You **MUST** invoke the `art:nanobanana` skill for all image generation and editing. This skill provides access to Gemini image models (Pro and Flash) with support for text-to-image, image editing, multi-image reference, and high-resolution output.
 
-Using Thumbkit is **REQUIRED** for you to complete your task. Assume Thumbkit has been installed as a uv tool and is available globally on the user's system. If Thumbkit is not installed, you **MUST** install it before proceeding.
+**MANDATORY**: Invoke `art:nanobanana` before generating or editing any thumbnail. The skill will provide the generation scripts and API access needed to produce images.
 
-### Testing Installation
+### Model Selection for Thumbnails
 
-Test if Thumbkit is installed:
+- **Pro** (default) — Use for final production thumbnails. Supports 2K/4K resolution, up to 14 reference images, and thinking mode for better composition.
+- **Flash** — Use for rapid exploration and draft concepts. Faster and cheaper, good for iterating on ideas before committing to a final version.
 
-```bash
-thumbkit --version
-```
-
-### Installation
-
-```bash
-uv tool install https://github.com/kenneth-liao/thumbkit.git
-```
-
-### Upgrading
-
-```bash
-uv tool upgrade thumbkit
-```
-
-### Thumbkit Documentation
-
-To access the full CLI reference documentation, run the following command:
-
-```bash
-thumbkit docs
-```
+**Rule of thumb**: Use Flash for exploration batches (generate 5-10 variations), then Pro for the final production image.
 
 ## REQUIRED READING
 
@@ -47,7 +26,6 @@ The following documents are **MANDATORY READING** before generating ANY thumbnai
 
 1. `references/thumbnail-formulas.md` - Design formulas for high CTR thumbnails through proven strategies. These principles apply universally across platforms.
 2. `references/prompting-guidelines.md` - Thumbnails are generated using Gemini image models (NanoBanana). The prompting guidelines will enable you to get more predictable and consistent results.
-3. You **MUST** read the complete Thumbkit CLI reference documentation by running `thumbkit docs`.
 
 It is a **MANDATORY REQUIREMENT** that you follow both the design formulas and prompting guidelines in order to generate high-performing thumbnails. Failure to do so will result in a failed task.
 
@@ -109,13 +87,7 @@ Once you have generated an initial thumbnail concept or prompt, you **MUST** use
 
 ### Optimizing Thumbnails
 
-Because you can edit a base image with Thumbkit, you can iteratively modify and improve a previously generated thumbnail. For example, if you have generated a thumbnail but want to change the color scheme:
-
-```bash
-thumbkit edit \
-  --base absolute/path/to/original-thumbnail.png \
-  --prompt "Keep everything the same, but change the text color to bright red."
-```
+Because `art:nanobanana` supports image editing, you can iteratively modify and improve a previously generated thumbnail. Pass the original thumbnail as a reference image and describe the desired changes.
 
 Always review generated thumbnails to ensure they meet the complete design formulas and original intent. If not, you can iterate by editing the original thumbnail. **DO NOT** go through the generate-review-regenerate loop more than **ONCE**.
 

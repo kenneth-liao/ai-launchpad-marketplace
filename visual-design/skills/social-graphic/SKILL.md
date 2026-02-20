@@ -16,7 +16,7 @@ Invoke this skill when the user needs:
 - **Course thumbnails** -- Platform-specific cover images
 - **Profile and cover images** -- Headers, banners, profile pictures
 
-For YouTube thumbnails or any thumbnail requiring Thumbkit generation, use the `visual-design:thumbnail` skill instead.
+For YouTube thumbnails or any thumbnail requiring specialized CTR optimization, use the `visual-design:thumbnail` skill instead.
 
 ## Platform Resolution
 

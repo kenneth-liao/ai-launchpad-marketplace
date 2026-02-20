@@ -91,7 +91,7 @@ This plugin requires a YouTube Data API key and a Gemini API key. Please refer t
 ## 🔗 Related Projects
 
 - [AI Launchpad](https://github.com/kenneth-liao/ai-launchpad) - The main AI development framework
-- [Thumbkit](https://github.com/kenneth-liao/thumbkit) - CLI tool for YouTube thumbnail generation
+- [Thumbkit](https://github.com/kenneth-liao/thumbkit) - CLI tool for YouTube thumbnail generation (legacy — new plugins use `art:nanobanana`)
 
 ---
 

@@ -169,7 +169,7 @@ The plan should now contain a user-selected title, thumbnail, and hook combinati
 
 Now that the user has selected their preferred title, thumbnail, and hook, finalize the plan.
 
-1. **MANDATORY**: Invoke `visual-design:thumbnail` to generate 3 thumbnail options for AB testing. These should be actual images generated with `thumbkit`, not just concepts. The first thumbnail should be based on the user's selected thumbnail concept. The other 2 should test different visual styles of the first thumbnail.
+1. **MANDATORY**: Invoke `visual-design:thumbnail` to generate 3 thumbnail options for AB testing. These should be actual images generated with `art:nanobanana`, not just concepts. The first thumbnail should be based on the user's selected thumbnail concept. The other 2 should test different visual styles of the first thumbnail.
 
 2. Update the final plan section in the plan file with the complete final selections:
 

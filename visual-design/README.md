@@ -6,9 +6,9 @@ A foundation plugin for creating visual assets across platforms. Visual Design p
 
 ### thumbnail
 
-Create high-performing thumbnails and cover images for any platform. Uses Thumbkit for generation, follows proven design patterns for CTR optimization, and integrates with brand guidelines for consistency.
+Create high-performing thumbnails and cover images for any platform. Uses `art:nanobanana` for generation, follows proven design patterns for CTR optimization, and integrates with brand guidelines for consistency.
 
-- Generates thumbnails using Thumbkit CLI with Gemini image models
+- Generates thumbnails using `art:nanobanana` with Gemini image models
 - Applies proven design formulas: glance test, curiosity, focal points, mobile-first
 - Supports platform-specific dimensions (YouTube 1280x720, blog headers 1200x630, etc.)
 - Integrates with `branding-kit:brand-guidelines` for brand compliance
@@ -32,4 +32,3 @@ These skills are invoked by orchestrator skills or directly by the user. Platfor
 
 - `art:nanobanana` -- AI image generation via Gemini models
 - `branding-kit:brand-guidelines` -- Brand identity and design system resolution
-- Thumbkit CLI -- Thumbnail generation and editing tool (thumbnail skill only)

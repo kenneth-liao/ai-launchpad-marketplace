@@ -97,4 +97,4 @@ When creating assets for The AI Launchpad, invoke `branding-kit:brand-guidelines
 - `content-strategy:title` -- Platform references, verification checklist, rejection criteria
 - `content-strategy:hook` -- Forbidden patterns, hook patterns, quality verification
 - `content-strategy:research` -- Platform-agnostic design, subagent support, output structure
-- `visual-design:thumbnail` -- Tool integration (Thumbkit), brand compliance, reference images
+- `visual-design:thumbnail` -- Skill integration (`art:nanobanana`), brand compliance, reference images
