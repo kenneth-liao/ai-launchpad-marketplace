@@ -15,7 +15,7 @@ Creates retention-optimized opening hooks for any content type. Extends curiosit
 
 ## Integration
 
-These skills are designed to be invoked by orchestrator skills in platform-specific plugins (e.g., `youtube`, `newsletter`). They also integrate with:
+These skills are designed to be invoked by orchestrator skills in platform-specific plugins (e.g., `youtube`, `substack`). They also integrate with:
 - **writing:voice** — Applied before finalizing any written output
 - **branding-kit:brand-guidelines** — Applied when creating assets for The AI Launchpad
 

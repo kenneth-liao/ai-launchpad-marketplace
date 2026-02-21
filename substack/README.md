@@ -1,13 +1,13 @@
-# Newsletter
+# Substack
 
-A thin orchestrator plugin for newsletter content workflows. This plugin does not contain implementation logic — it composes foundation skills from `content-strategy`, `writing`, and `visual-design` into newsletter-specific production workflows.
+A thin orchestrator plugin for Substack content workflows. This plugin does not contain implementation logic — it composes foundation skills from `content-strategy`, `writing`, and `visual-design` into Substack-specific production workflows.
 
 ## How It Works
 
-The newsletter plugin sequences foundation skill invocations to produce complete newsletter issue plans. Each step delegates to a specialized skill that handles the actual work:
+The substack plugin sequences foundation skill invocations to produce complete newsletter issues and Substack Notes. Each step delegates to a specialized skill that handles the actual work:
 
 - **Research**: `content-strategy:research` for topic and competitor analysis
-- **Writing**: `writing:copywriting` for newsletter drafts and social promotion posts
+- **Writing**: `writing:copywriting` for newsletter drafts, social promotion posts, and Substack Notes
 - **Titles**: `content-strategy:title` for subject line generation
 - **Hooks**: `content-strategy:hook` for opening paragraph options
 - **Voice**: `writing:voice` (invoked automatically by the copywriting skill)
@@ -47,18 +47,34 @@ Orchestrates foundation skills to optimize an existing newsletter draft or write
 Use the optimize-issue skill to polish my newsletter draft
 ```
 
+### create-note
+
+Orchestrates foundation skills to create standalone Substack Notes — short-form posts for engagement, authority-building, and audience growth. Mirrors the `youtube:create-post` pattern.
+
+- Checks for recent newsletter issues to suggest context-aware note types
+- Invokes `content-strategy:research` with Substack Notes strategy for type selection
+- Delegates writing to `writing:copywriting` with the enhanced Substack Notes reference
+- Quality checklist ensures every note follows its structural formula
+
+**Example usage:**
+```
+Use the create-note skill to write a Substack Note about AI agents
+```
+
 ## Plugin Structure
 
 ```
-newsletter/
+substack/
 ├── .claude-plugin/
 │   └── plugin.json          # Plugin metadata
 ├── README.md                # Plugin documentation
 └── skills/
     ├── plan-issue/
     │   └── SKILL.md         # Orchestrator skill definition
-    └── optimize-issue/
-        ├── SKILL.md         # Orchestrator skill definition
-        └── references/
-            └── pre-publish-checklist.md
+    ├── optimize-issue/
+    │   ├── SKILL.md         # Orchestrator skill definition
+    │   └── references/
+    │       └── pre-publish-checklist.md
+    └── create-note/
+        └── SKILL.md         # Orchestrator skill definition
 ```

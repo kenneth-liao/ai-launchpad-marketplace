@@ -66,7 +66,7 @@ Based on the classification, determine where the skill belongs:
 - Or a new foundation plugin if the skill doesn't fit existing ones
 **Orchestrator skills** --> Platform-specific plugins:
 - `youtube/` -- for YouTube workflows
-- `newsletter/` -- for newsletter workflows
+- `substack/` -- for Substack workflows
 - Or a new orchestrator plugin for a new platform
 **Meta skills** --> `skill-factory/`
 

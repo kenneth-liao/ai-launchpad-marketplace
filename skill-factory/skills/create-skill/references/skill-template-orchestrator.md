@@ -116,7 +116,7 @@ Save the plan to `{output-path}`. The plan file must follow this structure:
 
 - `youtube:plan-video` -- Sequences research, title, thumbnail, hook, and outline for YouTube
 - `youtube:repurpose-video` -- Sequences copywriting invocations across platforms
-- `newsletter:plan-issue` -- Sequences research, draft, subject line, hook, and social posts
+- `substack:plan-issue` -- Sequences research, draft, subject line, hook, and social posts
 
 ## Key Difference from Task Skills
 

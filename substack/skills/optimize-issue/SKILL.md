@@ -18,7 +18,7 @@ Use this skill when:
 - Converting notes or bullet points into a publication-ready issue
 
 Do NOT use this skill when:
-- Starting from a topic with no existing content (use `newsletter:plan-issue` instead)
+- Starting from a topic with no existing content (use `substack:plan-issue` instead)
 - Creating visual assets for a newsletter (use `visual-design:newsletter-visuals`)
 
 ## Prerequisites

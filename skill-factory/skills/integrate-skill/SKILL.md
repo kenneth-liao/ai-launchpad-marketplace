@@ -58,7 +58,7 @@ For each distinct piece of content in the source skill, classify it using the ta
 1. Does it provide information that shapes other skills' output? --> **Knowledge** --> likely `branding-kit/` or a domain-specific knowledge plugin
 2. Does it define how output sounds or feels? --> **Personality** --> likely `writing/`
 3. Does it do one specific thing well? --> **Task** --> likely `writing/`, `content-strategy/`, `visual-design/`, `art/`, `research/`, or `personal-assistant/`
-4. Does it sequence multiple task skills for a platform workflow? --> **Orchestrator** --> likely `youtube/`, `newsletter/`, or a new platform plugin
+4. Does it sequence multiple task skills for a platform workflow? --> **Orchestrator** --> likely `youtube/`, `substack/`, or a new platform plugin
 5. Does it create or maintain other skills? --> **Meta** --> `skill-factory/`
 
 For each piece, determine:

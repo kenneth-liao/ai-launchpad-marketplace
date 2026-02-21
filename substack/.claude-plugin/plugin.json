@@ -1,0 +1,9 @@
+{
+  "name": "substack",
+  "description": "A plugin for Substack content workflows — orchestrates research, writing, and design skills for newsletter issues and Substack Notes",
+  "version": "2.0.0",
+  "author": {
+    "name": "Kenny Liao (The AI Launchpad)",
+    "url": "https://www.youtube.com/@KennethLiao"
+  }
+}

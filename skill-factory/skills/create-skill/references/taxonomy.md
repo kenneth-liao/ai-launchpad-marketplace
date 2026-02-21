@@ -39,8 +39,8 @@ After classifying a skill as Task, ask: "Does this task skill include executable
 
 **What it is**: Sequences task skills for a platform-specific workflow. Thin by design -- delegates everything, implements nothing.
 **Key signal**: Invokes multiple task skills in order. Contains workflow logic, not content generation logic.
-**Examples**: `youtube:plan-video`, `youtube:repurpose-video`, `newsletter:plan-issue`
-**Plugin home**: Platform-specific plugins (`youtube/`, `newsletter/`).
+**Examples**: `youtube:plan-video`, `youtube:repurpose-video`, `substack:plan-issue`
+**Plugin home**: Platform-specific plugins (`youtube/`, `substack/`).
 
 ### Meta
 
