@@ -1,42 +1,23 @@
-# Content Strategy Plugin
+# Content Strategy
 
-A foundation plugin for content research, title generation, and hook creation across all platforms and content types. Provides three generalized task skills that can be used standalone or orchestrated by platform-specific skills.
+Foundation plugin for content research, title generation, and hook creation across all platforms and content types. These skills can be used standalone or are orchestrated by platform-specific plugins (e.g., `youtube`, `substack`).
+
+## Prerequisites
+
+- AI Launchpad marketplace added — see [main README](../README.md)
+
+## Installation
+
+```
+/plugin install content-strategy@ai-launchpad-marketplace
+```
+
+Restart Claude Code for the changes to take effect.
 
 ## Skills
 
-### research
-Conducts topic and competitor research for any content type. Analyzes existing content landscape, identifies gaps, and produces actionable insights with rated opportunities.
-
-### title
-Generates optimized titles and headlines for any content type. Maximizes engagement through curiosity, complementarity with visual assets, and audience targeting. Supports YouTube titles, newsletter subject lines, and social headlines.
-
-### hook
-Creates retention-optimized opening hooks for any content type. Extends curiosity from the title/headline, prevents common opening mistakes, and maximizes early engagement.
-
-## Integration
-
-These skills are designed to be invoked by orchestrator skills in platform-specific plugins (e.g., `youtube`, `substack`). They also integrate with:
-- **writing:voice** — Applied before finalizing any written output
-- **branding-kit:brand-guidelines** — Applied when creating assets for The AI Launchpad
-
-## Directory Structure
-
-```
-content-strategy/
-  .claude-plugin/plugin.json
-  README.md
-  skills/
-    research/
-      SKILL.md
-      references/research-frameworks.md
-    title/
-      SKILL.md
-      references/youtube-title-formulas.md
-      references/newsletter-subject-lines.md
-      references/social-headlines.md
-    hook/
-      SKILL.md
-      references/youtube-hooks.md
-      references/newsletter-hooks.md
-      references/social-hooks.md
-```
+| Skill | Description |
+|-------|-------------|
+| `research` | Topic and competitor research — analyzes content landscape, identifies gaps, produces actionable insights |
+| `title` | Optimized titles and headlines — YouTube titles, newsletter subject lines, social headlines |
+| `hook` | Retention-optimized opening hooks — extends curiosity from the title, prevents common opening mistakes |

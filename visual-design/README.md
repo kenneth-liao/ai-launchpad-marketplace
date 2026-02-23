@@ -1,45 +1,24 @@
 # Visual Design
 
-A foundation plugin for creating visual assets across platforms. Visual Design provides task skills for generating thumbnails, cover images, and social media graphics optimized for engagement and brand consistency.
+Foundation plugin for creating visual assets — thumbnails, cover images, social media graphics, and newsletter visuals optimized for engagement and brand consistency.
+
+## Prerequisites
+
+- AI Launchpad marketplace added — see [main README](../README.md)
+- `art` plugin installed (uses `art:nanobanana` for image generation)
+
+## Installation
+
+```
+/plugin install visual-design@ai-launchpad-marketplace
+```
+
+Restart Claude Code for the changes to take effect.
 
 ## Skills
 
-### thumbnail
-
-Create high-performing thumbnails and cover images for any platform. Uses `art:nanobanana` for generation, follows proven design patterns for CTR optimization, and integrates with brand guidelines for consistency.
-
-- Generates thumbnails using `art:nanobanana` with Gemini image models
-- Applies proven design formulas: glance test, curiosity, focal points, mobile-first
-- Supports platform-specific dimensions (YouTube 1280x720, blog headers 1200x630, etc.)
-- Integrates with `branding-kit:brand-guidelines` for brand compliance
-- Includes Thumbnail Reviewer agent workflow for quality assurance
-
-### social-graphic
-
-Create social media graphics and visual assets for any platform. Handles platform-specific dimensions, safe zones, and design constraints.
-
-- Supports Twitter/X, LinkedIn, Instagram, Substack, YouTube, and blog/website formats
-- Loads platform specs (dimensions, safe zones, text limits) from reference data
-- Generates images using `art:nanobanana` skill
-- Enforces brand consistency through `branding-kit:brand-guidelines`
-- Covers social posts, newsletter headers, blog feature images, and course thumbnails
-
-### newsletter-visuals
-
-Audit a newsletter draft for visual opportunities, score and rank them by impact, and generate on-brand visual assets. Handles the full workflow from audit to generation.
-
-- Scores visual opportunities on clarity lift, engagement lift, and uniqueness (1-5 each)
-- Enforces hard rules: 10+ score threshold, max 5 visuals, 150-word spacing
-- Presents a visual brief for user approval before generating
-- Generates images using `art:nanobanana` with design system integration
-- Writes captions and alt text for each visual
-- Substack-specific rendering constraints in reference file
-
-## Usage
-
-These skills are invoked by orchestrator skills or directly by the user. Platform-specific context (dimensions, safe zones, format requirements) can be provided by the calling orchestrator or resolved from the built-in platform specs.
-
-## Dependencies
-
-- `art:nanobanana` -- AI image generation via Gemini models
-- `branding-kit:brand-guidelines` -- Brand identity and design system resolution
+| Skill | Description |
+|-------|-------------|
+| `thumbnail` | High-performing thumbnails and cover images with CTR optimization |
+| `social-graphic` | Social media graphics for Twitter/X, LinkedIn, Instagram, Substack, YouTube, and blogs |
+| `newsletter-visuals` | Audit newsletter drafts for visual opportunities, score them, and generate assets |

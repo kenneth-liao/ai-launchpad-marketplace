@@ -1,113 +1,45 @@
 # AI Launchpad Marketplace
 
-The AI Launchpad marketplace is a curated collection of Claude Code plugins to unlock your personal workflows.
+A curated collection of Claude Code plugins to unlock your personal workflows.
 
-## 🚀 Quick Start
-
-You must first add the marketplace to your Claude Code, then you can choose what plugins to install. 
-
-Marketplaces and plugins are installed globally, in your user-level Claude Code (`~/.claude`). This just means that any plugins you install will be available in all projects: anywhere on your system that you start Claude Code.
+## Quick Start
 
 ### Requirements
 
-This marketplace requires [uv](https://docs.astral.sh/uv/) to manage MCP servers and CLI tools. Complete the installation instructions [here](https://docs.astral.sh/uv/getting-started/installation/) before proceeding!
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) (for MCP servers and CLI tools)
 
-**[NOTE]** Individual plugins may have additional requirements! Please refer to the plugin's README for more information.
+Individual plugins may have additional requirements — refer to each plugin's README.
 
 ### Installation
 
 1. Start Claude Code anywhere.
+2. Add the marketplace:
 
-```bash
-claude
 ```
-
-2. Add the AI Launchpad marketplace to Claude Code.
-
-```bash
 /plugin marketplace add https://github.com/kenneth-liao/ai-launchpad-marketplace.git
 ```
 
-You can now browse available plugins interactively by running `/plugin`.
+3. Browse and install plugins interactively with `/plugin`.
 
-## 📦 Available Plugins
+## Available Plugins
 
-**[NOTE]** Individual plugins may have additional requirements! Please refer to the plugin's README for more information.
+| Plugin | Description |
+|--------|-------------|
+| [Personal Assistant (Elle)](./personal-assistant) | Persistent-memory personal assistant that learns your preferences and context |
+| [YouTube](./youtube) | End-to-end YouTube video planning — research, titles, thumbnails, hooks, scripts |
+| [Substack](./substack) | Newsletter and Substack Notes content workflows |
+| [Writing](./writing) | Authentic voice writing across all content types and platforms |
+| [Content Strategy](./content-strategy) | Topic research, title generation, and hook creation |
+| [Visual Design](./visual-design) | Thumbnails, social media graphics, and visual assets |
+| [Art](./art) | AI image generation and editing via Gemini |
+| [Branding Kit](./branding-kit) | Design systems and brand guidelines |
+| [Research](./research) | Web research and competitor analysis |
+| [Agent Teams](./agent-teams) | Agent team session viewing and analysis |
+| [Skill Factory](./skill-factory) | Create new skills following the composable skill architecture |
+| [Skill Evolution](./skill-evolution) | Self-improving skills via session retrospectives |
 
-### Personal Assistant (Elle)
-
-Meet **Elle** — an AI personal assistant who actually remembers you.
-
-Elle transforms Claude Code from a stateless AI into a personal assistant with persistent memory. She learns your preferences, tracks your projects, remembers key people in your life, and gets better at helping you over time.
-
-**REQUIREMENTS:**
-No additional requirements.
-
-**Features:**
-- **Persistent Memory** — Context system that remembers you across conversations
-- **Learns from Corrections** — Makes a mistake once, never again (rules system)
-- **Proactive Assistance** — Tracks deadlines, relationships, and triggers
-- **Personalized Responses** — Everything grounded in your context
-- **Notification Sounds** — Know when Elle needs your attention
-
-**Context System:**
-```
-~/.claude/.context/
-├── core/
-│   ├── identity.md        # Who you are
-│   ├── preferences.md     # How you work
-│   ├── relationships.md   # Key people in your life
-│   ├── triggers.md        # Important dates & reminders
-│   ├── projects.md        # What you're working on
-│   └── rules.md           # Hard rules from corrections
-│   └── ...
-```
-
-**[View Plugin →](./personal-assistant)**
-
-### YouTube
-
-Orchestrate research, writing, and design skills to plan YouTube videos end-to-end.
-
-**REQUIREMENTS:**
-This plugin requires a YouTube Data API key and a Gemini API key. Please refer to the plugin's [README](./youtube/README.md) for more information.
-
-**Features:**
-- Plan complete videos: research → titles → thumbnails → hooks → scripts
-- Repurpose video content into newsletters, social posts, and more
-- YouTube Analytics integration via MCP server
-- Thin orchestrator — delegates to writing, content-strategy, and visual-design plugins
-
-**[View Plugin →](./youtube)**
-
-### Skill Evolution
-
-A meta-plugin for self-improving skills. Captures friction from working sessions and writes improvement notes to auto-memory.
-
-**REQUIREMENTS:**
-No additional requirements.
-
-**Features:**
-- **Real-time friction capture** — Detects user corrections and frustration mid-session
-- **Interactive retrospective** — `/retrospective` trigger reviews the session and presents findings
-- **Auto-memory integration** — Writes confirmed findings to MEMORY.md for immediate effect
-- **Skill improvement proposals** — Drafts proposed edits to existing skills for user review
-
-**[View Plugin →](./skill-evolution)**
-
----
-
-## 👤 Author
+## Author
 
 **Kenny Liao (The AI Launchpad)**
-- YouTube: [@KennethLiao](https://www.youtube.com/@KennethLiao)
-- GitHub: [@kenneth-liao](https://github.com/kenneth-liao)
-
-## 🔗 Related Projects
-
-- [AI Launchpad](https://github.com/kenneth-liao/ai-launchpad) - The main AI development framework
-- [Thumbkit](https://github.com/kenneth-liao/thumbkit) - CLI tool for YouTube thumbnail generation (legacy — new plugins use `art:nanobanana`)
-
----
-
-Made with ❤️ for the Claude Code community
+[YouTube](https://www.youtube.com/@KennethLiao) · [GitHub](https://github.com/kenneth-liao)

@@ -1,33 +1,23 @@
-# skill-evolution/
+# Skill Evolution
 
-A meta-plugin for self-improving skills over time. Captures session friction, identifies skill gaps and deficiencies, and writes improvement notes to auto-memory and skill improvement proposals.
+Meta-plugin for self-improving skills. Captures session friction, identifies skill gaps, and writes improvement notes to auto-memory.
 
-## Purpose
+## Prerequisites
 
-As Claude Code executes skills across sessions, mistakes and gaps emerge. This plugin closes the feedback loop by:
+- AI Launchpad marketplace added — see [main README](../README.md)
 
-- Detecting user friction signals in real-time (corrections, redos, frustration)
-- Running interactive retrospectives at end of session
-- Writing confirmed findings to auto-memory (MEMORY.md) for immediate effect
-- Drafting skill improvement proposals for user review
+## Installation
+
+```
+/plugin install skill-evolution@ai-launchpad-marketplace
+```
+
+Restart Claude Code for the changes to take effect.
 
 ## Skills
 
-### retrospective (Meta Skill)
+| Skill | Description |
+|-------|-------------|
+| `retrospective` | Interactive session review — detects friction, classifies findings, and writes confirmed improvements to MEMORY.md |
 
-Two-mode meta skill:
-
-1. **Real-time friction capture** (passive): Recognizes user correction/frustration mid-session and mentally catalogs friction moments without interrupting workflow.
-2. **Interactive retrospective** (active): Triggered by user via `/retrospective`. Reviews session, classifies findings, presents interactively for user confirmation, writes to memory.
-
-## Directory Structure
-
-```
-skill-evolution/
-├── .claude-plugin/
-│   └── plugin.json
-├── README.md
-└── skills/
-    └── retrospective/
-        └── SKILL.md
-```
+Trigger with `/retrospective` at the end of a working session.

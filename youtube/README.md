@@ -1,39 +1,37 @@
-# youtube
+# YouTube
 
-A thin orchestrator plugin for YouTube content workflows. This plugin sequences foundation skills (research, writing, design) into YouTube-specific production pipelines. It contains workflow logic and platform-specific decisions, but delegates all content generation to foundation skills.
+End-to-end YouTube video planning — orchestrates research, writing, and design skills into YouTube-specific production workflows.
+
+## Prerequisites
+
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) (required for the YouTube Analytics MCP server)
+- AI Launchpad marketplace added — see [main README](../README.md)
+- `YOUTUBE_API_KEY` environment variable set with a [YouTube Data API](https://developers.google.com/youtube/v3/getting-started) key
+
+## Installation
+
+```
+/plugin install youtube@ai-launchpad-marketplace
+```
+
+Restart Claude Code for the changes to take effect.
 
 ## Skills
 
-### plan-video
-
-Orchestrates a complete video planning workflow: research, title generation, thumbnail concepts, hook strategies, and content outlining. Delegates to `content-strategy:research`, `content-strategy:title`, `visual-design:thumbnail`, `content-strategy:hook`, and `writing:copywriting` while managing the user selection workflow between steps.
-
-### repurpose-video
-
-Takes a completed video's content (research, plan, transcript) and repurposes it across platforms. Sequences multiple `writing:copywriting` invocations with platform-specific references (newsletter, Twitter, LinkedIn, Substack Notes) to transform video content into multi-platform distribution.
+| Skill | Description |
+|-------|-------------|
+| `plan-video` | Complete video planning: research, titles, thumbnails, hooks, content outline |
+| `repurpose-video` | Repurpose a completed video into newsletter issues, social posts, and more |
+| `newsletter-to-video` | Convert a newsletter issue into a YouTube video outline |
+| `create-post` | Create YouTube community posts for engagement |
 
 ## Agents
 
-### YouTube Researcher
-
-An expert YouTube data researcher powered by Claude Haiku. Uses the YouTube Analytics MCP tools to search and analyze channels, videos, comments, and transcripts. Returns structured research reports with metrics and findings.
-
-### Thumbnail Reviewer
-
-An expert thumbnail concept reviewer. Evaluates thumbnail concepts against proven design requirements (glance test, curiosity, focal points, mobile-first). Provides actionable feedback without subjective creative opinions.
+| Agent | Description |
+|-------|-------------|
+| YouTube Researcher | Expert researcher using YouTube Analytics MCP tools |
+| Thumbnail Reviewer | Evaluates thumbnail concepts against proven design patterns |
 
 ## MCP Server
 
-### youtube-analytics
-
-A Python MCP server (via `uv`) that wraps the YouTube Data API. Provides tools for searching videos, fetching video/channel details, reading comments and transcripts, finding related videos, and discovering trending content. Requires a `YOUTUBE_API_KEY` environment variable.
-
-## Architecture
-
-This plugin is a **thin orchestrator** -- it does not contain implementation logic for titles, thumbnails, hooks, or copywriting. Instead, it composes foundation skills from other plugins:
-
-- `content-strategy` -- research, title formulas, hook strategies
-- `visual-design` -- thumbnail concepts and generation
-- `writing` -- copywriting, voice consistency
-
-The YouTube Analytics MCP server is the only implementation detail owned by this plugin, providing YouTube-specific data access to any skill invoked from this context.
+The `youtube-analytics` MCP server wraps the YouTube Data API, providing tools for searching videos, fetching details, reading comments/transcripts, and discovering trending content.
