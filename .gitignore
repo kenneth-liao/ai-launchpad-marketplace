@@ -38,3 +38,7 @@ tmp/
 
 # Worktrees
 .worktrees/
+
+# Local-only folders
+.archive/
+.docs/
