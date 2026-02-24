@@ -205,20 +205,21 @@ class YouTubeService:
     # -- transcript --
     def get_video_transcript(self, video_id: str, language: Optional[str] = None) -> list:
         video_id = parse_video_id(video_id)
+        ytt = YouTubeTranscriptApi()
         if language:
-            transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+            transcript_list = ytt.list(video_id)
             try:
                 transcript = transcript_list.find_transcript([language])
-                return transcript.fetch()
+                return transcript.fetch().to_raw_data()
             except NoTranscriptFound:
                 try:
                     transcript = transcript_list.find_generated_transcript([language])
-                    return transcript.fetch()
+                    return transcript.fetch().to_raw_data()
                 except Exception:
                     transcript = transcript_list.find_transcript(["en"])
-                    return transcript.fetch()
+                    return transcript.fetch().to_raw_data()
         else:
-            return YouTubeTranscriptApi.get_transcript(video_id)
+            return ytt.fetch(video_id).to_raw_data()
 
     # -- related videos --
     @_retry_on_rate_limit
@@ -420,9 +421,9 @@ def get_video_transcript(video_id: str, language: Optional[str] = None) -> dict:
         raw = svc.get_video_transcript(video_id, language)
         segments = []
         for seg in raw:
-            text = getattr(seg, "text", "") if not isinstance(seg, dict) else seg.get("text", "")
-            start = getattr(seg, "start", 0) if not isinstance(seg, dict) else seg.get("start", 0)
-            dur = getattr(seg, "duration", 0) if not isinstance(seg, dict) else seg.get("duration", 0)
+            text = seg.get("text", "")
+            start = seg.get("start", 0)
+            dur = seg.get("duration", 0)
             segments.append({
                 "text": text,
                 "start": start,
