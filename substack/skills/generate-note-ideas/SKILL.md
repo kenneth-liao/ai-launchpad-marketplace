@@ -31,7 +31,7 @@ Use this skill when:
 
 Execute all steps below in order.
 
-### Step 0: Load Processed Log
+### Step 0: Load Processed Log and Content Bank
 
 Read `./substack/notes/processed-log.md` to determine which sources have already been scanned.
 
@@ -44,7 +44,14 @@ Read `./substack/notes/processed-log.md` to determine which sources have already
 - Create the `./substack/notes/` directory if it does not exist
 - Create the file with the empty template (see Output Structure below -- headers only, no data rows)
 
-Also read `./substack/notes/ideas.md` if it exists. Previously generated ideas feed duplicate prevention in Step 4.
+Read `./substack/notes/ideas.md` (the content bank) if it exists:
+- Tally pending ideas per type to identify which types need new ideas
+- Tally high-converter vs high-engagement pending ideas to identify conversion gaps
+- Feed all existing ideas (any status) to Step 4 for duplicate prevention
+- Report the current bank inventory to the user: "Content bank has X pending ideas across Y types. Types needing ideas: [list]."
+
+**If content bank does not exist:**
+- Create it with the empty template (see Output Structure below -- type headers only, no ideas)
 
 ### Step 1: Fetch Published YouTube Content
 
@@ -121,16 +128,21 @@ The user can:
 
 **CRITICAL**: Do not save any output until the user approves. Present and wait.
 
-### Step 6: Save Output
+### Step 6: Save to Content Bank
 
-After user approval, save to two files:
+After user approval, update two files:
 
-**1. Append approved ideas to `./substack/notes/ideas.md`:**
-- Add a `## Run: YYYY-MM-DD` header for this batch
-- Write each approved idea in the structured format (see Output Structure below)
-- Separate runs with a `---` horizontal rule
+**1. File approved ideas into `./substack/notes/ideas.md` by type:**
+- For each approved idea, add it under the matching note type section
+- Use the content bank idea format (Topic, Status: pending, Source, Pitch, Rationale, Conversion, Added date)
+- Place new ideas at the bottom of each type section (newest last)
 
-**2. Update `./substack/notes/processed-log.md`:**
+**2. Update Quick Stats header:**
+- Recalculate total pending/drafted/published counts
+- Update "Last ideation run" date
+- Recalculate "Types needing ideas" (types with 0 pending ideas)
+
+**3. Update `./substack/notes/processed-log.md`:**
 - Add a row for each new YouTube video scanned (video ID, title, scan date, ideas generated count)
 - Add a row for each new newsletter issue scanned (URL, title, scan date, ideas generated count)
 - Update the Substack Notes Scanned section with the latest scan date and gap analysis summary
@@ -143,31 +155,57 @@ Do NOT automatically invoke `create-note`. This skill generates ideas only -- th
 
 ## Output Structure
 
-### Ideas File (`./substack/notes/ideas.md`)
+### Content Bank (`./substack/notes/ideas.md`)
+
+The content bank organizes ideas by note type for easy retrieval during writing sessions. Ideas flow from ideation runs into type-organized sections with status tracking.
 
 ```markdown
-# Substack Note Ideas
+# Substack Notes Content Bank
 
-## Run: YYYY-MM-DD
-
-### Idea 1
-**Topic:** [topic]
-**Type:** [note type]
-**Source:** [source reference]
-**Pitch:** [one-line pitch]
-**Rationale:** [strategic rationale]
+## Quick Stats
+- Total pending: 0 | Drafted: 0 | Published: 0
+- Last ideation run: YYYY-MM-DD
+- Types needing ideas: [list types with 0 pending ideas]
 
 ---
 
-### Idea 2
-**Topic:** [topic]
-**Type:** [note type]
-**Source:** [source reference]
-**Pitch:** [one-line pitch]
-**Rationale:** [strategic rationale]
+## Single-Punch Wisdom
+
+## Income Proof Story
+
+## Pattern Observation
+
+## Contrarian Statement
+
+## Problem → Solution
+
+## Build-in-Public Update
+
+## List-Based Tactical
+
+## Vulnerable Personal Story
+
+## Newsletter Teaser
+
+## Direct Advice
 ```
 
-Multiple runs are separated with a `---` horizontal rule between the last idea of one run and the `## Run:` header of the next.
+Each idea within a type section uses this format:
+
+```markdown
+### [Specific topic in 5-10 words]
+**Status:** pending
+**Source:** [YouTube — "Title" (video ID) | Newsletter — "Title" (URL) | Web trend — description]
+**Pitch:** [One sentence describing the note's core message]
+**Rationale:** [Why this idea is worth posting — engagement potential, gap it fills, timeliness]
+**Conversion:** [High Converter | High Engagement | Both | Moderate]
+**Added:** YYYY-MM-DD
+```
+
+**Status values:**
+- `pending` — idea generated but not yet written
+- `drafted` — note has been drafted via `substack:create-note`
+- `published` — note has been published to Substack
 
 ### Processed Log (`./substack/notes/processed-log.md`)
 
@@ -191,12 +229,14 @@ Multiple runs are separated with a `---` horizontal rule between the last idea o
 
 Verify completion before finalizing:
 - [ ] Processed log loaded or created (Step 0)
+- [ ] Content bank loaded and inventory reported (Step 0)
 - [ ] YouTube videos scanned via MCP tools or web search fallback (Step 1)
 - [ ] Substack newsletter issues scanned via web fetch (Step 2)
 - [ ] Web trends gathered (Step 3)
 - [ ] `content-strategy:ideate` invoked with `references/substack-notes-ideation.md` (Step 4)
 - [ ] Ideas presented to user for approval (Step 5)
-- [ ] Approved ideas saved to `./substack/notes/ideas.md` (Step 6)
+- [ ] Approved ideas filed by type in content bank `./substack/notes/ideas.md` (Step 6)
+- [ ] Quick Stats updated in content bank (Step 6)
 - [ ] Processed log updated with newly scanned sources (Step 6)
 - [ ] Handoff to `substack:create-note` suggested (Step 7)
 

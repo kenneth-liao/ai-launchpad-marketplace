@@ -45,6 +45,13 @@ Check if the user has specified a newsletter issue or if an issue directory exis
 - Notes will focus on engagement, authority-building, or value delivery
 - Any note type is available
 
+**Content Bank Check:**
+
+Also check if `./substack/notes/ideas.md` (the content bank) exists:
+- If it exists and the user did NOT specify a topic, read the bank and present pending ideas organized by type as topic options
+- If it exists and the user DID specify a topic, check if the topic matches a pending idea in the bank — if so, note the match for status update in Step 5
+- If the bank does not exist, proceed normally — the user provides a topic directly
+
 ### Step 1: Invoke `content-strategy:research`
 
 **MANDATORY**: Invoke `content-strategy:research` with `references/substack-notes-strategy.md` to determine the strategic context for this note.
@@ -116,6 +123,12 @@ Present the final note to the user for approval.
 
 **If no issue directory:**
 - Present the final note inline to the user
+
+**Content Bank Update:**
+
+If the note was based on a content bank idea:
+- Update the idea's status from `pending` to `drafted` in `./substack/notes/ideas.md`
+- Recalculate the Quick Stats header (pending/drafted/published counts, types needing ideas)
 
 ## Output Format
 
