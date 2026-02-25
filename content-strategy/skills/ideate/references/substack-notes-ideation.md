@@ -6,7 +6,7 @@ Strategic frameworks for extracting Substack Note ideas from published content s
 
 ## Angle Extraction Framework
 
-When reading a YouTube transcript, newsletter issue, or other content source, scan for these eight categories of note-worthy material. Each category reliably produces standalone Notes that deliver value without requiring the audience to consume the original source.
+When reading a YouTube transcript, newsletter issue, or other content source, scan for these ten categories of note-worthy material. Each category reliably produces standalone Notes that deliver value without requiring the audience to consume the original source.
 
 ### 1. Surprising Data Points or Counterintuitive Findings
 
@@ -110,6 +110,54 @@ Tutorials and how-to content contain individual steps that are valuable on their
 
 **Extraction signal:** A step or tip that would make someone say "I didn't know you could do that" or "that's going to save me hours."
 
+### 9. Generosity Opportunities
+
+Look for moments where promoting other creators, inviting audience participation, or offering help would be natural. Generosity notes are the single highest-converting format — they build community and trust simultaneously.
+
+**What to look for:**
+- Creators mentioned or referenced in the content
+- Tools, products, or projects by other people worth highlighting
+- Moments where the audience could contribute their own experience
+- Topics where "tell me yours" invitations would feel genuine
+
+**Extraction signal:** Any mention of another creator, tool, or community moment that could become a "spotlight" or "promote yourself here" note.
+
+### 10. Questions the Audience Would Debate
+
+Look for topics where there's genuine disagreement, curiosity, or personal variation. These become Conversation Starter notes (Direct Advice variant) that drive comments — the highest-weighted engagement signal for the algorithm.
+
+**What to look for:**
+- Topics where smart people disagree
+- "What's your approach to X?" opportunities
+- Decisions with multiple valid answers
+- Personal experience questions ("What almost made you quit?")
+- Preference-based choices where there's no single right answer
+
+**Extraction signal:** A topic where asking "What's your take?" or "What's your experience?" would generate genuinely diverse answers, not just agreement.
+
+---
+
+## Newsletter-to-Notes Extraction
+
+Every newsletter issue contains 3-5 Notes buried inside it. This framework systematically extracts them. One 2,000-word post can fuel a week of Notes content.
+
+### Extraction Map
+
+| Newsletter Element | Note Type | How to Extract |
+|---|---|---|
+| Key finding or thesis | Pattern Observation | State the finding as a standalone observation with 1-2 supporting details |
+| Data point or metric | Income Proof Story | Frame the number with a before/after arc or a surprising comparison |
+| How-to section or tutorial step | Problem → Solution (Quick Fix) | Isolate one step that solves a specific problem in under 60 seconds |
+| Opinion or strong take | Contrarian Statement | Sharpen the opinion into a bold claim + brief reasoning |
+| Reader response or interesting comment | Direct Advice (Conversation Starter) | Use the response as a springboard: "A reader said X. Here's why that changes things." |
+| Behind-the-scenes detail | Build-in-Public Update | Share the process detail with a metric or timeline |
+
+### Repurposing Principles
+
+- **Say the same thing in different ways**: A newsletter insight can become a Pattern Observation, a Contrarian Statement, AND a Quick Fix — each approaching the same idea from a different angle.
+- **Don't copy-paste**: Extract the angle, not the paragraph. A note should feel native to the format, not like a newsletter excerpt.
+- **One idea per note**: A newsletter section with 3 insights = 3 separate notes, not 1 long note.
+
 ---
 
 ## Source-to-Type Mapping
@@ -120,7 +168,7 @@ Different content sources naturally produce different note types. Use this mappi
 |---|---|---|
 | **YouTube transcript** | Pattern Observation, Contrarian Statement, Problem -> Solution, Single-Punch Wisdom | Build-in-Public Update, List-Based Tactical |
 | **YouTube comments** | Direct Advice (answering common questions), Contrarian Statement (correcting misconceptions) | Problem -> Solution (addressing audience pain points) |
-| **Newsletter issue** | Newsletter Teaser, Single-Punch Wisdom, List-Based Tactical | Pattern Observation, Problem -> Solution |
+| **Newsletter issue** | Newsletter Teaser, Problem → Solution (Quick Fix), Pattern Observation | Single-Punch Wisdom, List-Based Tactical, Contrarian Statement, Income Proof Story |
 | **Past notes history** | Gap analysis — identify which of the 10 types haven't been used recently and prioritize those | All types (filling gaps) |
 | **Web trends** | Pattern Observation, Direct Advice (tied to timely topics), Build-in-Public Update (tied to current tools/platforms) | Contrarian Statement (challenging trend narratives) |
 
@@ -139,6 +187,8 @@ When reviewing past notes history:
 2. Identify the 2-3 types with the fewest recent uses.
 3. When extracting ideas from other sources, actively look for angles that map to the underused types.
 4. Flag the gap in the idea's rationale so the user knows the idea partially serves variety.
+5. Tally how many recent notes map to high-converter vs. high-engagement types.
+6. If the last 2 weeks have been engagement-heavy (mostly Contrarian, Pattern Observation, Vulnerable Story), flag this and bias extraction toward converter types (Quick Fix, Generosity, Tactical, Conversation Starter).
 
 ---
 
@@ -154,10 +204,11 @@ Every generated idea must pass this checklist before inclusion. If an idea fails
 | 4 | **Maps to a note type** | Does it cleanly map to one of the 10 note types from `writing:copywriting` > `substack-notes.md`? If it doesn't fit any type, it's probably too abstract or too complex for a note. |
 | 5 | **Not a rehash** | Has something substantially similar already been posted in past notes? Check the past notes history. Similar topic is fine; same angle is not. |
 | 6 | **Clear engagement angle** | Would someone restack this, quote it, or reply to it? Every idea needs a reason for the reader to interact — a surprising claim, a useful tip, a question worth answering, or a take worth debating. |
+| 7 | **Conversion potential** | Does this idea map to a high-converter type (Problem → Solution, Generosity, Income Proof Story, List-Based Tactical, Conversation Starter)? If the entire batch skews toward engagement-only types, actively look for converter angles — but never force a weak idea just for conversion balance. |
 
 ### Applying the Checklist
 
-Run each idea through all six criteria in order. If an idea fails criterion 1 (standalone value), there's no point checking the rest — it needs rework or removal. The criteria are ordered by importance: standalone value and specificity are non-negotiable; engagement angle is the final polish check.
+Run each idea through all seven criteria in order. If an idea fails criterion 1 (standalone value), there's no point checking the rest — it needs rework or removal. The criteria are ordered by importance: standalone value and specificity are non-negotiable; engagement angle is the final polish check.
 
 ---
 
@@ -255,13 +306,13 @@ Return each idea in this structure. The format is designed so the user (or a dow
 
 ## Volume Target
 
-Generate **5-10 ideas per run**. Bias toward quality over quantity.
+Generate **up to 21 ideas per run** to support 1-3 notes/day cadence. Bias toward quality over quantity — it's completely fine to return fewer ideas if the source material is thin.
 
-- **5 ideas** is the minimum for a useful batch — fewer than that suggests the source material was thin or the extraction wasn't thorough enough.
-- **10 ideas** is the maximum — beyond that, quality starts to dilute and the user faces decision fatigue.
-- **7-8 ideas** is the ideal sweet spot for most runs.
+- **Minimum useful batch:** 5 ideas — fewer than that suggests the source material was thin or the extraction wasn't thorough enough.
+- **Comfortable range:** 7-14 ideas — enough for several days of posting.
+- **Maximum:** 21 ideas — a full week at 3/day cadence. Only reach this when multiple strong sources are available.
 
-If a source doesn't have strong note-worthy angles, skip it rather than forcing weak ideas. Not every video or newsletter issue is a goldmine — some content is too niche, too similar to recent notes, or too thin on extractable material. Report that honestly rather than padding the list.
+**Never force weak ideas.** If a source doesn't have strong note-worthy angles, skip it rather than padding the list. Not every video or newsletter issue is a goldmine — some content is too niche, too similar to recent notes, or too thin on extractable material. Report that honestly.
 
 ### Distribution Across Sources
 
@@ -270,3 +321,7 @@ When multiple sources are provided in a single run, aim for ideas from each sour
 ### Distribution Across Types
 
 Aim for at least 3 different note types across the batch. A batch of 8 ideas that are all Pattern Observations suggests tunnel vision during extraction. Use the gap analysis from past notes history to guide type variety.
+
+### Distribution Across Conversion Tags
+
+Aim for a healthy mix of high-converter and high-engagement types. If the batch is skewing entirely toward engagement types (contrarian takes, vulnerable stories), actively look for Quick Fix, Generosity, or Tactical angles to balance the conversion potential.
