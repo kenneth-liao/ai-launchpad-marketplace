@@ -1,17 +1,17 @@
 ---
 name: generate-note-ideas
-description: "Scan published YouTube videos, Substack newsletter issues, and Substack Notes to generate high-quality note ideas. This is a thin orchestrator — it sequences source scanning, content-strategy:research invocation, and output management, but delegates all ideation logic to the research skill via references/substack-notes-ideation.md."
+description: "Scan published YouTube videos, Substack newsletter issues, and Substack Notes to generate high-quality note ideas. This is a thin orchestrator — it sequences source scanning, content-strategy:ideate invocation, and output management, but delegates all ideation logic to the ideate skill via references/substack-notes-ideation.md."
 ---
 
 # Generate Substack Note Ideas
 
 ## Overview
 
-This orchestrator scans published content across YouTube and Substack, then delegates ideation to `content-strategy:research` with the ideation reference file. It handles source fetching, processed-log management, and output persistence -- all actual idea generation logic is delegated to the foundation skill.
+This orchestrator scans published content across YouTube and Substack, then delegates ideation to `content-strategy:ideate` with the ideation reference file. It handles source fetching, processed-log management, and output persistence -- all actual idea generation logic is delegated to the foundation skill.
 
 This skill sits upstream of `substack:create-note` -- it produces a curated list of note ideas, while `create-note` writes the full note from a selected idea.
 
-**Core Principle**: This is a thin orchestrator. Never generate ideas manually. Always delegate to `content-strategy:research` via `references/substack-notes-ideation.md`. This skill manages the source-scanning workflow, duplicate prevention, and output files only.
+**Core Principle**: This is a thin orchestrator. Never generate ideas manually. Always delegate to `content-strategy:ideate` via `references/substack-notes-ideation.md`. This skill manages the source-scanning workflow, duplicate prevention, and output files only.
 
 ## When to Use
 
@@ -88,9 +88,9 @@ Use web search to find trending topics in the user's niche.
 
 **This step always runs** regardless of whether new sources were found in Steps 1-2. Trending topics provide timely note ideas even when no new content has been published.
 
-### Step 4: Invoke `content-strategy:research` with Ideation Reference
+### Step 4: Invoke `content-strategy:ideate` with Ideation Reference
 
-**MANDATORY**: Invoke `content-strategy:research` with `references/substack-notes-ideation.md` to generate structured note ideas.
+**MANDATORY**: Invoke `content-strategy:ideate` with `references/substack-notes-ideation.md` to generate structured note ideas.
 
 Provide all source material gathered in Steps 0-3:
 - New YouTube video transcripts, titles, descriptions, and top comments (from Step 1)
@@ -99,7 +99,7 @@ Provide all source material gathered in Steps 0-3:
 - Web trend findings (from Step 3)
 - Previously generated ideas from `ideas.md` (from Step 0, for duplicate prevention)
 
-The research skill applies the ideation framework and returns structured ideas with topic, note type, source, pitch, and strategic rationale.
+The ideate skill applies the ideation framework and returns structured ideas with topic, note type, source, pitch, and strategic rationale.
 
 NOTE: All ideation logic -- source-to-idea extraction, note-type matching, angle generation, duplicate filtering -- lives in the reference file. Do not implement any of this in the orchestrator.
 
@@ -194,7 +194,7 @@ Verify completion before finalizing:
 - [ ] YouTube videos scanned via MCP tools or web search fallback (Step 1)
 - [ ] Substack newsletter issues scanned via web fetch (Step 2)
 - [ ] Web trends gathered (Step 3)
-- [ ] `content-strategy:research` invoked with `references/substack-notes-ideation.md` (Step 4)
+- [ ] `content-strategy:ideate` invoked with `references/substack-notes-ideation.md` (Step 4)
 - [ ] Ideas presented to user for approval (Step 5)
 - [ ] Approved ideas saved to `./substack/notes/ideas.md` (Step 6)
 - [ ] Processed log updated with newly scanned sources (Step 6)
@@ -202,7 +202,7 @@ Verify completion before finalizing:
 
 ## Common Pitfalls to Avoid
 
-1. **Generating ideas manually**: All ideation logic lives in the research reference file. Delegate to `content-strategy:research` -- do not implement idea generation in this orchestrator.
+1. **Generating ideas manually**: All ideation logic lives in the ideate reference file. Delegate to `content-strategy:ideate` -- do not implement idea generation in this orchestrator.
 2. **Re-scanning processed sources**: Always check the processed log first. Skip sources already scanned.
 3. **Ignoring the notes history**: Past notes feed gap analysis. Always load them in Step 2.
 4. **Skipping web trends**: Trending topics provide timely ideas even when no new content exists. Step 3 always runs.

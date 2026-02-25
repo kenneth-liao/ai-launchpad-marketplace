@@ -19,5 +19,6 @@ Restart Claude Code for the changes to take effect.
 | Skill | Description |
 |-------|-------------|
 | `research` | Topic and competitor research — analyzes content landscape, identifies gaps, produces actionable insights |
+| `ideate` | Content idea extraction — mines published material for structured ideas, maps to content types, quality-filters against platform criteria |
 | `title` | Optimized titles and headlines — YouTube titles, newsletter subject lines, social headlines |
 | `hook` | Retention-optimized opening hooks — extends curiosity from the title, prevents common opening mistakes |

@@ -1,6 +1,6 @@
 # Substack Notes Ideation
 
-Strategic frameworks for extracting Substack Note ideas from published content sources. Used by `content-strategy:research` when invoked by `substack:generate-note-ideas`. The companion strategy reference (`substack-notes-strategy.md`) covers timing, cadence, and publishing cycles — this file covers **how to mine existing content for note-worthy angles**.
+Strategic frameworks for extracting Substack Note ideas from published content sources. Used by `content-strategy:ideate` when invoked by `substack:generate-note-ideas`. The companion strategy reference (`substack-notes-strategy.md`) covers timing, cadence, and publishing cycles — this file covers **how to mine existing content for note-worthy angles**.
 
 ---
 
