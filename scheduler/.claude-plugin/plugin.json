@@ -1,0 +1,9 @@
+{
+  "name": "scheduler",
+  "description": "A plugin for scheduling automated Claude Code tasks — manages launchd-based recurring execution of skills, prompts, and scripts with safety controls and notifications",
+  "version": "1.0.0",
+  "author": {
+    "name": "Kenny Liao (The AI Launchpad)",
+    "url": "https://www.youtube.com/@KennethLiao"
+  }
+}

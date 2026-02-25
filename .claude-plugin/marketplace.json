@@ -58,6 +58,11 @@
       "name": "agent-teams",
       "source": "./agent-teams",
       "description": "A plugin for Claude Code agent team workflows — session viewing, analysis, and best practice evaluation"
+    },
+    {
+      "name": "scheduler",
+      "source": "./scheduler",
+      "description": "A plugin for scheduling automated Claude Code tasks using macOS launchd"
     }
   ]
 }
