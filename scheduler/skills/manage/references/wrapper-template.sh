@@ -25,6 +25,23 @@ LOG_FILE="$HOME/.claude/scheduler/logs/$DATE-$TASK_ID.log"
 RESULT_FILE="$RESULT_DIR/$TASK_ID.md"
 mkdir -p "$RESULT_DIR" "$(dirname "$LOG_FILE")"
 
+# --- Timeout helper (macOS-compatible, no GNU coreutils needed) ---
+run_with_timeout() {
+  local timeout_secs=$1
+  shift
+  "$@" &
+  local pid=$!
+  ( sleep "$timeout_secs" && kill -TERM "$pid" 2>/dev/null ) &
+  local watchdog=$!
+  wait "$pid" 2>/dev/null
+  local exit_code=$?
+  kill "$watchdog" 2>/dev/null
+  wait "$watchdog" 2>/dev/null
+  return $exit_code
+}
+
+TIMEOUT_SECONDS=$((TIMEOUT_MINUTES * 60))
+
 # --- Execute ---
 START_TIME=$(date +%s)
 echo "=== $TASK_ID started at $(date '+%Y-%m-%d %H:%M:%S') ===" >> "$LOG_FILE"
@@ -34,17 +51,17 @@ cd "$WORKDIR"
 EXIT_CODE=0
 case "$TASK_TYPE" in
   skill)
-    timeout "${TIMEOUT_MINUTES}m" claude -p "/$TASK_TARGET" \
+    run_with_timeout "$TIMEOUT_SECONDS" claude -p "/$TASK_TARGET" \
       --max-turns "$MAX_TURNS" --output-format text \
       > "$RESULT_FILE" 2>> "$LOG_FILE" || EXIT_CODE=$?
     ;;
   prompt)
-    timeout "${TIMEOUT_MINUTES}m" claude -p "$TASK_TARGET" \
+    run_with_timeout "$TIMEOUT_SECONDS" claude -p "$TASK_TARGET" \
       --max-turns "$MAX_TURNS" --output-format text \
       > "$RESULT_FILE" 2>> "$LOG_FILE" || EXIT_CODE=$?
     ;;
   script)
-    timeout "${TIMEOUT_MINUTES}m" bash "$TASK_TARGET" \
+    run_with_timeout "$TIMEOUT_SECONDS" bash "$TASK_TARGET" \
       > "$RESULT_FILE" 2>> "$LOG_FILE" || EXIT_CODE=$?
     ;;
 esac
