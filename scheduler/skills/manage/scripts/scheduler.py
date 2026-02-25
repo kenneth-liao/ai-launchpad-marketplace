@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import textwrap
@@ -31,7 +32,10 @@ REGISTRY_FILE = SCHEDULER_DIR / "registry.json"
 WRAPPERS_DIR = SCHEDULER_DIR / "wrappers"
 LOGS_DIR = SCHEDULER_DIR / "logs"
 RESULTS_DIR = SCHEDULER_DIR / "results"
-PLIST_DIR = Path.home() / "Library" / "LaunchAgents"
+PLIST_DIR = Path(os.environ.get(
+    "SCHEDULER_PLIST_DIR",
+    str(Path.home() / "Library" / "LaunchAgents")
+))
 PLIST_PREFIX = "com.ailaunchpad.scheduler"
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -338,6 +342,9 @@ def _launchctl_unload(plist_path: Path) -> None:
 
 def cmd_add(args: argparse.Namespace) -> None:
     """Add a new scheduled task."""
+    if not re.match(r'^[a-zA-Z0-9][a-zA-Z0-9_-]*$', args.id):
+        _error(f"Invalid task ID '{args.id}'. Use only letters, numbers, hyphens, and underscores.")
+
     _validate_cron(args.cron)
 
     if args.type not in ("skill", "prompt", "script"):
@@ -425,6 +432,9 @@ def cmd_pause(args: argparse.Namespace) -> None:
     if args.id not in registry["tasks"]:
         _error(f"Task '{args.id}' not found.")
 
+    if registry["tasks"][args.id]["status"] == "paused":
+        _error(f"Task '{args.id}' is already paused.")
+
     plist = _plist_path(args.id)
     if plist.exists():
         _launchctl_unload(plist)
@@ -439,6 +449,9 @@ def cmd_resume(args: argparse.Namespace) -> None:
     registry = _load_registry()
     if args.id not in registry["tasks"]:
         _error(f"Task '{args.id}' not found.")
+
+    if registry["tasks"][args.id]["status"] == "active":
+        _error(f"Task '{args.id}' is already active.")
 
     plist = _plist_path(args.id)
     if plist.exists():
@@ -535,7 +548,7 @@ def cmd_update_last_run(args: argparse.Namespace) -> None:
 def cmd_repair(args: argparse.Namespace) -> None:
     """Regenerate missing wrapper scripts and plist files for active tasks."""
     registry = _load_registry()
-    repaired = []
+    issues_fixed = 0
 
     for task_id, task in registry["tasks"].items():
         if task["status"] != "active":
@@ -544,21 +557,21 @@ def cmd_repair(args: argparse.Namespace) -> None:
         wrapper_path = WRAPPERS_DIR / f"{task_id}.sh"
         plist = _plist_path(task_id)
 
-        needs_repair = False
-
         if not wrapper_path.exists():
             _generate_wrapper(task)
-            needs_repair = True
+            print(f"Regenerated wrapper for '{task_id}'")
+            issues_fixed += 1
 
         if not plist.exists():
             _generate_plist(task_id, wrapper_path)
             _launchctl_load(plist)
-            needs_repair = True
+            print(f"Regenerated plist for '{task_id}'")
+            issues_fixed += 1
 
-        if needs_repair:
-            repaired.append(task_id)
-
-    print(json.dumps({"repaired": repaired}, indent=2))
+    if issues_fixed > 0:
+        print(f"Repair complete: {issues_fixed} issue(s) fixed.")
+    else:
+        print("Repair complete: no issues found.")
 
 
 # ---------------------------------------------------------------------------
