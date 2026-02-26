@@ -159,52 +159,78 @@ def _cron_to_calendar_interval(expr: str) -> list[dict]:
 
     Each dict may contain: Minute, Hour, Day, Month, Weekday.
     Wildcard fields are omitted (meaning "every").
+    Supports step syntax (e.g. ``*/2``, ``1-30/5``) and comma-separated lists.
+    Produces the Cartesian product of all multi-value fields so that
+    launchd fires at every specified combination.
     """
     parts = expr.split()
     minute, hour, dom, month, dow = parts
 
-    def _parse_field(field: str) -> list[int] | None:
+    # Ranges used for expanding step syntax against wildcards
+    FIELD_RANGES: dict[str, tuple[int, int]] = {
+        "minute": (0, 59),
+        "hour": (0, 23),
+        "dom": (1, 31),
+        "month": (1, 12),
+        "dow": (0, 6),
+    }
+
+    def _parse_field(field: str, field_name: str) -> list[int] | None:
+        """Parse a single cron field into a sorted list of ints, or None for '*'."""
         if field == "*":
             return None
         nums: list[int] = []
         for part in field.split(","):
-            if "-" in part:
+            # Handle step syntax: */N or A-B/N
+            if "/" in part:
+                range_part, step_str = part.split("/", 1)
+                step = int(step_str)
+                if range_part == "*":
+                    lo, hi = FIELD_RANGES[field_name]
+                elif "-" in range_part:
+                    lo_s, hi_s = range_part.split("-", 1)
+                    lo, hi = int(lo_s), int(hi_s)
+                else:
+                    lo = int(range_part)
+                    hi = FIELD_RANGES[field_name][1]
+                nums.extend(range(lo, hi + 1, step))
+            elif "-" in part:
                 lo, hi = part.split("-", 1)
                 nums.extend(range(int(lo), int(hi) + 1))
             else:
                 nums.append(int(part))
-        return nums
+        return sorted(set(nums))
 
-    minute_vals = _parse_field(minute)
-    hour_vals = _parse_field(hour)
-    dom_vals = _parse_field(dom)
-    month_vals = _parse_field(month)
-    dow_vals = _parse_field(dow)
+    minute_vals = _parse_field(minute, "minute")
+    hour_vals = _parse_field(hour, "hour")
+    dom_vals = _parse_field(dom, "dom")
+    month_vals = _parse_field(month, "month")
+    dow_vals = _parse_field(dow, "dow")
 
-    # Build the base dict (without weekday/dom which may fan out)
-    base: dict[str, int] = {}
-    if minute_vals is not None:
-        base["Minute"] = minute_vals[0]
-    if hour_vals is not None:
-        base["Hour"] = hour_vals[0]
-    if month_vals is not None:
-        base["Month"] = month_vals[0]
+    # Build the Cartesian product of all multi-value fields.
+    # Fields that are None (wildcard) are omitted from the dict, which
+    # tells launchd "every value" for that field.
+    field_specs: list[tuple[str, list[int] | None]] = [
+        ("Minute", minute_vals),
+        ("Hour", hour_vals),
+        ("Day", dom_vals),
+        ("Month", month_vals),
+        ("Weekday", dow_vals),
+    ]
 
-    if dow_vals is not None and len(dow_vals) > 1:
-        # Fan out into one dict per weekday
-        intervals = []
-        for d in dow_vals:
-            entry = dict(base)
-            entry["Weekday"] = d
-            intervals.append(entry)
-        return intervals
+    intervals: list[dict] = [{}]
+    for key, vals in field_specs:
+        if vals is None:
+            continue  # wildcard — omit from dict
+        expanded: list[dict] = []
+        for existing in intervals:
+            for v in vals:
+                entry = dict(existing)
+                entry[key] = v
+                expanded.append(entry)
+        intervals = expanded
 
-    if dow_vals is not None:
-        base["Weekday"] = dow_vals[0]
-    if dom_vals is not None:
-        base["Day"] = dom_vals[0]
-
-    return [base]
+    return intervals if intervals else [{}]
 
 
 def _interval_to_plist_xml(interval: dict) -> str:
