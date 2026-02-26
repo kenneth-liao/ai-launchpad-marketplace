@@ -308,6 +308,8 @@ def _generate_wrapper(task: dict) -> Path:
     wrapper = wrapper.replace("{max_turns}", str(task["safety"]["max_turns"]))
     wrapper = wrapper.replace("{timeout_minutes}", str(task["safety"]["timeout_minutes"]))
     wrapper = wrapper.replace("{working_directory}", task["working_directory"])
+    wrapper = wrapper.replace("{run_once}", "true" if task.get("run_once") else "false")
+    wrapper = wrapper.replace("{scheduler_py}", str(Path(__file__).resolve()))
 
     WRAPPERS_DIR.mkdir(parents=True, exist_ok=True)
     wrapper_path = WRAPPERS_DIR / f"{task['id']}.sh"
@@ -397,6 +399,7 @@ def cmd_add(args: argparse.Namespace) -> None:
             "max_turns": args.max_turns,
             "timeout_minutes": args.timeout_minutes,
         },
+        "run_once": args.run_once,
         "status": "active",
         "created_at": now,
         "last_run": None,
@@ -484,6 +487,26 @@ def cmd_resume(args: argparse.Namespace) -> None:
         _launchctl_load(plist)
 
     registry["tasks"][args.id]["status"] = "active"
+    _save_registry(registry)
+    print(json.dumps(registry["tasks"][args.id], indent=2))
+
+
+def cmd_complete(args: argparse.Namespace) -> None:
+    """Mark a task as completed and unload from launchctl.
+
+    Used by run-once wrappers to self-deactivate after successful execution.
+    Unlike 'pause', this sets status to 'completed' to indicate the task
+    finished naturally rather than being manually paused.
+    """
+    registry = _load_registry()
+    if args.id not in registry["tasks"]:
+        _error(f"Task '{args.id}' not found.")
+
+    plist = _plist_path(args.id)
+    if plist.exists():
+        _launchctl_unload(plist)
+
+    registry["tasks"][args.id]["status"] = "completed"
     _save_registry(registry)
     print(json.dumps(registry["tasks"][args.id], indent=2))
 
@@ -623,6 +646,8 @@ def main() -> None:
     p_add.add_argument("--max-turns", type=int, default=20, help="Max Claude turns (default: 20)")
     p_add.add_argument("--timeout-minutes", type=int, default=15,
                        help="Timeout in minutes (default: 15)")
+    p_add.add_argument("--run-once", action="store_true", default=False,
+                       help="Run once then auto-complete (one-off task)")
     p_add.set_defaults(func=cmd_add)
 
     # --- list ---
@@ -648,6 +673,11 @@ def main() -> None:
     p_resume = subparsers.add_parser("resume", help="Resume a paused task")
     p_resume.add_argument("--id", required=True, help="Task ID")
     p_resume.set_defaults(func=cmd_resume)
+
+    # --- complete ---
+    p_complete = subparsers.add_parser("complete", help="Mark a task as completed and unload")
+    p_complete.add_argument("--id", required=True, help="Task ID")
+    p_complete.set_defaults(func=cmd_complete)
 
     # --- run ---
     p_run = subparsers.add_parser("run", help="Execute a task immediately")

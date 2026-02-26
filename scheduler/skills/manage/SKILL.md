@@ -1,11 +1,11 @@
 ---
 name: manage
-description: Manage scheduled Claude Code tasks — add, list, pause, resume, remove, view results, and test launchd-based recurring execution of skills, prompts, and scripts. Invoke via /schedule.
+description: Manage scheduled Claude Code tasks — add (recurring or one-off), list, pause, resume, remove, view results, and test launchd-based execution of skills, prompts, and scripts. Invoke via /schedule.
 ---
 
 # Scheduler
 
-Manage automated, recurring Claude Code tasks using macOS launchd. Schedule marketplace skills, freeform prompts, or shell scripts to run on a cron schedule with safety controls and desktop notifications.
+Manage automated Claude Code tasks using macOS launchd. Schedule marketplace skills, freeform prompts, or shell scripts to run on a recurring cron schedule or as one-off tasks, with safety controls and desktop notifications.
 
 ## Overview
 
@@ -16,7 +16,7 @@ This orchestrator manages the full lifecycle of scheduled tasks. It delegates al
 ## When to Use
 
 Use this skill when:
-- Scheduling a recurring task (skill, prompt, or script)
+- Scheduling a recurring or one-off task (skill, prompt, or script)
 - Listing, pausing, resuming, or removing scheduled tasks
 - Viewing results or logs from past scheduled runs
 - Testing a scheduled task before activating it
@@ -80,18 +80,25 @@ Based on type:
 - Prompt: Ask for the prompt text.
 - Script: Ask for the absolute path to the script.
 
-**Step 4: Schedule**
-Ask: "What schedule? You can use natural language or a cron expression."
-Examples: "Every Monday at 8am", "Daily at 9:00", "Every weekday at 7:30am", "0 8 * * 1"
+**Step 4: Frequency**
+Ask: "Recurring or one-off?"
+- **Recurring** — runs on a schedule until paused or removed
+- **One-off** — runs once at the specified time, then auto-completes
 
-Convert natural language to a cron expression. Confirm with the user:
+**Step 5: Schedule**
+Ask: "What schedule? You can use natural language or a cron expression."
+Examples: "Every Monday at 8am", "Daily at 9:00", "Every weekday at 7:30am", "Tomorrow at 9am", "0 8 * * 1"
+
+Convert natural language to a cron expression. For one-off tasks, convert the target datetime to a specific cron (e.g., "tomorrow at 9am" on Feb 25 → `0 9 26 2 *`).
+
+Confirm with the user:
 "That's `0 8 * * 1` — Every Monday at 8:00 AM. Correct?"
 
-**Step 5: Safety limits**
+**Step 6: Safety limits**
 Ask: "Safety limits? Defaults are max 20 turns, 15 minute timeout."
 Let user accept defaults or customize.
 
-**Step 6: Confirm and create**
+**Step 7: Confirm and create**
 Present a summary table:
 
 | Field | Value |
@@ -100,6 +107,7 @@ Present a summary table:
 | Name | Weekly note ideas |
 | Type | Skill |
 | Target | substack:generate-note-ideas |
+| Frequency | Recurring |
 | Schedule | Every Monday at 8:00 AM (0 8 * * 1) |
 | Max turns | 20 |
 | Timeout | 15 min |
@@ -120,7 +128,22 @@ uv run <skill_dir>/scripts/scheduler.py add \
   --working-directory "{cwd}"
 ```
 
+For one-off tasks, add the `--run-once` flag:
+```bash
+uv run <skill_dir>/scripts/scheduler.py add \
+  --id "morning-news-pulse" \
+  --name "Morning news pulse" \
+  --type prompt \
+  --target "Research today's AI news" \
+  --cron "0 9 26 2 *" \
+  --max-turns 20 \
+  --timeout-minutes 15 \
+  --run-once \
+  --working-directory "{cwd}"
+```
+
 Report: "Created and activated! Next run: {next run time}."
+For one-off tasks, add: "This will auto-complete after running."
 
 ### Operation: List
 
@@ -226,6 +249,8 @@ uv run <skill_dir>/scripts/scheduler.py repair
 
 ## Notes
 
+- **One-off tasks**: Tasks created with `--run-once` auto-complete after their first successful run. They remain in the registry with status `completed` so results and logs are preserved. They can be removed later with the Remove operation.
+- **Lock file**: The wrapper uses a PID-based lock to prevent concurrent runs of the same task. If a previous run is still active, the new run is skipped.
 - **Sleep behavior**: launchd catches up one missed run on wake. If multiple intervals were missed, only one run fires.
 - **Working directory**: Defaults to the current project. Tasks that use marketplace skills should point to the marketplace project directory.
 - **Auth**: Works with Claude subscription login (default) or API key from Keychain (optional).
