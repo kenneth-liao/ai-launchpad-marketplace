@@ -42,4 +42,3 @@ tmp/
 # Local-only folders
 .archive/
 .docs/
-.tests/
