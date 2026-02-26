@@ -11,6 +11,9 @@ $TIMEOUT_MINUTES = {timeout_minutes}
 $WORKDIR = "{working_directory}"
 $RUN_ONCE = "{run_once}"
 $SCHEDULER_PY = "{scheduler_py}"
+$ALLOWED_TOOLS = '{allowed_tools}'
+$PERMISSION_MODE = '{permission_mode}'
+$SKIP_PERMISSIONS = '{skip_permissions}'
 
 # --- Environment ---
 # Optional: load API key if available (not required for subscription auth)
@@ -87,11 +90,24 @@ function Log($msg) {
     Add-Content $LOG_FILE "[$timestamp] $msg"
 }
 
+# --- Permission flags ---
+$permArgs = @()
+if ($SKIP_PERMISSIONS -eq 'true') {
+    $permArgs += '--dangerously-skip-permissions'
+} elseif ($PERMISSION_MODE) {
+    $permArgs += '--permission-mode'
+    $permArgs += $PERMISSION_MODE
+}
+if ($ALLOWED_TOOLS) {
+    $permArgs += '--allowedTools'
+    $permArgs += $ALLOWED_TOOLS
+}
+
 # --- Execute ---
 $startTime = Get-Date
 $TIMEOUT_SECONDS = $TIMEOUT_MINUTES * 60
 $targetPreview = if ($TASK_TARGET.Length -gt 120) { $TASK_TARGET.Substring(0, 120) + "..." } else { $TASK_TARGET }
-Log "START  task=$TASK_ID type=$TASK_TYPE turns=$MAX_TURNS timeout=${TIMEOUT_MINUTES}m"
+Log "START  task=$TASK_ID type=$TASK_TYPE turns=$MAX_TURNS timeout=${TIMEOUT_MINUTES}m perms=$($permArgs.Count)flags"
 Log "TARGET $targetPreview"
 
 Set-Location $WORKDIR
@@ -101,15 +117,17 @@ try {
     $job = switch ($TASK_TYPE) {
         "skill" {
             Start-Job -ScriptBlock {
-                param($target, $maxTurns, $resultFile, $logFile)
-                claude -p "/$target" --max-turns $maxTurns --output-format text 2>>$logFile | Set-Content $resultFile
-            } -ArgumentList $TASK_TARGET, $MAX_TURNS, $RESULT_FILE, $LOG_FILE
+                param($target, $maxTurns, $resultFile, $logFile, $pArgs)
+                $allArgs = @('-p', "/$target", '--max-turns', $maxTurns, '--output-format', 'text') + $pArgs
+                & claude @allArgs 2>>$logFile | Set-Content $resultFile
+            } -ArgumentList $TASK_TARGET, $MAX_TURNS, $RESULT_FILE, $LOG_FILE, (,$permArgs)
         }
         "prompt" {
             Start-Job -ScriptBlock {
-                param($target, $maxTurns, $resultFile, $logFile)
-                claude -p $target --max-turns $maxTurns --output-format text 2>>$logFile | Set-Content $resultFile
-            } -ArgumentList $TASK_TARGET, $MAX_TURNS, $RESULT_FILE, $LOG_FILE
+                param($target, $maxTurns, $resultFile, $logFile, $pArgs)
+                $allArgs = @('-p', $target, '--max-turns', $maxTurns, '--output-format', 'text') + $pArgs
+                & claude @allArgs 2>>$logFile | Set-Content $resultFile
+            } -ArgumentList $TASK_TARGET, $MAX_TURNS, $RESULT_FILE, $LOG_FILE, (,$permArgs)
         }
         "script" {
             Start-Job -ScriptBlock {

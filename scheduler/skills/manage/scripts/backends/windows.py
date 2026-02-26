@@ -375,6 +375,18 @@ class WindowsBackend(PlatformBackend):
             "{output_directory}", task.get("output_directory") or ""
         )
 
+        # Permission flags (escape single quotes for PowerShell)
+        permissions = task.get("permissions") or {}
+        allowed_tools = ",".join(permissions.get("allowed_tools") or [])
+        permission_mode = permissions.get("permission_mode") or ""
+        skip_perms = "true" if permission_mode == "bypassPermissions" else "false"
+        if skip_perms == "true":
+            permission_mode = ""  # The flag is standalone
+
+        wrapper = wrapper.replace("{allowed_tools}", allowed_tools.replace("'", "''"))
+        wrapper = wrapper.replace("{permission_mode}", permission_mode)
+        wrapper = wrapper.replace("{skip_permissions}", skip_perms)
+
         wrappers_dir.mkdir(parents=True, exist_ok=True)
         wrapper_path = wrappers_dir / f"{task['id']}{self.wrapper_extension()}"
         wrapper_path.write_text(wrapper)

@@ -114,6 +114,27 @@ Let user accept defaults or customize.
 Ask: "Want results saved to a specific directory? Default is the scheduler's results folder."
 If the user provides a path, it will be resolved to an absolute path and used as the flat output directory (no date subdirectories). If skipped, results go to `<scheduler_dir>/results/YYYY-MM-DD/{id}.md`.
 
+**Step 6b: Permissions (skip for script-type tasks)**
+Scheduled tasks run non-interactively — Claude Code can't ask the user to approve tool use. Without pre-approved permissions, tools that need approval will fail silently.
+
+Ask: "What permissions should this task have?"
+Offer these presets:
+- **Default** — no extra permissions (works if you have `bypassPermissions` set globally)
+- **Readonly** — read files, search, browse web (safe for research/reporting tasks)
+- **Research** — read files, search, web browse, curl (for data gathering)
+- **Full edit** — read, write, edit files, git, npm, uv, python, web (for code maintenance tasks)
+- **Bypass** — skip all permission checks (`--dangerously-skip-permissions`)
+- **Custom** — specify individual tool names
+
+For **custom**, prompt for individual tool specs (e.g., `Read`, `Write`, `Bash(git *)`) separated by spaces.
+
+Show the selected permission mode in the confirmation summary table.
+
+CLI flags:
+- `--permission-preset readonly|full-edit|research|bypass`
+- `--permission-mode default|acceptEdits|plan|dontAsk|bypassPermissions`
+- `--allowed-tools Read Write 'Bash(git *)'` (individual tool specs)
+
 **Step 7: Confirm and create**
 Present a summary table:
 
@@ -129,6 +150,7 @@ Present a summary table:
 | Timeout | 15 min |
 | Working dir | {current project directory} |
 | Output dir | (default) |
+| Permissions | (default) / readonly / research / full-edit / bypass / custom |
 
 Ask: "Create this task?"
 
@@ -145,7 +167,7 @@ uv run <skill_dir>/scripts/scheduler.py add \
   --working-directory "{cwd}"
 ```
 
-For one-off tasks, add the `--run-once` flag. You can also specify `--output-directory` to save results to a custom location:
+For one-off tasks, add the `--run-once` flag. You can also specify `--output-directory` and `--permission-preset`:
 ```bash
 uv run <skill_dir>/scripts/scheduler.py add \
   --id "morning-news-pulse" \
@@ -156,6 +178,7 @@ uv run <skill_dir>/scripts/scheduler.py add \
   --max-turns 20 \
   --timeout-minutes 15 \
   --run-once \
+  --permission-preset research \
   --output-directory "/path/to/output" \
   --working-directory "{cwd}"
 ```
@@ -285,9 +308,12 @@ For converting natural language to cron:
 uv run <skill_dir>/scripts/scheduler.py repair
 ```
 **"Task failed (check logs)"**: Use the Logs operation to show what went wrong.
+**"Task succeeded but output is empty"**: Likely a permission issue. Scheduled tasks run non-interactively and can't prompt for tool approval. Add a permission preset (e.g., `--permission-preset readonly` for read-only tasks) and regenerate wrappers with `repair --force`.
+**"Wrapper needs permission update"**: After changing a task's permissions in the registry, run `repair --force` to regenerate all wrappers with the new settings.
 
 ## Notes
 
+- **Permissions**: Scheduled tasks run non-interactively via `claude -p` — there's no user to approve tool use. Without pre-configured permissions, any tool needing approval fails silently. Use `--permission-preset` (readonly, research, full-edit, bypass) or `--allowed-tools` to pre-approve the tools a task needs. The `bypass` preset uses `--dangerously-skip-permissions` to skip all checks. After adding permissions to existing tasks, run `repair --force` to regenerate wrappers.
 - **One-off tasks**: Tasks created with `--run-once` auto-complete after their first successful run. They remain in the registry with status `completed` so results and logs are preserved. They can be removed later with the Remove operation.
 - **Lock file**: The wrapper uses a PID-based lock to prevent concurrent runs of the same task. If a previous run is still active, the new run is skipped. On Windows, the lock uses `Get-Process` instead of `kill -0`.
 - **Sleep/missed run behavior**: All platforms catch up on missed runs. macOS launchd fires one missed run on wake. Linux systemd timers use `Persistent=true`. Windows Task Scheduler uses `StartWhenAvailable=true`.

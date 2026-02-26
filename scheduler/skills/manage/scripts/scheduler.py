@@ -24,6 +24,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from croniter import croniter
+from permission_presets import expand_preset, is_bypass_preset
 from platform_detect import detect_platform, get_backend
 
 # ---------------------------------------------------------------------------
@@ -199,6 +200,57 @@ def _expand_dow(dow_field: str) -> list[str]:
 # ---------------------------------------------------------------------------
 
 
+def _resolve_permissions(args: argparse.Namespace) -> dict | None:
+    """Build the permissions dict from CLI args, resolving presets.
+
+    Returns None if no permission configuration was requested.
+    """
+    preset = getattr(args, "permission_preset", None)
+    allowed_tools = getattr(args, "allowed_tools", None)
+    permission_mode = getattr(args, "permission_mode", None)
+
+    if not preset and not allowed_tools and not permission_mode:
+        return None
+
+    result: dict = {
+        "allowed_tools": None,
+        "permission_mode": None,
+        "preset": None,
+    }
+
+    if preset:
+        result["preset"] = preset
+        if is_bypass_preset(preset):
+            # bypass preset → use --dangerously-skip-permissions
+            result["permission_mode"] = "bypassPermissions"
+            if allowed_tools:
+                print("Warning: --allowed-tools ignored when using bypass preset",
+                      file=sys.stderr)
+                allowed_tools = None
+        else:
+            # Expand preset to tool list, merge with any explicit --allowed-tools
+            preset_tools = expand_preset(preset)
+            if allowed_tools:
+                # Merge: preset tools + explicit tools, deduplicated preserving order
+                seen = set()
+                merged = []
+                for tool in preset_tools + allowed_tools:
+                    if tool not in seen:
+                        seen.add(tool)
+                        merged.append(tool)
+                result["allowed_tools"] = merged
+            else:
+                result["allowed_tools"] = preset_tools
+
+    elif allowed_tools:
+        result["allowed_tools"] = allowed_tools
+
+    if permission_mode:
+        result["permission_mode"] = permission_mode
+
+    return result
+
+
 def cmd_add(args: argparse.Namespace) -> None:
     """Add a new scheduled task."""
     if not re.match(r'^[a-zA-Z0-9][a-zA-Z0-9_-]*$', args.id):
@@ -221,6 +273,9 @@ def cmd_add(args: argparse.Namespace) -> None:
     if args.output_directory:
         output_directory = str(Path(args.output_directory).expanduser().resolve())
 
+    # Resolve permission configuration
+    permissions = _resolve_permissions(args)
+
     task = {
         "id": args.id,
         "name": args.name,
@@ -237,6 +292,7 @@ def cmd_add(args: argparse.Namespace) -> None:
         },
         "run_once": args.run_once,
         "output_directory": output_directory,
+        "permissions": permissions,
         "platform": detect_platform(),
         "status": "active",
         "created_at": now,
@@ -436,8 +492,14 @@ def cmd_update_last_run(args: argparse.Namespace) -> None:
 
 
 def cmd_repair(args: argparse.Namespace) -> None:
-    """Regenerate missing wrapper scripts and schedule artifacts for active tasks."""
+    """Regenerate missing wrapper scripts and schedule artifacts for active tasks.
+
+    With --force, regenerates ALL wrappers regardless of whether they already
+    exist.  Useful after adding permissions to existing tasks or after a
+    template update.
+    """
     registry = _load_registry()
+    force = getattr(args, "force", False)
     issues_fixed = 0
 
     for task_id, task in registry["tasks"].items():
@@ -446,9 +508,10 @@ def cmd_repair(args: argparse.Namespace) -> None:
 
         wrapper_path = WRAPPERS_DIR / f"{task_id}{backend.wrapper_extension()}"
 
-        if not wrapper_path.exists():
+        if force or not wrapper_path.exists():
             backend.generate_wrapper(task, SCHEDULER_DIR, SCHEDULER_PY, WRAPPERS_DIR)
-            print(f"Regenerated wrapper for '{task_id}'")
+            label = "Force-regenerated" if wrapper_path.exists() and force else "Regenerated"
+            print(f"{label} wrapper for '{task_id}'")
             issues_fixed += 1
 
         if not backend.schedule_artifact_exists(task_id):
@@ -527,6 +590,14 @@ def main() -> None:
                        help="Run once then auto-complete (one-off task)")
     p_add.add_argument("--output-directory", default=None,
                        help="Custom directory for task result files")
+    p_add.add_argument("--allowed-tools", nargs="*", default=None,
+                       help="Individual tool specs for --allowedTools (e.g. Read Write 'Bash(git *)')")
+    p_add.add_argument("--permission-mode", default=None,
+                       choices=["default", "acceptEdits", "plan", "dontAsk", "bypassPermissions"],
+                       help="Claude Code permission mode for non-interactive execution")
+    p_add.add_argument("--permission-preset", default=None,
+                       choices=["readonly", "full-edit", "research", "bypass"],
+                       help="Named permission preset (expands to a set of --allowedTools)")
     p_add.set_defaults(func=cmd_add)
 
     # --- list ---
@@ -584,6 +655,8 @@ def main() -> None:
 
     # --- repair ---
     p_repair = subparsers.add_parser("repair", help="Regenerate missing wrappers and schedules")
+    p_repair.add_argument("--force", action="store_true", default=False,
+                          help="Regenerate ALL wrappers, not just missing ones")
     p_repair.set_defaults(func=cmd_repair)
 
     # --- cleanup ---

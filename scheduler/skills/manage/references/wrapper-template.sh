@@ -10,6 +10,9 @@ TIMEOUT_MINUTES={timeout_minutes}
 WORKDIR="{working_directory}"
 RUN_ONCE="{run_once}"
 SCHEDULER_PY="{scheduler_py}"
+ALLOWED_TOOLS='{allowed_tools}'
+PERMISSION_MODE='{permission_mode}'
+SKIP_PERMISSIONS='{skip_permissions}'
 
 # --- Environment ---
 export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
@@ -67,12 +70,23 @@ run_with_timeout() {
 
 TIMEOUT_SECONDS=$((TIMEOUT_MINUTES * 60))
 
+# --- Permission flags ---
+PERM_ARGS=()
+if [ "$SKIP_PERMISSIONS" = "true" ]; then
+  PERM_ARGS+=(--dangerously-skip-permissions)
+elif [ -n "$PERMISSION_MODE" ]; then
+  PERM_ARGS+=(--permission-mode "$PERMISSION_MODE")
+fi
+if [ -n "$ALLOWED_TOOLS" ]; then
+  PERM_ARGS+=(--allowedTools "$ALLOWED_TOOLS")
+fi
+
 # --- Logging helper ---
 log() { echo "[$(date '+%H:%M:%S')] $*" >> "$LOG_FILE"; }
 
 # --- Execute ---
 START_TIME=$(date +%s)
-log "START  task=$TASK_ID type=$TASK_TYPE turns=$MAX_TURNS timeout=${TIMEOUT_MINUTES}m"
+log "START  task=$TASK_ID type=$TASK_TYPE turns=$MAX_TURNS timeout=${TIMEOUT_MINUTES}m perms=${#PERM_ARGS[@]}flags"
 log "TARGET ${TASK_TARGET:0:120}$([ ${#TASK_TARGET} -gt 120 ] && echo '...')"
 
 cd "$WORKDIR"
@@ -81,12 +95,12 @@ EXIT_CODE=0
 case "$TASK_TYPE" in
   skill)
     run_with_timeout "$TIMEOUT_SECONDS" claude -p "/$TASK_TARGET" \
-      --max-turns "$MAX_TURNS" --output-format text \
+      --max-turns "$MAX_TURNS" --output-format text "${PERM_ARGS[@]}" \
       > "$RESULT_FILE" 2>> "$LOG_FILE" || EXIT_CODE=$?
     ;;
   prompt)
     run_with_timeout "$TIMEOUT_SECONDS" claude -p "$TASK_TARGET" \
-      --max-turns "$MAX_TURNS" --output-format text \
+      --max-turns "$MAX_TURNS" --output-format text "${PERM_ARGS[@]}" \
       > "$RESULT_FILE" 2>> "$LOG_FILE" || EXIT_CODE=$?
     ;;
   script)
