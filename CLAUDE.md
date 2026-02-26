@@ -1,2 +1,4 @@
 - All documentation, research, and plans must be saved to the .docs/ folder, which is untracked and not committed to Git
+- Do not create a new docs folder and save plans to it. Save all plans to .docs/plans/
 - Any test created must be saved to .tests/
+- The root folders in this marketplace should all be reserved for plugins. All other folders begin with a period are not to be committed or tracked.
