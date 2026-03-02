@@ -16,6 +16,8 @@ SKIP_PERMISSIONS='{skip_permissions}'
 
 # --- Environment ---
 unset CLAUDECODE  # Prevent Claude Code from detecting a nested session and auto-creating worktrees
+# --- Session ID for Claude Code JSONL log tracking ---
+SESSION_ID=$(uuidgen | tr '[:upper:]' '[:lower:]')
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 
 # Optional: load API key if available (not required for subscription auth)
@@ -37,7 +39,7 @@ else
   RESULT_DIR="$SCHEDULER_DIR/results/$DATE"
   RESULT_FILE="$RESULT_DIR/$TASK_ID-$TIMESTAMP.md"
 fi
-LOG_FILE="$SCHEDULER_DIR/logs/$DATE-$TASK_ID.log"
+LOG_FILE="$SCHEDULER_DIR/logs/$DATE/$TASK_ID.log"
 LOCK_FILE="$SCHEDULER_DIR/.lock-$TASK_ID"
 mkdir -p "$RESULT_DIR" "$(dirname "$LOG_FILE")"
 
@@ -96,12 +98,14 @@ EXIT_CODE=0
 case "$TASK_TYPE" in
   skill)
     run_with_timeout "$TIMEOUT_SECONDS" claude -p "/$TASK_TARGET" \
-      --max-turns "$MAX_TURNS" --output-format text "${PERM_ARGS[@]}" \
+      --max-turns "$MAX_TURNS" --output-format text --session-id "$SESSION_ID" \
+      "${PERM_ARGS[@]}" \
       > "$RESULT_FILE" 2>> "$LOG_FILE" || EXIT_CODE=$?
     ;;
   prompt)
     run_with_timeout "$TIMEOUT_SECONDS" claude -p "$TASK_TARGET" \
-      --max-turns "$MAX_TURNS" --output-format text "${PERM_ARGS[@]}" \
+      --max-turns "$MAX_TURNS" --output-format text --session-id "$SESSION_ID" \
+      "${PERM_ARGS[@]}" \
       > "$RESULT_FILE" 2>> "$LOG_FILE" || EXIT_CODE=$?
     ;;
   script)
@@ -125,13 +129,24 @@ else
   log "FAIL   exit=$EXIT_CODE duration=${DURATION}s result=${RESULT_BYTES}B"
 fi
 
+# --- Find Claude Code JSONL session log ---
+SESSION_LOG=""
+if [ "$TASK_TYPE" != "script" ]; then
+  SESSION_LOG=$(ls "$HOME/.claude/projects"/*/"$SESSION_ID.jsonl" 2>/dev/null | head -1)
+fi
+
 # --- Update registry with run results ---
 log "UPDATE update-last-run exit=$EXIT_CODE duration=${DURATION}s"
+SESSION_LOG_ARG=""
+if [ -n "$SESSION_LOG" ]; then
+  SESSION_LOG_ARG="--session-log $SESSION_LOG"
+  log "SESSION $SESSION_LOG"
+fi
 uv run "$SCHEDULER_PY" update-last-run \
   --id "$TASK_ID" \
   --exit-code $EXIT_CODE \
   --duration $DURATION \
-  --result-file "$RESULT_FILE" >> "$LOG_FILE" 2>&1 || true
+  --result-file "$RESULT_FILE" $SESSION_LOG_ARG >> "$LOG_FILE" 2>&1 || true
 
 # --- Notify ---
 if [ $EXIT_CODE -eq 0 ]; then
