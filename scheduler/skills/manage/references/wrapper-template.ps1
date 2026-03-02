@@ -41,6 +41,9 @@ try {
     }
 }
 
+# --- Session ID for Claude Code JSONL log tracking ---
+$SESSION_ID = [guid]::NewGuid().ToString()
+
 # --- Paths ---
 $SCHEDULER_DIR = "{scheduler_dir}"
 $OUTPUT_DIR = "{output_directory}"
@@ -54,7 +57,7 @@ if ($OUTPUT_DIR) {
     $RESULT_DIR = Join-Path $SCHEDULER_DIR "results\$DATE"
     $RESULT_FILE = Join-Path $RESULT_DIR "$TASK_ID-$TIMESTAMP.md"
 }
-$LOG_FILE = Join-Path $SCHEDULER_DIR "logs\$DATE-$TASK_ID.log"
+$LOG_FILE = Join-Path $SCHEDULER_DIR "logs\$DATE\$TASK_ID.log"
 $LOCK_FILE = Join-Path $SCHEDULER_DIR ".lock-$TASK_ID"
 
 # Create directories
@@ -117,17 +120,17 @@ try {
     $job = switch ($TASK_TYPE) {
         "skill" {
             Start-Job -ScriptBlock {
-                param($target, $maxTurns, $resultFile, $logFile, $pArgs)
-                $allArgs = @('-p', "/$target", '--max-turns', $maxTurns, '--output-format', 'text') + $pArgs
+                param($target, $maxTurns, $resultFile, $logFile, $pArgs, $sessionId)
+                $allArgs = @('-p', "/$target", '--max-turns', $maxTurns, '--output-format', 'text', '--session-id', $sessionId) + $pArgs
                 & claude @allArgs 2>>$logFile | Set-Content $resultFile
-            } -ArgumentList $TASK_TARGET, $MAX_TURNS, $RESULT_FILE, $LOG_FILE, (,$permArgs)
+            } -ArgumentList $TASK_TARGET, $MAX_TURNS, $RESULT_FILE, $LOG_FILE, (,$permArgs), $SESSION_ID
         }
         "prompt" {
             Start-Job -ScriptBlock {
-                param($target, $maxTurns, $resultFile, $logFile, $pArgs)
-                $allArgs = @('-p', $target, '--max-turns', $maxTurns, '--output-format', 'text') + $pArgs
+                param($target, $maxTurns, $resultFile, $logFile, $pArgs, $sessionId)
+                $allArgs = @('-p', $target, '--max-turns', $maxTurns, '--output-format', 'text', '--session-id', $sessionId) + $pArgs
                 & claude @allArgs 2>>$logFile | Set-Content $resultFile
-            } -ArgumentList $TASK_TARGET, $MAX_TURNS, $RESULT_FILE, $LOG_FILE, (,$permArgs)
+            } -ArgumentList $TASK_TARGET, $MAX_TURNS, $RESULT_FILE, $LOG_FILE, (,$permArgs), $SESSION_ID
         }
         "script" {
             Start-Job -ScriptBlock {
@@ -171,14 +174,29 @@ if ($EXIT_CODE -eq 0) {
     Log "FAIL   exit=$EXIT_CODE duration=${duration}s result=${resultBytes}B"
 }
 
+# --- Find Claude Code JSONL session log ---
+$SESSION_LOG = ""
+if ($TASK_TYPE -ne "script") {
+    $jsonlPattern = Join-Path $env:USERPROFILE ".claude\projects\*\$SESSION_ID.jsonl"
+    $jsonlFile = Get-Item $jsonlPattern -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($jsonlFile) {
+        $SESSION_LOG = $jsonlFile.FullName
+    }
+}
+
 # --- Update registry with run results ---
 Log "UPDATE update-last-run exit=$EXIT_CODE duration=${duration}s"
+$sessionLogArg = @()
+if ($SESSION_LOG) {
+    $sessionLogArg = @('--session-log', $SESSION_LOG)
+    Log "SESSION $SESSION_LOG"
+}
 try {
     uv run $SCHEDULER_PY update-last-run `
         --id $TASK_ID `
         --exit-code $EXIT_CODE `
         --duration $duration `
-        --result-file $RESULT_FILE 2>&1 >> $LOG_FILE
+        --result-file $RESULT_FILE @sessionLogArg 2>&1 >> $LOG_FILE
 } catch { }
 
 # --- Notify ---
