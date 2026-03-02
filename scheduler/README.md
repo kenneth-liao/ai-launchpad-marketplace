@@ -51,7 +51,9 @@ Conversational orchestrator for scheduling tasks. Invoke via `/manage` (or `/sch
 4. The platform scheduler fires the wrapper at the scheduled time
 5. The wrapper runs `claude -p` (for skills/prompts) or `bash`/PowerShell (for scripts)
 6. Results saved to `<scheduler_dir>/results/YYYY-MM-DD/{id}-HHMMSS.md`
-7. Desktop notification on completion or failure
+7. Logs saved to `<scheduler_dir>/logs/YYYY-MM-DD/{id}.log`
+8. Claude Code JSONL session log path captured in the registry (for skill/prompt tasks)
+9. Desktop notification on completion or failure
 
 ## Architecture
 
@@ -65,6 +67,16 @@ scheduler/skills/manage/scripts/
     linux.py                # systemd .service + .timer units
     windows.py              # Task Scheduler XML + schtasks.exe
 ```
+
+## Updating
+
+After updating the plugin, regenerate wrappers for existing tasks to pick up template changes:
+
+```
+/manage → select "Repair" → confirm force regeneration
+```
+
+This regenerates all wrapper scripts from the latest templates without affecting schedules or results.
 
 ## Requirements
 
