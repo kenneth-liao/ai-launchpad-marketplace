@@ -1,0 +1,49 @@
+{
+  "skill_name": "retrospective",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm ending my session. Here's a transcript of our conversation today:\n\n---\nUSER: Can you push these changes to main?\nCLAUDE: Done! I've pushed the changes to the main branch.\nUSER: Wait, don't push without asking me first! I wasn't ready.\nCLAUDE: I'm sorry about that. I'll ask before pushing next time.\nUSER: Also, I always want to see a diff before any git operations.\nCLAUDE: Understood, I'll show diffs first going forward.\n---\n\nRun a retrospective on this session. For the purposes of this eval, present all findings but do NOT actually write to any files — just show me what you would write and where.",
+      "expected_output": "The retrospective identifies two friction moments: (1) pushing without permission — a behavioral correction that should route to rules.md, and (2) wanting to see diffs first — a preference that should route to preferences.md. Neither should route to MEMORY.md or improvements.md.",
+      "files": [],
+      "expectations": [
+        "Identifies the 'don't push without asking' moment as friction",
+        "Classifies the push correction as a Behavioral Correction, not a Preference or Project-Specific finding",
+        "Routes the push correction to rules.md, not MEMORY.md",
+        "Identifies the 'show diffs first' moment as a separate finding",
+        "Classifies 'show diffs first' as a Preference Discovered",
+        "Routes the preference to preferences.md",
+        "Does not route either finding to improvements.md or MEMORY.md",
+        "Presents findings one at a time and asks for confirmation before proceeding"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Session's done. Here's our conversation:\n\n---\nUSER: Use the thumbnail skill to create a YouTube thumbnail for my video about AI agents.\nCLAUDE: [Creates a thumbnail with generic stock photo style]\nUSER: This isn't right. The thumbnail skill should be using my brand colors and design system. It completely ignored my style guide.\nCLAUDE: Let me redo that with your brand guidelines.\nUSER: Also, the skill didn't even check for my existing thumbnails to match the series style. It just made something generic.\nCLAUDE: Good point, let me look at your previous thumbnails.\nUSER: When you work on thumbnails, always check my last 3 thumbnails for visual consistency.\n---\n\nRun a retrospective. For this eval, present all findings but do NOT write to files — just show what you'd write and where.",
+      "expected_output": "The retrospective identifies: (1) skill friction — the thumbnail skill ignored brand guidelines and series consistency (routes to improvements.md), and (2) a workflow preference — always check last 3 thumbnails (routes to workflows.md or preferences.md). The skill friction should go to the Friction Log since this is a first occurrence.",
+      "files": [],
+      "expectations": [
+        "Identifies the thumbnail skill ignoring brand guidelines as skill friction",
+        "Routes the skill friction to improvements.md Friction Log (not MEMORY.md or rules.md)",
+        "Notes that this is a first occurrence so it goes to Friction Log, not Active Proposals",
+        "Identifies the 'check last 3 thumbnails' instruction as a workflow or preference",
+        "Routes the workflow/preference to workflows.md or preferences.md (not MEMORY.md)",
+        "Does not conflate the two different types of friction into one finding",
+        "Mentions checking improvements.md for prior occurrences of thumbnail skill friction"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Let's do a retrospective. Here's what happened this session:\n\n---\nUSER: Can you make the header font a bit larger?\nCLAUDE: Done, increased from 24px to 28px.\nUSER: Actually, let's try 32px.\nCLAUDE: Updated to 32px.\nUSER: Perfect. Now can you change the background to a softer blue?\nCLAUDE: Changed to #E8F0FE.\nUSER: Nice, but maybe a touch darker?\nCLAUDE: How about #D4E4FC?\nUSER: That's great, let's go with that.\n---\n\nRun the retrospective. Present findings but do NOT write to files.",
+      "expected_output": "The retrospective correctly identifies this as a clean session with only normal iterative refinement. Font size adjustments and color tweaking are collaboration, not friction. Should report 'Clean session' or equivalent.",
+      "files": [],
+      "expectations": [
+        "Does NOT classify font size iteration as friction",
+        "Does NOT classify color refinement as friction",
+        "Reports a clean session with nothing to capture",
+        "Does not propose any writes to any context files",
+        "Correctly distinguishes iterative refinement from actual friction"
+      ]
+    }
+  ]
+}

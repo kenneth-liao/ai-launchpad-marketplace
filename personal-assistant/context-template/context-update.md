@@ -78,6 +78,15 @@ If important date, deadline, or recurring check-in learned:
 → Update `~/.claude/.context/core/triggers.md`
 → Include: date, event/deadline, action needed
 
+### 7b. Improvements & Friction
+If a skill or system issue was observed:
+- Check `~/.claude/.context/core/improvements.md` for existing patterns
+- If matches existing friction note, increment occurrences
+- If new, add a friction note (prefer doing this during retrospective)
+- If 2+ occurrences, promote to Active Proposals
+
+Note: Most improvements tracking happens during the retrospective. Only add here for clear, immediate signals.
+
 ### 8. Journal (Session Log)
 At the end of notable sessions, append to `~/.claude/.context/core/journal.md`:
 → Date, what was accomplished, notable decisions or context
@@ -98,6 +107,7 @@ At the end of notable sessions, append to `~/.claude/.context/core/journal.md`:
 | `core/projects.md` | Update when project status changes; archive completed |
 | `core/rules.md` | **ADD** when correction detected; only remove if explicitly rescinded |
 | `core/session.md` | Update every session; clear on major context switch |
+| `core/improvements.md` | **ADD** friction notes; **PROMOTE** at 2+ occurrences; **ARCHIVE** when verified |
 | `core/journal.md` | **APPEND** notable sessions at TOP; periodically prune old entries |
 
 All files are in `~/.claude/.context/`. Add new sections as needed.

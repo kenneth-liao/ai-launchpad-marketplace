@@ -28,7 +28,7 @@ ls ~/.claude/.context/session/ 2>/dev/null
 **State A - Already Migrated (no action needed):**
 All of these conditions are true:
 - `~/.claude/.context/` exists
-- `core/relationships.md`, `core/triggers.md`, `core/journal.md` all exist
+- `core/relationships.md`, `core/triggers.md`, `core/journal.md`, `core/improvements.md` all exist
 - No `projects/` directory
 - No `session/` directory
 
@@ -278,6 +278,40 @@ Do NOT overwrite existing files - they may contain user data from manual creatio
 
 ---
 
+## Step 5b: Create improvements.md and Migrate Proposals
+
+Check if improvements.md exists:
+
+```bash
+ls ~/.claude/.context/core/improvements.md 2>/dev/null
+```
+
+**If missing, copy from template:**
+
+```bash
+cp ~/.claude/plugins/marketplaces/ai-launchpad/personal-assistant/context-template/core/improvements.md ~/.claude/.context/core/improvements.md
+```
+
+### Migrate Existing Skill Proposals
+
+Scan for project-scoped skill proposals:
+
+```bash
+find ~/.claude/projects/*/memory -name "skill-proposals.md" 2>/dev/null
+```
+
+For each file found:
+1. Read its contents
+2. Migrate entries to `~/.claude/.context/core/improvements.md` Active Proposals section
+3. Add `Projects` field based on source directory name
+4. Leave original file intact (do not delete)
+
+<REQUIRED>
+Do NOT overwrite improvements.md if it already exists — it may contain user data.
+</REQUIRED>
+
+---
+
 ## Step 6: Update Instruction Files
 
 These files contain instructions (not user data), so always replace them with the latest versions:
@@ -328,6 +362,7 @@ Expected structure:
     ├── session.md
     ├── relationships.md
     ├── triggers.md
+    ├── improvements.md
     └── journal.md
 ```
 
