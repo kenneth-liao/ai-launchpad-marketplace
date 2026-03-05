@@ -1,9 +1,0 @@
-{
-  "name": "youtube",
-  "description": "A plugin for YouTube content workflows — orchestrates research, writing, and design skills for video production",
-  "version": "2.0.0",
-  "author": {
-    "name": "Kenny Liao (The AI Launchpad)",
-    "url": "https://www.youtube.com/@KennethLiao"
-  }
-}

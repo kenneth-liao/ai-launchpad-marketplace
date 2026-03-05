@@ -27,17 +27,10 @@ Individual plugins may have additional requirements — refer to each plugin's R
 | Plugin | Description |
 |--------|-------------|
 | [Personal Assistant (Elle)](./personal-assistant) | Persistent-memory personal assistant that learns your preferences and context |
-| [YouTube](./youtube) | End-to-end YouTube video planning — research, titles, thumbnails, hooks, scripts |
-| [Substack](./substack) | Newsletter and Substack Notes content workflows |
-| [Writing](./writing) | Authentic voice writing across all content types and platforms |
-| [Content Strategy](./content-strategy) | Topic research, title generation, and hook creation |
-| [Visual Design](./visual-design) | Thumbnails, social media graphics, and visual assets |
-| [Art](./art) | AI image generation and editing via Gemini |
-| [Branding Kit](./branding-kit) | Design systems and brand guidelines |
+| [Creator Stack](./creator-stack) | Complete content creation toolkit — writing, content strategy, visual design, AI image generation, branding, YouTube, and Substack workflows |
 | [Research](./research) | Web research and competitor analysis |
 | [Agent Teams](./agent-teams) | Agent team session viewing and analysis |
 | [Scheduler](./scheduler) | Cross-platform scheduled automation — recurring skills, prompts, and scripts |
-| [Skill Forge](./skill-forge) | Full skill lifecycle — create, integrate, and improve skills |
 
 ## Keeping Plugins Updated
 

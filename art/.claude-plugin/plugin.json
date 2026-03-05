@@ -1,9 +1,0 @@
-{
-"name": "art",
-"description": "A plugin for AI image generation and editing via Google Gemini — text-to-image, image editing, multi-image references, and batch generation in up to 4K resolution",
-"version": "1.1.1",
-"author": {
-"name": "Kenny Liao (The AI Launchpad)",
-"url": "https://www.youtube.com/@KennethLiao"
-}
-}

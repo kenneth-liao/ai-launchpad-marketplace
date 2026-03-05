@@ -1,9 +1,0 @@
-{
-  "name": "skill-forge",
-  "description": "A meta-plugin for the full skill lifecycle — create, integrate, and improve skills that conform to the composable skill architecture framework",
-  "version": "2.0.0",
-  "author": {
-    "name": "Kenny Liao (The AI Launchpad)",
-    "url": "https://www.youtube.com/@KennethLiao"
-  }
-}

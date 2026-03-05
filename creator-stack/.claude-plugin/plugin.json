@@ -1,0 +1,9 @@
+{
+  "name": "creator-stack",
+  "description": "A complete content creation toolkit — writing, content strategy, visual design, AI image generation, branding, and YouTube/Substack platform workflows",
+  "version": "1.0.0",
+  "author": {
+    "name": "Kenny Liao (The AI Launchpad)",
+    "url": "https://www.youtube.com/@KennethLiao"
+  }
+}

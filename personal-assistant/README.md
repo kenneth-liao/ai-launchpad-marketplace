@@ -30,6 +30,7 @@ This initializes the context system at `~/.claude/.context/` and optionally walk
 | `/personal-assistant:onboard` | Guided conversation to populate your context |
 | `/personal-assistant:upgrade` | Upgrade context system to latest structure (preserves data) |
 | `/personal-assistant:update-context` | Manually trigger a context update from the current conversation |
+| `/personal-assistant:retrospective` | End-of-session review — captures lessons learned, corrections, and insights |
 
 ## How It Works
 
