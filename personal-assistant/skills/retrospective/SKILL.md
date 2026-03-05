@@ -142,6 +142,8 @@ Route each confirmed finding to its classified destination with format appropria
   - Source: Retrospective [date] — [brief friction context]
 ```
 
+**After writing to rules.md or preferences.md**: Prompt the user: "Rules/preferences changed. Run `/sync-context` to update elle-core.md?"
+
 **preferences.md** (for Preferences Discovered):
 Replace the relevant preference entry, or add a new one under the appropriate section. Follow the file's existing format.
 
@@ -229,6 +231,7 @@ skill-creator:skill-creator         → Guides skill creation (assistant)
 superpowers:writing-skills          → Tests and deploys skills (TDD)
 personal-assistant:retrospective    → Identifies what needs improving (feedback loop)
 personal-assistant:update-context   → Handles routine context updates (avoid duplication)
+personal-assistant:sync-context     → Regenerates elle-core.md after rule changes
 ```
 
 This skill completes the skill lifecycle: create → test → deploy → observe → improve.
