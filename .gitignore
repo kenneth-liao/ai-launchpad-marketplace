@@ -42,3 +42,4 @@ tmp/
 # Local-only folders
 .archive/
 .docs/
+.evals/
