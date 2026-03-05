@@ -38,7 +38,7 @@ def extract_identity_summary(identity_path: Path) -> str:
             continue
         if in_frontmatter:
             continue
-        if stripped.startswith("<guide>") or stripped.startswith("<format>"):
+        if stripped.startswith("<") and ("guide>" in stripped or "format>" in stripped):
             continue
         if stripped.startswith("#"):
             continue
@@ -64,7 +64,7 @@ def extract_preferences_summary(preferences_path: Path) -> str:
             continue
         if in_frontmatter:
             continue
-        if stripped.startswith("<guide>") or stripped.startswith("<format>"):
+        if stripped.startswith("<") and ("guide>" in stripped or "format>" in stripped):
             continue
         if stripped.startswith("#"):
             continue
@@ -90,7 +90,7 @@ def extract_rules_verbatim(rules_path: Path) -> str:
             continue
         if in_frontmatter:
             continue
-        if stripped.startswith("<guide>") or stripped.startswith("<format>"):
+        if stripped.startswith("<") and ("guide>" in stripped or "format>" in stripped):
             continue
         if stripped.startswith("#"):
             continue
@@ -107,19 +107,37 @@ def extract_active_projects(projects_path: Path) -> str:
 
     content = projects_path.read_text(encoding="utf-8", errors="replace")
 
+    # Header words that indicate a table header row, not data
+    header_words = {"Project", "Description", "Location", "Status", "Date",
+                    "Milestone", "Completed", "Outcome", "Key Notes"}
+
     lines = []
+    in_format_block = False
     for line in content.split("\n"):
         stripped = line.strip()
+        # Skip <format> blocks entirely — they contain template table headers
+        if "<format>" in stripped:
+            in_format_block = True
+            continue
+        if "</format>" in stripped:
+            in_format_block = False
+            continue
+        if in_format_block:
+            continue
         if "|" in stripped and not stripped.startswith("<"):
+            # Skip separator rows (|---|---|)
             if re.match(r"^\|[\s\-|]+\|$", stripped):
                 continue
-            if "Project" in stripped and "Description" in stripped:
-                continue
             cells = [c.strip() for c in stripped.split("|") if c.strip()]
-            if len(cells) >= 2:
-                project_name = cells[0]
-                description = cells[1]
-                lines.append(f"- {project_name} -- {description}")
+            if len(cells) < 2:
+                continue
+            # Skip header rows — if most cells are known header words, it's a header
+            header_count = sum(1 for c in cells if c in header_words)
+            if header_count >= len(cells) // 2:
+                continue
+            project_name = cells[0]
+            description = cells[1]
+            lines.append(f"- {project_name} -- {description}")
 
     return "\n".join(lines)
 

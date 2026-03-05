@@ -60,6 +60,27 @@ class TestExtractRulesVerbatim:
         result = extract_rules_verbatim(tmp_path / "nonexistent.md")
         assert result == ""
 
+    def test_skips_xml_tags(self, tmp_path):
+        """Both opening and closing guide/format tags should be filtered."""
+        from sync_context import extract_rules_verbatim
+        rules = tmp_path / "rules.md"
+        rules.write_text(textwrap.dedent("""\
+            ---
+            name: Rules
+            ---
+            ## Rules
+            <guide>Format instructions here</guide>
+            - NEVER do bad things
+            <format>| Column |</format>
+            - ALWAYS do good things
+        """))
+        result = extract_rules_verbatim(rules)
+        assert "</guide>" not in result
+        assert "<guide>" not in result
+        assert "</format>" not in result
+        assert "NEVER do bad things" in result
+        assert "ALWAYS do good things" in result
+
 
 class TestExtractActiveProjects:
     def test_extracts_project_names(self, tmp_context):
@@ -77,6 +98,69 @@ class TestExtractActiveProjects:
         from sync_context import extract_active_projects
         result = extract_active_projects(tmp_path / "nonexistent.md")
         assert result == ""
+
+    def test_skips_format_blocks(self, tmp_path):
+        """Format blocks contain template headers that should not appear in output."""
+        from sync_context import extract_active_projects
+        projects = tmp_path / "projects.md"
+        projects.write_text(textwrap.dedent("""\
+            ## Active Projects
+            <format>
+            | Project | Location | Status | Key Notes |
+            |---------|----------|--------|-----------|
+            </format>
+            | Project | Location | Status | Key Notes |
+            |---------|----------|--------|-----------|
+            | My App | ~/projects/app | Active | Main product |
+        """))
+        result = extract_active_projects(projects)
+        assert "My App" in result
+        # Table header row should not appear as a project entry
+        assert result.count("Project") == 0 or "My App" in result
+        lines = [l for l in result.strip().split("\n") if l.strip()]
+        assert len(lines) == 1
+
+    def test_skips_multiple_table_headers(self, tmp_path):
+        """Multiple tables (Active, Milestones, Archived) should only yield data rows."""
+        from sync_context import extract_active_projects
+        projects = tmp_path / "projects.md"
+        projects.write_text(textwrap.dedent("""\
+            ## Active Projects
+            | Project | Location | Status | Key Notes |
+            |---------|----------|--------|-----------|
+            | Basis | ~/projects/basis | Active | Core product |
+
+            ## Upcoming Milestones
+            | Date | Project | Milestone |
+            |------|---------|-----------|
+            | 2026-04-01 | Basis | Launch |
+
+            ## Archived Projects
+            | Project | Completed | Outcome |
+            |---------|-----------|---------|
+        """))
+        result = extract_active_projects(projects)
+        assert "Basis" in result
+        assert "2026-04-01" in result
+        # Header rows should not appear
+        assert "Project -- Location" not in result
+        assert "Date -- Project" not in result
+        assert "Project -- Completed" not in result
+
+    def test_skips_closing_guide_tags(self, tmp_path):
+        """Closing </guide> tags should not leak into output."""
+        from sync_context import extract_active_projects
+        projects = tmp_path / "projects.md"
+        projects.write_text(textwrap.dedent("""\
+            ## Active Projects
+            <guide>All active projects</guide>
+            | Project | Location | Status |
+            |---------|----------|--------|
+            | My App | ~/app | Active |
+        """))
+        result = extract_active_projects(projects)
+        assert "</guide>" not in result
+        assert "<guide>" not in result
 
 
 class TestGenerateElleCoreContent:
