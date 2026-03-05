@@ -1,6 +1,6 @@
 ---
 name: plan-issue
-description: Orchestrate foundation skills to plan a complete newsletter issue including research, draft, subject line, opening hook, and social promotion posts. This is a thin orchestrator — it sequences skill invocations and manages the user review workflow.
+description: "Orchestrate foundation skills to plan a complete newsletter issue including research, draft, subject line, opening hook, and social promotion posts. This is a thin orchestrator — it sequences skill invocations and manages the user review workflow. Use when the user wants to plan a newsletter from a topic, create a newsletter content plan, or turn an idea into a full issue plan with social promotion."
 ---
 
 # Plan Newsletter Issue
@@ -8,6 +8,10 @@ description: Orchestrate foundation skills to plan a complete newsletter issue i
 ## Overview
 
 This skill takes a topic and produces a complete newsletter issue plan with draft content, subject line options, opening hook options, and social promotion posts. It is a thin orchestrator — every content generation step delegates to a foundation skill. This skill contains workflow sequence and platform-specific decisions only, not implementation logic.
+
+## How Reference Delegation Works
+
+Each foundation skill owns its own reference files and loads them automatically. When you invoke `creator-stack:copywriting` for newsletter content, it loads `references/newsletter.md` from its own directory. When you invoke `creator-stack:title` for subject lines, it loads `references/newsletter-subject-lines.md` from its own directory. You don't need to manage these paths — just invoke the skill and provide context.
 
 ## When to Use
 
@@ -28,32 +32,31 @@ If research already exists or the user is repurposing existing content, the rese
 
 ## Planning Workflow
 
-Execute all steps below sequentially. Add these as ToDos to track progress.
+Execute all steps below sequentially.
 
 ### Step 1: Research the Topic
 
-**Invoke `creator-stack:research`** to understand the content landscape and identify the best angle for the newsletter issue.
+Invoke `creator-stack:research` to understand the content landscape and identify the best angle for the newsletter issue.
 
 - Pass the topic, audience context, and any source material to the research skill.
-- The research skill will analyze competitors, identify gaps, and produce actionable insights.
+- The research skill analyzes competitors, identifies gaps, and produces actionable insights.
 
 **Skip condition**: Skip this step if the user provides existing research, or if working from existing content (e.g., repurposing a video transcript). Note the reason for skipping in the plan.
 
 ### Step 2: Draft the Newsletter Issue
 
-**Invoke `creator-stack:copywriting`** to draft the full newsletter issue.
+Invoke `creator-stack:copywriting` with content type "newsletter" to draft the full issue.
 
-- The copywriting skill will automatically load `references/newsletter.md` for newsletter structure and conventions.
-- The copywriting skill will automatically invoke `creator-stack:voice` for voice consistency.
+- The copywriting skill loads its own `references/newsletter.md` for newsletter structure and conventions.
+- The copywriting skill automatically invokes `creator-stack:voice` for voice consistency.
 - Pass the research findings (or source material) and topic context.
-- The draft should follow the newsletter reference structure including sections, formatting, and CTAs.
+- The draft follows the newsletter reference structure including sections, formatting, and CTAs.
 
 ### Step 3: Generate Subject Line Options
 
-**Invoke `creator-stack:title`** to generate 3-5 subject line options.
+Invoke `creator-stack:title` with content type "newsletter" to generate 3-5 subject line options.
 
-- The title skill will automatically load `references/newsletter-subject-lines.md` for subject line patterns.
-- Each option must include:
+- Each option includes:
   - Subject line text
   - Preview text (the snippet shown in email clients)
   - Rationale for why it will perform well
@@ -61,10 +64,9 @@ Execute all steps below sequentially. Add these as ToDos to track progress.
 
 ### Step 4: Generate Opening Hook Options
 
-**Invoke `creator-stack:hook`** to generate 2-3 opening paragraph options.
+Invoke `creator-stack:hook` with content type "newsletter" to generate 2-3 opening paragraph options.
 
-- The hook skill will automatically load `references/newsletter-hooks.md` for opening patterns.
-- Each option must include:
+- Each option includes:
   - Full opening paragraph text
   - Hook strategy description
   - Rationale and alignment with the selected subject line
@@ -72,17 +74,17 @@ Execute all steps below sequentially. Add these as ToDos to track progress.
 
 ### Step 5: Generate Social Promotion Posts
 
-**Invoke `creator-stack:copywriting`** separately for each platform:
+Invoke `creator-stack:copywriting` separately for each platform:
 
-1. **Twitter/X thread** — the copywriting skill loads `references/twitter.md` for thread structure and character limits.
-2. **LinkedIn post** — the copywriting skill loads `references/linkedin.md` for post conventions.
-3. **Substack Note** — the copywriting skill loads `references/substack-notes.md` for note formatting.
+1. **Twitter/X thread** — specify content type "twitter"
+2. **LinkedIn post** — specify content type "linkedin"
+3. **Substack Note** — specify content type "substack-note"
 
-Each promotion post should tease the newsletter content and drive subscriptions/reads.
+Each promotion post should tease the newsletter content and drive subscriptions/reads. The copywriting skill loads the appropriate platform reference for each invocation.
 
 ### Step 6: Generate Header Image (Optional)
 
-**Invoke `creator-stack:social-graphic`** to generate a newsletter header image.
+Invoke `creator-stack:social-graphic` to generate a newsletter header image.
 
 - Only invoke if the user requests a header image or if the newsletter platform benefits from one.
 - If not requested, mark as "Not requested" in the plan.
@@ -95,7 +97,7 @@ Present the full plan to the user for review. Include all options with star rati
 
 Save the plan to `./newsletter/issues/[issue_name]/plan.md`. Create the directory if it doesn't exist. Use a slugified version of the topic as the issue name (e.g., `ai-coding-assistants`).
 
-The plan file must follow this structure:
+The plan file follows this structure:
 
 ```markdown
 # Newsletter Issue Plan: [Topic]
@@ -110,7 +112,7 @@ The plan file must follow this structure:
 [2-3 opening paragraphs with strategy, rationale, and star ratings]
 
 ## Draft Issue
-[Full newsletter draft following newsletter.md structure]
+[Full newsletter draft following newsletter structure]
 
 ## Social Promotion
 ### Twitter/X Thread
@@ -124,45 +126,38 @@ The plan file must follow this structure:
 [Generated image or "Not requested"]
 ```
 
-## Execution Guidelines
+## Delegation Reference
 
-### Always Invoke Foundation Skills
+Each foundation skill owns its own reference files and loads them automatically:
 
-**NEVER** generate content manually. Always delegate to the appropriate skill:
-- `creator-stack:research` for research
-- `creator-stack:copywriting` for all written content (newsletter draft and social posts)
-- `creator-stack:title` for subject lines
-- `creator-stack:hook` for opening hooks
-- `creator-stack:social-graphic` for header images
-
-### Provide Multiple Options
-
-**CRITICAL**: Present all options with star ratings so the user can choose. Do not select a single option on the user's behalf.
-
-### Back Recommendations with Research
-
-When rating options with stars:
-- Reference research findings or source material insights
-- Explain why a particular angle or framing will resonate
-- Note how the option addresses identified content gaps
+| Content | Skill | Reference (loaded by the skill) |
+|---------|-------|---------------------------------|
+| Research | `creator-stack:research` | Loaded based on topic context |
+| Newsletter draft | `creator-stack:copywriting` | `newsletter.md` |
+| Subject lines | `creator-stack:title` | `newsletter-subject-lines.md` |
+| Opening hooks | `creator-stack:hook` | `newsletter-hooks.md` |
+| Twitter thread | `creator-stack:copywriting` | `twitter.md` |
+| LinkedIn post | `creator-stack:copywriting` | `linkedin.md` |
+| Substack Note | `creator-stack:copywriting` | `substack-notes.md` |
+| Voice | `creator-stack:voice` | Invoked automatically by copywriting |
 
 ## Quality Checklist
 
 Verify completion before presenting the plan:
 - [ ] Research conducted (or source material loaded)
-- [ ] `creator-stack:research` invoked (or skipped with reason)
 - [ ] `creator-stack:copywriting` invoked for newsletter draft
 - [ ] `creator-stack:title` invoked for subject lines
 - [ ] `creator-stack:hook` invoked for opening hooks
-- [ ] `creator-stack:copywriting` invoked for social promotion posts
+- [ ] `creator-stack:copywriting` invoked for social promotion posts (all 3 platforms)
 - [ ] All written content goes through `creator-stack:voice` (handled by copywriting skill)
+- [ ] All options presented with star ratings
 - [ ] Complete plan presented to user
 
-## Common Pitfalls to Avoid
+## Common Pitfalls
 
-1. **Writing content directly**: Drafting newsletter text or social posts without invoking the copywriting skill. Always delegate.
+1. **Writing content directly**: Drafting newsletter text or social posts without invoking the copywriting skill — the foundation skill has all the section rules and voice handling built in.
 2. **Skipping research without reason**: If research is skipped, document why (e.g., "Repurposing video transcript provided by user").
-3. **Single option only**: Presenting one subject line or one hook. Always provide multiple options with ratings.
+3. **Single option only**: Presenting one subject line or one hook — always provide multiple options with ratings so the user can choose.
 4. **Missing social promotion**: Forgetting one of the three platforms (Twitter/X, LinkedIn, Substack Notes).
 5. **No voice consistency**: The copywriting skill handles this automatically via `creator-stack:voice`, but verify the output reads consistently.
 

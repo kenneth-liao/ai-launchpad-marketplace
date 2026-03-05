@@ -1,15 +1,19 @@
 ---
 name: repurpose-video
-description: Repurpose a completed YouTube video into newsletter issues, social media posts, and other content formats. This is a thin orchestrator — it sequences creator-stack:copywriting invocations with different platform references.
+description: "Repurpose a completed YouTube video into newsletter issues, social media posts, and other content formats. This is a thin orchestrator — it sequences creator-stack:copywriting invocations with different platform references. Use when the user wants to distribute video content across platforms, create social posts from a video, turn a video into a newsletter, or maximize reach of existing content."
 ---
 
 # Repurpose Video
 
 ## Overview
 
-This orchestrator takes a completed video's content and transforms it into multi-platform content. It sequences `creator-stack:copywriting` invocations with platform-specific references to produce newsletter issues, Twitter threads, LinkedIn posts, and Substack Notes -- all maintaining consistent voice through the writing skill's built-in voice handling.
+This orchestrator takes a completed video's content and transforms it into multi-platform content. It sequences `creator-stack:copywriting` invocations with platform-specific references to produce newsletter issues, Twitter threads, LinkedIn posts, and Substack Notes — all maintaining consistent voice through the writing skill's built-in voice handling.
 
-**Core Principle**: This is a thin orchestrator. All content generation is delegated to `creator-stack:copywriting` with the appropriate platform reference. This skill manages the workflow sequence and platform-specific decisions only.
+**Core Principle**: This is a thin orchestrator. All content generation is delegated to `creator-stack:copywriting`, which owns the platform-specific references and automatically invokes `creator-stack:voice`. This skill manages the workflow sequence and platform-specific decisions only.
+
+## How Reference Delegation Works
+
+Each platform step below invokes `creator-stack:copywriting` and specifies a content type. The copywriting skill then loads its own reference file for that platform (e.g., `references/newsletter.md`, `references/twitter.md`). Those files live in the copywriting skill's directory, not here — this orchestrator doesn't need its own references because all content generation is delegated.
 
 ## When to Use
 
@@ -22,9 +26,9 @@ Use this skill when:
 ## Prerequisites
 
 A completed video with at least one of the following available in the episode directory (`./youtube/episode/[episode_number]_[topic_short_name]/`):
-- `research.md` -- research findings
-- `plan.md` -- video plan with title, hook, and outline
-- `transcript.md` -- video transcript
+- `research.md` — research findings
+- `plan.md` — video plan with title, hook, and outline
+- `transcript.md` — video transcript
 - Key points or notes provided by the user
 
 The more source material available, the better the repurposed content will be. A transcript is the richest source, but a plan + research combination also works well.
@@ -44,30 +48,29 @@ If the user provides additional notes or key points, incorporate those as well.
 
 ### Step 2: Extract Key Content
 
-Synthesize the source material into a content brief:
+Synthesize the source material into a content brief. This brief becomes the shared context for every downstream copywriting invocation — it's what keeps the message consistent across platforms even as the format changes.
+
 - **Core thesis**: The main argument or insight from the video
 - **Key takeaways**: 3-5 actionable insights or lessons
 - **Supporting points**: Examples, data, or stories used in the video
 - **Unique angle**: What makes this perspective different from existing content
 - **Call to action**: What the viewer/reader should do next
 
-This content brief will be provided as context to each downstream `creator-stack:copywriting` invocation.
-
 ### Step 3: Newsletter Issue
 
-**MANDATORY**: Invoke `creator-stack:copywriting` with `references/newsletter.md` to draft a newsletter issue.
+Invoke `creator-stack:copywriting` with content type "newsletter" to draft a newsletter issue.
 
 Provide the content brief and specify:
 - Transform the video's content into a written newsletter format
-- Adapt the structure for reading (not watching)
+- Adapt the structure for reading (not watching) — readers scan, viewers follow linearly
 - Include the key takeaways in a scannable format
 - Link back to the YouTube video
 
-The `creator-stack:copywriting` skill will automatically invoke `creator-stack:voice` for voice consistency.
+The copywriting skill loads its own `references/newsletter.md` and automatically invokes `creator-stack:voice`.
 
 ### Step 4: Twitter Thread
 
-**MANDATORY**: Invoke `creator-stack:copywriting` with `references/twitter.md` to draft a Twitter thread.
+Invoke `creator-stack:copywriting` with content type "twitter" to draft a Twitter thread.
 
 Provide the content brief and specify:
 - Distill the video into a compelling thread (5-10 tweets)
@@ -77,7 +80,7 @@ Provide the content brief and specify:
 
 ### Step 5: LinkedIn Post
 
-**MANDATORY**: Invoke `creator-stack:copywriting` with `references/linkedin.md` to draft a LinkedIn post.
+Invoke `creator-stack:copywriting` with content type "linkedin" to draft a LinkedIn post.
 
 Provide the content brief and specify:
 - Adapt the video's professional insights for LinkedIn's audience
@@ -87,7 +90,7 @@ Provide the content brief and specify:
 
 ### Step 6: Substack Note
 
-**MANDATORY**: Invoke `creator-stack:copywriting` with `references/substack-notes.md` to draft a Substack Note.
+Invoke `creator-stack:copywriting` with content type "substack-note" to draft a Substack Note.
 
 Provide the content brief and specify:
 - Create a concise, conversational note
@@ -137,20 +140,20 @@ The saved `repurposed.md` file should follow this structure:
 Verify completion before finalizing:
 - [ ] Source material loaded (research, plan, transcript, or notes)
 - [ ] Content brief extracted with core thesis, takeaways, and unique angle
-- [ ] `creator-stack:copywriting` invoked with `references/newsletter.md` -- newsletter drafted
-- [ ] `creator-stack:copywriting` invoked with `references/twitter.md` -- Twitter thread drafted
-- [ ] `creator-stack:copywriting` invoked with `references/linkedin.md` -- LinkedIn post drafted
-- [ ] `creator-stack:copywriting` invoked with `references/substack-notes.md` -- Substack Note drafted
-- [ ] Voice consistency maintained across all platforms (handled by writing skill)
+- [ ] `creator-stack:copywriting` invoked for newsletter — drafted
+- [ ] `creator-stack:copywriting` invoked for Twitter — thread drafted
+- [ ] `creator-stack:copywriting` invoked for LinkedIn — post drafted
+- [ ] `creator-stack:copywriting` invoked for Substack Note — note drafted
+- [ ] Voice consistency maintained across all platforms (handled by copywriting skill)
 - [ ] Each platform's content adapts the message to its audience and format
 - [ ] Video link included in all platform content
 - [ ] All content presented to user for review
 - [ ] Final content saved to `repurposed.md` in episode directory
 
-## Common Pitfalls to Avoid
+## Common Pitfalls
 
-1. **Copy-pasting across platforms**: Each platform needs content adapted to its format and audience -- do not reuse the same text
-2. **Skipping the content brief**: Jumping straight to writing without extracting key points leads to unfocused content
-3. **Missing voice consistency**: Always let `creator-stack:copywriting` handle voice through its built-in `creator-stack:voice` invocation
-4. **Forgetting video links**: Every platform piece should drive traffic back to the video
-5. **Over-repurposing**: Not every video insight fits every platform -- let the writing skill adapt appropriately
+1. **Copy-pasting across platforms**: Each platform needs content adapted to its format and audience — the copywriting skill handles this through platform-specific references, so always invoke it separately per platform.
+2. **Skipping the content brief**: Jumping straight to writing without extracting key points leads to unfocused content that drifts between platforms.
+3. **Missing voice consistency**: Always let `creator-stack:copywriting` handle voice through its built-in `creator-stack:voice` invocation.
+4. **Forgetting video links**: Every platform piece should drive traffic back to the video.
+5. **Over-repurposing**: Not every video insight fits every platform — let the writing skill adapt appropriately.

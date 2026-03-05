@@ -7,7 +7,7 @@ description: "Orchestrate foundation skills to optimize a newsletter draft or wr
 
 Orchestrate foundation skills to transform outlines into full drafts or optimize rough drafts into high-performing newsletter issues. This is a thin orchestrator — it sequences skill invocations and manages the user review workflow, but delegates all content generation to foundation skills.
 
-**Core Principle**: This is a thin orchestrator. Never write newsletter content manually. Always delegate to the appropriate foundation skill.
+**Core Principle**: This is a thin orchestrator. All content generation goes through the appropriate foundation skill — that's how quality stays consistent and voice stays authentic. This skill manages workflow sequence and user decisions only.
 
 ## When to Use
 
@@ -23,7 +23,7 @@ Do NOT use this skill when:
 
 ## Prerequisites
 
-**MANDATORY**: Existing content must be available. Either:
+Existing content must be available. Either:
 1. A newsletter outline (bullet points, topic structure, notes), OR
 2. A rough draft that needs optimization
 
@@ -43,31 +43,31 @@ Present the assessment to the user: input type, detected issue type, and the wor
 ### Step 2: Draft or Optimize Content
 
 **From outline:**
-1. **MANDATORY**: Invoke `creator-stack:copywriting` with content type "newsletter" to write the full draft.
+1. Invoke `creator-stack:copywriting` with content type "newsletter" to write the full draft.
    - Pass the outline as source material
-   - The copywriting skill loads `references/newsletter.md` for section rules, issue types, and writing conventions
+   - The copywriting skill loads its own `references/newsletter.md` for section rules, issue types, and writing conventions
 2. The draft follows the Newsletter Arc: Hook → Context → Value → Close
 
 **From rough draft:**
-1. **MANDATORY**: Invoke `creator-stack:copywriting` with content type "newsletter" to audit and optimize each section.
+1. Invoke `creator-stack:copywriting` with content type "newsletter" to audit and optimize each section.
    - Pass the draft as source material with instruction to optimize
-   - The copywriting skill checks against section rules and body writing rules
+   - The copywriting skill checks against its section rules and body writing rules
 2. Present findings: what works, what needs improvement, and specific recommendations
 3. Rewrite/optimize sections that fall short
 
 ### Step 3: Generate Subject Lines
 
-1. **MANDATORY**: Invoke `creator-stack:title` with content type "newsletter" to generate 3 subject line options.
+1. Invoke `creator-stack:title` with content type "newsletter" to generate 3 subject line options.
    - Pass the draft content as context
-   - The title skill loads `references/newsletter-subject-lines.md` for formulas and rules
+   - The title skill loads its own `references/newsletter-subject-lines.md` for formulas and rules
 2. Each option includes preview text (subtitle)
 3. Document all options with star ratings and recommendation
 
 ### Step 4: Generate Opening Hook
 
-1. **MANDATORY**: Invoke `creator-stack:hook` with content type "newsletter" to generate 2-3 hook options.
+1. Invoke `creator-stack:hook` with content type "newsletter" to generate 2-3 hook options.
    - Pass the selected subject line and draft content as context
-   - The hook skill loads `references/newsletter-hooks.md` for hook patterns
+   - The hook skill loads its own `references/newsletter-hooks.md` for hook patterns
 2. Each hook must extend curiosity from the subject line (not repeat it)
 3. Document all options with rationale
 
@@ -78,11 +78,11 @@ Present the assessment to the user: input type, detected issue type, and the wor
 3. Present the full draft (or optimized draft)
 4. Ask the user to select subject line + hook
 
-**CRITICAL**: Present ALL options. Do not select on the user's behalf.
+Always present all options — the user makes the final call, not the orchestrator.
 
 ### Step 6: Run Pre-Publish Checklist
 
-1. **MANDATORY**: Read `references/pre-publish-checklist.md`
+1. Read `references/pre-publish-checklist.md`
 2. Run through every check against the final draft
 3. Flag any items that don't pass
 4. Present results to the user with specific fixes for any failures
@@ -109,15 +109,16 @@ Present the final issue in this structure:
 P.S. [Secondary CTA or personal touch]
 ```
 
-## Execution Guidelines
+## Delegation Reference
 
-**NEVER** generate content manually. Always delegate:
-- `creator-stack:copywriting` for all newsletter prose (drafting and optimization)
-- `creator-stack:title` for subject line generation
-- `creator-stack:hook` for opening hook generation
-- `creator-stack:voice` is invoked automatically by the copywriting skill
+Each foundation skill owns its own reference files. When you invoke a skill, it loads the right references automatically — you don't need to manage file paths.
 
-**CRITICAL**: Always present ALL options with star ratings and rationale.
+| Content | Skill | Why |
+|---------|-------|-----|
+| Newsletter prose (draft + optimize) | `creator-stack:copywriting` | Owns section rules, body writing conventions, voice invocation |
+| Subject lines | `creator-stack:title` | Owns subject line formulas and open rate patterns |
+| Opening hooks | `creator-stack:hook` | Owns hook patterns and curiosity extension logic |
+| Voice consistency | `creator-stack:voice` | Invoked automatically by copywriting — no manual call needed |
 
 ## Quality Checklist
 
@@ -129,11 +130,10 @@ P.S. [Secondary CTA or personal touch]
 - [ ] User selected subject line and hook
 - [ ] Pre-publish checklist run (all items pass or flagged)
 - [ ] Final issue assembled and presented
-- [ ] No content generated manually by this orchestrator
 
 ## Common Pitfalls
 
-1. **Writing content manually**: Generating newsletter prose instead of delegating to `creator-stack:copywriting`.
-2. **Single option**: Presenting one subject line or hook instead of multiple options.
+1. **Writing content manually**: Generating newsletter prose instead of delegating to `creator-stack:copywriting` — the foundation skill has all the section rules and voice handling built in.
+2. **Single option**: Presenting one subject line or hook instead of multiple options — users need choices to make good decisions.
 3. **Skipping the pre-publish checklist**: The checklist catches issues the draft workflow misses.
-4. **Fat orchestrator**: Adding copywriting techniques, section rules, or formatting guidance here instead of keeping them in foundation skill references.
+4. **Fat orchestrator**: Adding copywriting techniques, section rules, or formatting guidance here instead of keeping them in foundation skill references — that logic belongs in the skill that owns it.

@@ -1,15 +1,19 @@
 ---
 name: create-post
-description: Create high-engagement YouTube community posts that drive views, build audience loyalty, and maximize conversion. This is a thin orchestrator — it sequences creator-stack:research and creator-stack:copywriting invocations for community post creation.
+description: "Create high-engagement YouTube community posts that drive views, build audience loyalty, and maximize conversion. This is a thin orchestrator — it sequences creator-stack:research and creator-stack:copywriting invocations for community post creation. Use when the user asks to create a community post, promote a video on the community tab, run a poll, or engage their YouTube audience between uploads."
 ---
 
 # Create Community Post
 
 ## Overview
 
-This orchestrator creates YouTube community posts by sequencing `creator-stack:research` for strategic context and `creator-stack:copywriting` for content generation. It handles episode awareness, post type selection, and output management -- all actual content generation and strategy are delegated to the foundation skills and their references.
+This orchestrator creates YouTube community posts by sequencing `creator-stack:research` for strategic context and `creator-stack:copywriting` for content generation. It handles episode awareness, post type selection, and output management — all actual content generation and strategy are delegated to the foundation skills.
 
-**Core Principle**: This is a thin orchestrator. Strategy lives in `creator-stack:research` via `references/youtube-community-strategy.md`. Templates and formatting live in `creator-stack:copywriting` via `references/youtube-community-post.md`. This skill manages the workflow sequence, episode context, and user decisions only.
+**Core Principle**: This is a thin orchestrator. Strategy lives in `creator-stack:research` (via its `references/youtube-community-strategy.md`). Templates and formatting live in `creator-stack:copywriting` (via its `references/youtube-community-post.md`). This skill manages the workflow sequence, episode context, and user decisions only.
+
+## How Reference Delegation Works
+
+Both foundation skills own their own reference files. When you invoke `creator-stack:research` and specify "youtube community post" as context, it loads its strategy reference. When you invoke `creator-stack:copywriting` with content type "youtube community post", it loads its template reference. Those files live in each skill's directory, not here.
 
 ## When to Use
 
@@ -35,49 +39,49 @@ Check if the user has specified an episode or if an episode directory exists at 
 **If episode directory exists:**
 - Read `plan.md` for video title, topic, and context
 - Suggest a lifecycle phase based on context:
-  - Video not yet published -> **pre-release**
-  - Video just published -> **launch day**
-  - Video published 3-7 days ago -> **post-launch**
+  - Video not yet published → **pre-release**
+  - Video just published → **launch day**
+  - Video published 3-7 days ago → **post-launch**
 - Use this context to inform the research invocation in Step 1
 
 **If no episode directory:**
 - Default to **between videos** mode
 - Posts will focus on engagement, audience research, or value delivery
 
-### Step 1: Invoke `creator-stack:research`
+### Step 1: Invoke Research for Strategic Context
 
-**MANDATORY**: Invoke `creator-stack:research` with `references/youtube-community-strategy.md` to determine the strategic context for this post.
+Invoke `creator-stack:research` with the community post context to determine strategy.
 
 Provide:
 - The lifecycle phase (from Step 0 or user input)
 - The video topic (if applicable)
 - The user's stated goal (engagement, promotion, research, conversion)
 
-The research skill will apply the strategy framework to determine:
+The research skill applies the strategy framework to determine:
 - Optimal post type ranking for the context
 - Timing recommendations
 - Strategic rationale for the approach
 
-NOTE: This is a lighter research invocation -- the orchestrator is asking research to apply the strategy framework to the user's context, not to do full competitor analysis.
+NOTE: This is a lighter research invocation — asking research to apply the strategy framework to the user's context, not to do full competitor analysis.
 
 ### Step 2: Present Post Type Options
 
 Based on the research output, present the ranked post type options to the user:
 
-1. **Poll** (text or image) -- highest engagement
-2. **Video teaser/clip** -- high engagement
-3. **GIF** -- medium-high engagement
-4. **Image** -- medium engagement
-5. **Quiz** -- medium engagement
-6. **Text-only** -- lowest engagement
+1. **Poll** (text or image) — highest engagement
+2. **Video teaser/clip** — high engagement
+3. **GIF** — medium-high engagement
+4. **Image** — medium engagement
+5. **Quiz** — medium engagement
+6. **Text-only** — lowest engagement
 
 Include the research skill's recommendation for which type best fits the context. User selects their preferred type.
 
-**Default to polls when unsure** -- they have the lowest friction and highest engagement.
+**Default to polls when unsure** — they have the lowest friction and highest engagement.
 
-### Step 3: Invoke `creator-stack:copywriting`
+### Step 3: Invoke Copywriting for Content
 
-**MANDATORY**: Invoke `creator-stack:copywriting` with `references/youtube-community-post.md` to draft the community post.
+Invoke `creator-stack:copywriting` with content type "youtube community post" to draft the post.
 
 Provide:
 - The selected post type from Step 2
@@ -85,7 +89,7 @@ Provide:
 - The episode context from Step 0 (if applicable)
 - The lifecycle phase and user's stated goal
 
-The `creator-stack:copywriting` skill will automatically invoke `creator-stack:voice` for voice consistency. The reference file contains all templates, formatting rules, and the 288-character hook rule.
+The copywriting skill automatically invokes `creator-stack:voice` for voice consistency. Its reference file contains all templates, formatting rules, and the 288-character hook rule.
 
 ### Step 4: Quality Checklist
 
@@ -94,9 +98,9 @@ Verify the drafted post against all eight criteria before presenting to the user
 - [ ] Hook lands within 288 characters (visible preview cutoff)
 - [ ] Total length is 150-400 characters
 - [ ] Ends with a CTA (question, poll, or link)
-- [ ] Conversational tone -- not corporate or automated
+- [ ] Conversational tone — not corporate or automated
 - [ ] First person, direct address ("I" and "you")
-- [ ] Mobile-friendly -- short paragraphs, line breaks between ideas
+- [ ] Mobile-friendly — short paragraphs, line breaks between ideas
 - [ ] NOT a generic "new video out" link dump
 - [ ] Post type matches the stated purpose/phase
 
@@ -141,19 +145,19 @@ Multiple posts for the same episode are appended to the same file with a horizon
 
 Verify completion before finalizing:
 - [ ] Episode context checked (Step 0)
-- [ ] `creator-stack:research` invoked with `references/youtube-community-strategy.md` -- strategic context determined
+- [ ] `creator-stack:research` invoked — strategic context determined
 - [ ] Post type options presented and user selection received
-- [ ] `creator-stack:copywriting` invoked with `references/youtube-community-post.md` -- post drafted
-- [ ] Voice consistency maintained (handled by writing skill's `creator-stack:voice` invocation)
+- [ ] `creator-stack:copywriting` invoked — post drafted
+- [ ] Voice consistency maintained (handled by copywriting skill)
 - [ ] All 8 quality criteria passed (Step 4)
 - [ ] Post presented to user for approval
 - [ ] Output saved to episode directory or presented inline
 
-## Common Pitfalls to Avoid
+## Common Pitfalls
 
-1. **Writing templates inline**: All templates live in `references/youtube-community-post.md` -- do not duplicate them in this orchestrator
-2. **Embedding strategy logic**: All strategy lives in `references/youtube-community-strategy.md` -- do not hardcode timing, cadence, or algorithm advice here
-3. **Skipping foundation skill invocations**: Both `creator-stack:research` and `creator-stack:copywriting` must be invoked -- do not generate posts directly
-4. **Ignoring episode context**: Always check for an episode directory first -- it changes the entire strategic approach
-5. **Defaulting to "new video out" posts**: The research and writing skills are specifically designed to avoid generic link dumps -- trust the foundation skills
-6. **Skipping the quality checklist**: Every post must pass all 8 criteria before presenting to the user
+1. **Writing templates inline**: All templates live in copywriting's `references/youtube-community-post.md` — don't duplicate them here.
+2. **Embedding strategy logic**: All strategy lives in research's `references/youtube-community-strategy.md` — don't hardcode timing, cadence, or algorithm advice here.
+3. **Skipping foundation skill invocations**: Both research and copywriting should be invoked — they have the proven patterns and quality logic.
+4. **Ignoring episode context**: Always check for an episode directory first — it changes the entire strategic approach.
+5. **Defaulting to "new video out" posts**: The research and writing skills are specifically designed to avoid generic link dumps — trust the foundation skills.
+6. **Skipping the quality checklist**: Every post should pass all 8 criteria before presenting to the user.

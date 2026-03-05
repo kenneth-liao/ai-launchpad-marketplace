@@ -9,9 +9,7 @@ This skill enables generation of high-performing thumbnails and cover images opt
 
 ## Image Generation
 
-You **MUST** invoke the `creator-stack:nanobanana` skill for all image generation and editing. This skill provides access to Gemini image models (Pro and Flash) with support for text-to-image, image editing, multi-image reference, and high-resolution output.
-
-**MANDATORY**: Invoke `creator-stack:nanobanana` before generating or editing any thumbnail. The skill will provide the generation scripts and API access needed to produce images.
+All image generation and editing goes through the `creator-stack:nanobanana` skill — it provides access to Gemini image models (Pro and Flash) with support for text-to-image, image editing, multi-image reference, and high-resolution output. Invoke it before generating or editing any thumbnail.
 
 ### Model Selection for Thumbnails
 
@@ -20,14 +18,14 @@ You **MUST** invoke the `creator-stack:nanobanana` skill for all image generatio
 
 **Rule of thumb**: Use Flash for exploration batches (generate 5-10 variations), then Pro for the final production image.
 
-## REQUIRED READING
+## Essential References
 
-The following documents are **MANDATORY READING** before generating ANY thumbnail.
+Read both of these before generating any thumbnail — they contain the design patterns and prompting techniques that make the difference between a generic image and a high-CTR thumbnail:
 
-1. `references/thumbnail-formulas.md` - Design formulas for high CTR thumbnails through proven strategies. These principles apply universally across platforms.
-2. `references/prompting-guidelines.md` - Thumbnails are generated using Gemini image models (NanoBanana). The prompting guidelines will enable you to get more predictable and consistent results.
+1. `references/thumbnail-formulas.md` — Design formulas for high CTR thumbnails through proven strategies. These principles apply universally across platforms.
+2. `references/prompting-guidelines.md` — Thumbnails are generated using Gemini image models (NanoBanana). The prompting guidelines help you get more predictable and consistent results.
 
-It is a **MANDATORY REQUIREMENT** that you follow both the design formulas and prompting guidelines in order to generate high-performing thumbnails. Failure to do so will result in a failed task.
+Skipping these leads to generic thumbnails that don't follow proven patterns — always load them first.
 
 ## Platform Context
 

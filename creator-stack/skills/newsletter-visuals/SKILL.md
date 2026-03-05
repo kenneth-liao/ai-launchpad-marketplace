@@ -19,7 +19,10 @@ Use this skill when:
 
 ## Prerequisites
 
-**MANDATORY**: A design system must exist before generating any visuals. Check `~/.claude/.context/design-systems/` for available design systems. If none exists, STOP and invoke `creator-stack:design-system` to create one. If one exists, verify its Application Guidelines cover newsletter/website assets.
+A design system must exist before generating any visuals — without one, generated images won't have consistent colors, typography, or style. Check `~/.claude/.context/design-systems/` for available design systems.
+
+- **If none exists**: Inform the user and offer to invoke `creator-stack:design-system` to create one. Do not generate visuals without a design system — the results will be inconsistent and off-brand.
+- **If one exists**: Verify its Application Guidelines cover newsletter/website assets. If they don't, note this to the user and proceed with the closest available style guidance.
 
 ## Content Type Resolution
 
@@ -27,7 +30,7 @@ Use this skill when:
 |---|---|---|
 | Substack newsletter | `references/substack-constraints.md` | Aspect ratios, email rendering, resolution |
 
-**MANDATORY**: Read the relevant reference file before generating any assets.
+Read the relevant reference file before generating any assets — it contains platform-specific constraints (aspect ratios, resolution, email rendering limits) that affect every prompt.
 
 ## Workflow
 
@@ -127,7 +130,7 @@ Run the quality checklist before presenting final assets.
 
 ## Voice Application
 
-ALWAYS invoke `creator-stack:voice` before finalizing any written output (captions). Voice is applied after the structural draft is complete but before brand compliance.
+Invoke `creator-stack:voice` before finalizing any written output (captions). Voice is applied after the structural draft is complete but before brand compliance.
 
 **Invocation point**: After writing captions and alt text, before presenting to the user.
 
