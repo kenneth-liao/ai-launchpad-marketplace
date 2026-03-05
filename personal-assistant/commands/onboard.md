@@ -105,6 +105,14 @@ After covering the topics, summarize what you learned:
 > "Thanks for sharing all of that! Here's what I've learned about you: [brief summary]. I'll use this to be more helpful going forward. You can always update this by running `/personal-assistant:onboard` again or just telling me things as we work together."
 
 Let them know:
-- Context updates happen automatically as you learn more
+- Context updates happen via `/update-context` or `/retrospective`
 - They can run this command anytime to update their profile
 - They can also just mention things naturally and you'll remember
+
+### Sync Rules
+
+After onboarding, regenerate elle-core.md to reflect the new context:
+
+> "Let me sync your context to elle-core.md so future sessions have your info loaded automatically."
+
+Run `/sync-context` (or invoke the script directly).
