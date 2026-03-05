@@ -1,5 +1,5 @@
 ---
-name: ideate
+name: extract-ideas
 description: Extract structured content ideas from published material. Mines existing videos, newsletters, notes, and web trends for note-worthy angles, maps them to content types, and quality-filters against platform criteria. This is a generalized ideation skill — platform-specific extraction frameworks and output formats are provided via reference files.
 ---
 
@@ -23,7 +23,7 @@ Use this skill when:
 
 Do NOT use this skill when:
 - You need to research a topic, analyze competitors, or find content gaps — use `creator-stack:research`
-- You need to write finished content from an idea — use `creator-stack:copywriting`
+- You need to write finished content from an idea — use `creator-stack:write`
 - You need to generate titles or hooks — use `creator-stack:title` or `creator-stack:hook`
 - You have no source material to extract from — ideation requires inputs
 
@@ -33,7 +33,7 @@ This skill is generalized. Platform-specific extraction frameworks, content type
 
 | Platform | Reference File | Loaded By |
 |---|---|---|
-| Substack Notes | `references/substack-notes-ideation.md` | `creator-stack:generate-note-ideas` |
+| Substack Notes | `references/substack-notes-ideation.md` | `creator-stack:ideate-notes` |
 
 When invoked, read the reference file provided by the orchestrator. The reference defines:
 - **Extraction categories** — what to look for in source material

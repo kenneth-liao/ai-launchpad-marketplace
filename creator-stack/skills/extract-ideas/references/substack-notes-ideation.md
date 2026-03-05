@@ -1,6 +1,6 @@
 # Substack Notes Ideation
 
-Strategic frameworks for extracting Substack Note ideas from published content sources. Used by `creator-stack:ideate` when invoked by `creator-stack:generate-note-ideas`. The companion strategy reference (`substack-notes-strategy.md`) covers timing, cadence, and publishing cycles — this file covers **how to mine existing content for note-worthy angles**.
+Strategic frameworks for extracting Substack Note ideas from published content sources. Used by `creator-stack:extract-ideas` when invoked by `creator-stack:ideate-notes`. The companion strategy reference (`substack-notes-strategy.md`) covers timing, cadence, and publishing cycles — this file covers **how to mine existing content for note-worthy angles**.
 
 ---
 
@@ -201,7 +201,7 @@ Every generated idea must pass this checklist before inclusion. If an idea fails
 | 1 | **Standalone value** | Is this idea interesting to someone who hasn't watched the source video or read the source issue? If the idea only makes sense with the full context, it fails. |
 | 2 | **Specificity** | Does it include concrete numbers, examples, tools, or scenarios? If you could swap the topic for any other topic and the idea still works, it's too vague. |
 | 3 | **One idea per note** | Does the idea contain exactly one core message? If you need "and" to describe it, split it into two ideas. |
-| 4 | **Maps to a note type** | Does it cleanly map to one of the 10 note types from `creator-stack:copywriting` > `substack-notes.md`? If it doesn't fit any type, it's probably too abstract or too complex for a note. |
+| 4 | **Maps to a note type** | Does it cleanly map to one of the 10 note types from `creator-stack:write` > `substack-notes.md`? If it doesn't fit any type, it's probably too abstract or too complex for a note. |
 | 5 | **Not a rehash** | Has something substantially similar already been posted in past notes? Check the past notes history. Similar topic is fine; same angle is not. |
 | 6 | **Clear engagement angle** | Would someone restack this, quote it, or reply to it? Every idea needs a reason for the reader to interact — a surprising claim, a useful tip, a question worth answering, or a take worth debating. |
 | 7 | **Conversion potential** | Does this idea map to a high-converter type (Problem → Solution, Generosity, Income Proof Story, List-Based Tactical, Conversation Starter)? If the entire batch skews toward engagement-only types, actively look for converter angles — but never force a weak idea just for conversion balance. |

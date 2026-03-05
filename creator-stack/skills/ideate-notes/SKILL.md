@@ -1,17 +1,17 @@
 ---
-name: generate-note-ideas
-description: "Scan published YouTube videos, Substack newsletter issues, and Substack Notes to generate high-quality note ideas. This is a thin orchestrator — it sequences source scanning, creator-stack:ideate invocation, and output management, but delegates all ideation logic to the ideate skill via references/substack-notes-ideation.md."
+name: ideate-notes
+description: "Scan published YouTube videos, Substack newsletter issues, and Substack Notes to generate high-quality note ideas. This is a thin orchestrator — it sequences source scanning, creator-stack:extract-ideas invocation, and output management, but delegates all ideation logic to the extract-ideas skill via references/substack-notes-ideation.md."
 ---
 
 # Generate Substack Note Ideas
 
 ## Overview
 
-This orchestrator scans published content across YouTube and Substack, then delegates ideation to `creator-stack:ideate` with the ideation reference file. It handles source fetching, processed-log management, and output persistence -- all actual idea generation logic is delegated to the foundation skill.
+This orchestrator scans published content across YouTube and Substack, then delegates ideation to `creator-stack:extract-ideas` with the ideation reference file. It handles source fetching, processed-log management, and output persistence -- all actual idea generation logic is delegated to the foundation skill.
 
-This skill sits upstream of `creator-stack:create-note` -- it produces a curated list of note ideas, while `create-note` writes the full note from a selected idea.
+This skill sits upstream of `creator-stack:write-note` -- it produces a curated list of note ideas, while `write-note` writes the full note from a selected idea.
 
-**Core Principle**: This is a thin orchestrator. Never generate ideas manually. Always delegate to `creator-stack:ideate` via `references/substack-notes-ideation.md`. This skill manages the source-scanning workflow, duplicate prevention, and output files only.
+**Core Principle**: This is a thin orchestrator. Never generate ideas manually. Always delegate to `creator-stack:extract-ideas` via `references/substack-notes-ideation.md`. This skill manages the source-scanning workflow, duplicate prevention, and output files only.
 
 ## When to Use
 
@@ -95,9 +95,9 @@ Use web search to find trending topics in the user's niche.
 
 **This step always runs** regardless of whether new sources were found in Steps 1-2. Trending topics provide timely note ideas even when no new content has been published.
 
-### Step 4: Invoke `creator-stack:ideate` with Ideation Reference
+### Step 4: Invoke `creator-stack:extract-ideas` with Ideation Reference
 
-**MANDATORY**: Invoke `creator-stack:ideate` with `references/substack-notes-ideation.md` to generate structured note ideas.
+**MANDATORY**: Invoke `creator-stack:extract-ideas` with `references/substack-notes-ideation.md` to generate structured note ideas.
 
 Provide all source material gathered in Steps 0-3:
 - New YouTube video transcripts, titles, descriptions, and top comments (from Step 1)
@@ -116,7 +116,7 @@ Present the batch of ideas (5-10) in the structured format from the ideation ref
 
 Each idea includes:
 - **Topic** -- what the note is about
-- **Type** -- suggested note type (from the `create-note` type taxonomy)
+- **Type** -- suggested note type (from the `write-note` type taxonomy)
 - **Source** -- which source content inspired this idea
 - **Pitch** -- one-line description of the note angle
 - **Rationale** -- why this idea is strategically sound
@@ -149,9 +149,9 @@ After user approval, update two files:
 
 ### Step 7: Handoff Suggestion
 
-Inform the user they can pick any idea and invoke `creator-stack:create-note` to write the full note.
+Inform the user they can pick any idea and invoke `creator-stack:write-note` to write the full note.
 
-Do NOT automatically invoke `create-note`. This skill generates ideas only -- the user decides when and which idea to execute.
+Do NOT automatically invoke `write-note`. This skill generates ideas only -- the user decides when and which idea to execute.
 
 ## Output Structure
 
@@ -204,7 +204,7 @@ Each idea within a type section uses this format:
 
 **Status values:**
 - `pending` — idea generated but not yet written
-- `drafted` — note has been drafted via `creator-stack:create-note`
+- `drafted` — note has been drafted via `creator-stack:write-note`
 - `published` — note has been published to Substack
 
 ### Processed Log (`./substack/notes/processed-log.md`)
@@ -233,16 +233,16 @@ Verify completion before finalizing:
 - [ ] YouTube videos scanned via MCP tools or web search fallback (Step 1)
 - [ ] Substack newsletter issues scanned via web fetch (Step 2)
 - [ ] Web trends gathered (Step 3)
-- [ ] `creator-stack:ideate` invoked with `references/substack-notes-ideation.md` (Step 4)
+- [ ] `creator-stack:extract-ideas` invoked with `references/substack-notes-ideation.md` (Step 4)
 - [ ] Ideas presented to user for approval (Step 5)
 - [ ] Approved ideas filed by type in content bank `./substack/notes/ideas.md` (Step 6)
 - [ ] Quick Stats updated in content bank (Step 6)
 - [ ] Processed log updated with newly scanned sources (Step 6)
-- [ ] Handoff to `creator-stack:create-note` suggested (Step 7)
+- [ ] Handoff to `creator-stack:write-note` suggested (Step 7)
 
 ## Common Pitfalls to Avoid
 
-1. **Generating ideas manually**: All ideation logic lives in the ideate reference file. Delegate to `creator-stack:ideate` -- do not implement idea generation in this orchestrator.
+1. **Generating ideas manually**: All ideation logic lives in the ideate reference file. Delegate to `creator-stack:extract-ideas` -- do not implement idea generation in this orchestrator.
 2. **Re-scanning processed sources**: Always check the processed log first. Skip sources already scanned.
 3. **Ignoring the notes history**: Past notes feed gap analysis. Always load them in Step 2.
 4. **Skipping web trends**: Trending topics provide timely ideas even when no new content exists. Step 3 always runs.

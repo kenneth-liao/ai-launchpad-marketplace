@@ -1,5 +1,5 @@
 ---
-name: plan-issue
+name: plan-newsletter
 description: "Orchestrate foundation skills to plan a complete newsletter issue including research, draft, subject line, opening hook, and social promotion posts. This is a thin orchestrator — it sequences skill invocations and manages the user review workflow. Use when the user wants to plan a newsletter from a topic, create a newsletter content plan, or turn an idea into a full issue plan with social promotion."
 ---
 
@@ -11,7 +11,7 @@ This skill takes a topic and produces a complete newsletter issue plan with draf
 
 ## How Reference Delegation Works
 
-Each foundation skill owns its own reference files and loads them automatically. When you invoke `creator-stack:copywriting` for newsletter content, it loads `references/newsletter.md` from its own directory. When you invoke `creator-stack:title` for subject lines, it loads `references/newsletter-subject-lines.md` from its own directory. You don't need to manage these paths — just invoke the skill and provide context.
+Each foundation skill owns its own reference files and loads them automatically. When you invoke `creator-stack:write` for newsletter content, it loads `references/newsletter.md` from its own directory. When you invoke `creator-stack:title` for subject lines, it loads `references/newsletter-subject-lines.md` from its own directory. You don't need to manage these paths — just invoke the skill and provide context.
 
 ## When to Use
 
@@ -45,7 +45,7 @@ Invoke `creator-stack:research` to understand the content landscape and identify
 
 ### Step 2: Draft the Newsletter Issue
 
-Invoke `creator-stack:copywriting` with content type "newsletter" to draft the full issue.
+Invoke `creator-stack:write` with content type "newsletter" to draft the full issue.
 
 - The copywriting skill loads its own `references/newsletter.md` for newsletter structure and conventions.
 - The copywriting skill automatically invokes `creator-stack:voice` for voice consistency.
@@ -74,7 +74,7 @@ Invoke `creator-stack:hook` with content type "newsletter" to generate 2-3 openi
 
 ### Step 5: Generate Social Promotion Posts
 
-Invoke `creator-stack:copywriting` separately for each platform:
+Invoke `creator-stack:write` separately for each platform:
 
 1. **Twitter/X thread** — specify content type "twitter"
 2. **LinkedIn post** — specify content type "linkedin"
@@ -133,22 +133,22 @@ Each foundation skill owns its own reference files and loads them automatically:
 | Content | Skill | Reference (loaded by the skill) |
 |---------|-------|---------------------------------|
 | Research | `creator-stack:research` | Loaded based on topic context |
-| Newsletter draft | `creator-stack:copywriting` | `newsletter.md` |
+| Newsletter draft | `creator-stack:write` | `newsletter.md` |
 | Subject lines | `creator-stack:title` | `newsletter-subject-lines.md` |
 | Opening hooks | `creator-stack:hook` | `newsletter-hooks.md` |
-| Twitter thread | `creator-stack:copywriting` | `twitter.md` |
-| LinkedIn post | `creator-stack:copywriting` | `linkedin.md` |
-| Substack Note | `creator-stack:copywriting` | `substack-notes.md` |
+| Twitter thread | `creator-stack:write` | `twitter.md` |
+| LinkedIn post | `creator-stack:write` | `linkedin.md` |
+| Substack Note | `creator-stack:write` | `substack-notes.md` |
 | Voice | `creator-stack:voice` | Invoked automatically by copywriting |
 
 ## Quality Checklist
 
 Verify completion before presenting the plan:
 - [ ] Research conducted (or source material loaded)
-- [ ] `creator-stack:copywriting` invoked for newsletter draft
+- [ ] `creator-stack:write` invoked for newsletter draft
 - [ ] `creator-stack:title` invoked for subject lines
 - [ ] `creator-stack:hook` invoked for opening hooks
-- [ ] `creator-stack:copywriting` invoked for social promotion posts (all 3 platforms)
+- [ ] `creator-stack:write` invoked for social promotion posts (all 3 platforms)
 - [ ] All written content goes through `creator-stack:voice` (handled by copywriting skill)
 - [ ] All options presented with star ratings
 - [ ] Complete plan presented to user
@@ -166,10 +166,10 @@ Verify completion before presenting the plan:
 **Scenario**: User asks to plan a newsletter about "Building AI agents with memory"
 
 1. **Research**: Invoke `creator-stack:research` with topic "AI agents with memory" to identify content gaps and angles.
-2. **Draft**: Invoke `creator-stack:copywriting` with research findings to produce the full newsletter draft.
+2. **Draft**: Invoke `creator-stack:write` with research findings to produce the full newsletter draft.
 3. **Subject lines**: Invoke `creator-stack:title` to generate 4 subject line options with preview text.
 4. **Opening hooks**: Invoke `creator-stack:hook` to generate 3 opening paragraph options.
-5. **Social posts**: Invoke `creator-stack:copywriting` three times for Twitter/X thread, LinkedIn post, and Substack Note.
+5. **Social posts**: Invoke `creator-stack:write` three times for Twitter/X thread, LinkedIn post, and Substack Note.
 6. **Header image**: User did not request one — mark "Not requested."
 7. **Present plan**: Save to `./newsletter/issues/ai-agents-with-memory/plan.md` and present to user.
 

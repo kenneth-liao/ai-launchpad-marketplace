@@ -1,6 +1,6 @@
 # YouTube Community Post Strategy
 
-Strategic frameworks, data, and decision models for YouTube community post planning. This is the authoritative source for community post strategy — the companion writing reference (`creator-stack:copywriting` > `youtube-community-post.md`) covers templates, formatting, and post structure.
+Strategic frameworks, data, and decision models for YouTube community post planning. This is the authoritative source for community post strategy — the companion writing reference (`creator-stack:write` > `youtube-community-post.md`) covers templates, formatting, and post structure.
 
 ## The 3-Phase Video Cycle
 

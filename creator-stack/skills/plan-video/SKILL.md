@@ -154,7 +154,7 @@ The plan should now contain a user-selected title, thumbnail, and hook combinati
 
 ### Step 6: High-Level Content Outline
 
-1. Invoke `creator-stack:copywriting` to create a high-level content outline.
+1. Invoke `creator-stack:write` to create a high-level content outline.
    - Provide the selected title, thumbnail concept, and hook as context.
 
 2. Create and document the strategic roadmap:
@@ -198,7 +198,7 @@ Each foundation skill owns its own reference files and loads them automatically:
 | Titles | `creator-stack:title` | `youtube-title-formulas.md` |
 | Thumbnails | `creator-stack:thumbnail` | `thumbnail-formulas.md` |
 | Hooks | `creator-stack:hook` | `youtube-hooks.md` |
-| Outline | `creator-stack:copywriting` | `youtube-script.md` |
+| Outline | `creator-stack:write` | `youtube-script.md` |
 | Voice | `creator-stack:voice` | Invoked automatically by copywriting |
 
 ## Complementarity Check
@@ -217,7 +217,7 @@ Verify completion before finalizing plan:
 - [ ] User selected title + thumbnail pairing
 - [ ] `creator-stack:hook` invoked — 3 hook strategies generated
 - [ ] User selected hook strategy
-- [ ] `creator-stack:copywriting` invoked — high-level content outline created
+- [ ] `creator-stack:write` invoked — high-level content outline created
 - [ ] `creator-stack:thumbnail` invoked — 3 AB testing thumbnails generated
 - [ ] Plan file complete with all sections populated
 - [ ] Recommendations marked by star rating
@@ -244,7 +244,7 @@ Verify completion before finalizing plan:
 5. Present all options, user selects title + thumbnail pairing
 6. Invoke `creator-stack:hook` — 3 hook strategies for selected pairing
 7. User selects hook
-8. Invoke `creator-stack:copywriting` — high-level content outline
+8. Invoke `creator-stack:write` — high-level content outline
 9. Invoke `creator-stack:thumbnail` — 3 AB testing thumbnails for final plan
 10. Update plan file with complete final selections
 

@@ -1,5 +1,5 @@
 ---
-name: copywriting
+name: write
 description: Generalized writing skill that produces written content for any platform and format. Determines content type from context, loads platform-specific references, drafts content, and applies voice and brand compliance.
 ---
 

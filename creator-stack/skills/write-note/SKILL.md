@@ -1,15 +1,15 @@
 ---
-name: create-note
-description: Create high-engagement Substack Notes for standalone audience engagement, authority-building, and newsletter promotion. This is a thin orchestrator — it sequences creator-stack:research and creator-stack:copywriting invocations for Substack Note creation.
+name: write-note
+description: Create high-engagement Substack Notes for standalone audience engagement, authority-building, and newsletter promotion. This is a thin orchestrator — it sequences creator-stack:research and creator-stack:write invocations for Substack Note creation.
 ---
 
 # Create Substack Note
 
 ## Overview
 
-This orchestrator creates Substack Notes by sequencing `creator-stack:research` for strategic context and `creator-stack:copywriting` for content generation. It handles newsletter context awareness, note type selection, and output management -- all actual content generation and strategy are delegated to the foundation skills and their references.
+This orchestrator creates Substack Notes by sequencing `creator-stack:research` for strategic context and `creator-stack:write` for content generation. It handles newsletter context awareness, note type selection, and output management -- all actual content generation and strategy are delegated to the foundation skills and their references.
 
-**Core Principle**: This is a thin orchestrator. Strategy lives in `creator-stack:research` via `references/substack-notes-strategy.md`. Templates and formatting live in `creator-stack:copywriting` via `references/substack-notes.md`. This skill manages the workflow sequence, newsletter context, and user decisions only.
+**Core Principle**: This is a thin orchestrator. Strategy lives in `creator-stack:research` via `references/substack-notes-strategy.md`. Templates and formatting live in `creator-stack:write` via `references/substack-notes.md`. This skill manages the workflow sequence, newsletter context, and user decisions only.
 
 ## When to Use
 
@@ -87,9 +87,9 @@ Include the research skill's recommendation for which type best fits the context
 
 **Default to Short (3-5 sentences)** unless the message demands more.
 
-### Step 3: Invoke `creator-stack:copywriting`
+### Step 3: Invoke `creator-stack:write`
 
-**MANDATORY**: Invoke `creator-stack:copywriting` with `references/substack-notes.md` to draft the note.
+**MANDATORY**: Invoke `creator-stack:write` with `references/substack-notes.md` to draft the note.
 
 Provide:
 - The selected note type from Step 2
@@ -97,7 +97,7 @@ Provide:
 - The newsletter context from Step 0 (if applicable)
 - The lifecycle phase and user's stated goal
 
-The `creator-stack:copywriting` skill will automatically invoke `creator-stack:voice` for voice consistency. The reference file contains all templates, formatting rules, and structural formulas.
+The `creator-stack:write` skill will automatically invoke `creator-stack:voice` for voice consistency. The reference file contains all templates, formatting rules, and structural formulas.
 
 ### Step 4: Quality Checklist
 
@@ -112,7 +112,7 @@ Verify the drafted note against all eight criteria before presenting to the user
 - [ ] NOT a generic link dump
 - [ ] Note type matches the stated goal
 
-If any criterion fails, request a revision from `creator-stack:copywriting` before presenting to the user.
+If any criterion fails, request a revision from `creator-stack:write` before presenting to the user.
 
 ### Step 5: Save Output
 
@@ -159,7 +159,7 @@ Verify completion before finalizing:
 - [ ] Newsletter context checked (Step 0)
 - [ ] `creator-stack:research` invoked with `references/substack-notes-strategy.md` -- strategic context determined
 - [ ] Note type options presented and user selection received
-- [ ] `creator-stack:copywriting` invoked with `references/substack-notes.md` -- note drafted
+- [ ] `creator-stack:write` invoked with `references/substack-notes.md` -- note drafted
 - [ ] Voice consistency maintained (handled by writing skill's `creator-stack:voice` invocation)
 - [ ] All 8 quality criteria passed (Step 4)
 - [ ] Note presented to user for approval
@@ -169,7 +169,7 @@ Verify completion before finalizing:
 
 1. **Writing templates inline**: All templates live in `references/substack-notes.md` -- do not duplicate them in this orchestrator
 2. **Embedding strategy logic**: All strategy lives in `references/substack-notes-strategy.md` -- do not hardcode timing, cadence, or algorithm advice here
-3. **Skipping foundation skill invocations**: Both `creator-stack:research` and `creator-stack:copywriting` must be invoked -- do not generate notes directly
+3. **Skipping foundation skill invocations**: Both `creator-stack:research` and `creator-stack:write` must be invoked -- do not generate notes directly
 4. **Ignoring newsletter context**: Always check for an issue directory first -- it changes the entire strategic approach
 5. **Defaulting to "new issue out" link dumps**: The research and writing skills are specifically designed to avoid generic link dumps -- trust the foundation skills
 6. **Skipping the quality checklist**: Every note must pass all 8 criteria before presenting to the user

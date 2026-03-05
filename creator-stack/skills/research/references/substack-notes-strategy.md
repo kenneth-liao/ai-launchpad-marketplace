@@ -1,6 +1,6 @@
 # Substack Notes Strategy
 
-Strategic frameworks, data, and decision models for Substack Notes planning. This is the authoritative source for Notes strategy — the companion writing reference (`creator-stack:copywriting` > `substack-notes.md`) covers templates, formatting, and note structure.
+Strategic frameworks, data, and decision models for Substack Notes planning. This is the authoritative source for Notes strategy — the companion writing reference (`creator-stack:write` > `substack-notes.md`) covers templates, formatting, and note structure.
 
 ## The Newsletter Publishing Cycle
 

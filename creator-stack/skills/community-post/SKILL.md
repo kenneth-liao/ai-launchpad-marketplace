@@ -1,19 +1,19 @@
 ---
-name: create-post
-description: "Create high-engagement YouTube community posts that drive views, build audience loyalty, and maximize conversion. This is a thin orchestrator — it sequences creator-stack:research and creator-stack:copywriting invocations for community post creation. Use when the user asks to create a community post, promote a video on the community tab, run a poll, or engage their YouTube audience between uploads."
+name: community-post
+description: "Create high-engagement YouTube community posts that drive views, build audience loyalty, and maximize conversion. This is a thin orchestrator — it sequences creator-stack:research and creator-stack:write invocations for community post creation. Use when the user asks to create a community post, promote a video on the community tab, run a poll, or engage their YouTube audience between uploads."
 ---
 
 # Create Community Post
 
 ## Overview
 
-This orchestrator creates YouTube community posts by sequencing `creator-stack:research` for strategic context and `creator-stack:copywriting` for content generation. It handles episode awareness, post type selection, and output management — all actual content generation and strategy are delegated to the foundation skills.
+This orchestrator creates YouTube community posts by sequencing `creator-stack:research` for strategic context and `creator-stack:write` for content generation. It handles episode awareness, post type selection, and output management — all actual content generation and strategy are delegated to the foundation skills.
 
-**Core Principle**: This is a thin orchestrator. Strategy lives in `creator-stack:research` (via its `references/youtube-community-strategy.md`). Templates and formatting live in `creator-stack:copywriting` (via its `references/youtube-community-post.md`). This skill manages the workflow sequence, episode context, and user decisions only.
+**Core Principle**: This is a thin orchestrator. Strategy lives in `creator-stack:research` (via its `references/youtube-community-strategy.md`). Templates and formatting live in `creator-stack:write` (via its `references/youtube-community-post.md`). This skill manages the workflow sequence, episode context, and user decisions only.
 
 ## How Reference Delegation Works
 
-Both foundation skills own their own reference files. When you invoke `creator-stack:research` and specify "youtube community post" as context, it loads its strategy reference. When you invoke `creator-stack:copywriting` with content type "youtube community post", it loads its template reference. Those files live in each skill's directory, not here.
+Both foundation skills own their own reference files. When you invoke `creator-stack:research` and specify "youtube community post" as context, it loads its strategy reference. When you invoke `creator-stack:write` with content type "youtube community post", it loads its template reference. Those files live in each skill's directory, not here.
 
 ## When to Use
 
@@ -81,7 +81,7 @@ Include the research skill's recommendation for which type best fits the context
 
 ### Step 3: Invoke Copywriting for Content
 
-Invoke `creator-stack:copywriting` with content type "youtube community post" to draft the post.
+Invoke `creator-stack:write` with content type "youtube community post" to draft the post.
 
 Provide:
 - The selected post type from Step 2
@@ -104,7 +104,7 @@ Verify the drafted post against all eight criteria before presenting to the user
 - [ ] NOT a generic "new video out" link dump
 - [ ] Post type matches the stated purpose/phase
 
-If any criterion fails, request a revision from `creator-stack:copywriting` before presenting to the user.
+If any criterion fails, request a revision from `creator-stack:write` before presenting to the user.
 
 ### Step 5: Save Output
 
@@ -147,7 +147,7 @@ Verify completion before finalizing:
 - [ ] Episode context checked (Step 0)
 - [ ] `creator-stack:research` invoked — strategic context determined
 - [ ] Post type options presented and user selection received
-- [ ] `creator-stack:copywriting` invoked — post drafted
+- [ ] `creator-stack:write` invoked — post drafted
 - [ ] Voice consistency maintained (handled by copywriting skill)
 - [ ] All 8 quality criteria passed (Step 4)
 - [ ] Post presented to user for approval

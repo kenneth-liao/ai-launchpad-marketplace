@@ -25,7 +25,7 @@ Restart Claude Code for the changes to take effect.
 
 | Skill | Description |
 |-------|-------------|
-| `copywriting` | Generalized writing for any platform and format — handles structure, drafting, and platform-specific conventions |
+| `write` | Generalized writing for any platform and format — handles structure, drafting, and platform-specific conventions |
 | `voice` | Applies Kenny's authentic writing voice — invoked automatically by copywriting or independently by other skills |
 
 ### Content Strategy
@@ -35,7 +35,7 @@ Restart Claude Code for the changes to take effect.
 | `research` | Conduct topic and competitor research for any content type |
 | `title` | Generate optimized titles and headlines for any content type |
 | `hook` | Create retention-optimized opening hooks for any content type |
-| `ideate` | Extract structured content ideas from published material |
+| `extract-ideas` | Extract structured content ideas from published material |
 
 ### Visual Design
 
@@ -66,16 +66,16 @@ Restart Claude Code for the changes to take effect.
 | `plan-video` | Complete video planning: research, titles, thumbnails, hooks, content outline |
 | `repurpose-video` | Repurpose a completed video into newsletter issues, social posts, and more |
 | `newsletter-to-video` | Convert a newsletter issue into a YouTube video outline |
-| `create-post` | Create YouTube community posts for engagement |
+| `community-post` | Create YouTube community posts for engagement |
 
 ### Substack
 
 | Skill | Description |
 |-------|-------------|
-| `plan-issue` | Plan a complete newsletter issue: research, draft, subject line, hook, social posts |
-| `optimize-issue` | Optimize a newsletter draft or write a full issue from an outline |
-| `generate-note-ideas` | Scan published content to generate high-quality Substack Notes ideas |
-| `create-note` | Create high-engagement Substack Notes for standalone audience engagement |
+| `plan-newsletter` | Plan a complete newsletter issue: research, draft, subject line, hook, social posts |
+| `optimize-newsletter` | Optimize a newsletter draft or write a full issue from an outline |
+| `ideate-notes` | Scan published content to generate high-quality Substack Notes ideas |
+| `write-note` | Create high-engagement Substack Notes for standalone audience engagement |
 
 ## Agents
 
