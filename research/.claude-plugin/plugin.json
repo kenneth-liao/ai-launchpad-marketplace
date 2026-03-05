@@ -1,9 +1,9 @@
 {
-"name": "research",
-"description": "A plugin for web research and comprehensive competitor analysis — market positioning, SWOT, competitive matrix, and strategic recommendations",
-"version": "1.0.2",
-"author": {
-"name": "Kenny Liao (The AI Launchpad)",
-"url": "https://www.youtube.com/@KennethLiao"
-}
+  "name": "research",
+  "description": "A plugin for web research and comprehensive competitor analysis — market positioning, SWOT, competitive matrix, and strategic recommendations",
+  "version": "1.0.2",
+  "author": {
+    "name": "Kenny Liao (The AI Launchpad)",
+    "url": "https://www.youtube.com/@KennethLiao"
+  }
 }
