@@ -138,6 +138,18 @@ Brief notifications, not permission-seeking:
 
 ---
 
+## Syncing Rules
+
+After updating any of these files, consider running `/sync-context`:
+- `rules.md` -- rules are included verbatim in elle-core.md
+- `preferences.md` -- communication preferences are summarized
+- `identity.md` -- identity summary is included
+- `projects.md` -- active projects are listed
+
+This regenerates `~/.claude/rules/elle-core.md` so future sessions see the changes immediately.
+
+---
+
 ## Escalation (Rare)
 
 Only ask the user when there's genuine ambiguity:

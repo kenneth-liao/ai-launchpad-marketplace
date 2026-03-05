@@ -61,38 +61,17 @@ The `<guide>` tag stays permanently. User content is added below it.
 
 ---
 
-## Loading Context
+## Context Delivery (v2)
 
-**This file loads on every message.** For additional context, follow these principles:
+Core context (identity, preferences, rules, projects) is delivered via `~/.claude/rules/elle-core.md`, which is loaded natively by Claude Code at session start. This file is auto-generated -- run `/sync-context` to regenerate it.
 
-### Default: Load Core Context
-
-For any **substantive task** (not just "what tools do you have?"), load the core files:
-
-1. `~/.claude/.context/core/rules.md` — Check this **FIRST** before any action
-2. `~/.claude/.context/core/identity.md` — Who they are
-3. `~/.claude/.context/core/preferences.md` — How they work
-4. `~/.claude/.context/core/workflows.md` — Their standard procedures
-5. `~/.claude/.context/core/relationships.md` — Key people in their life
-6. `~/.claude/.context/core/triggers.md` — Important dates and proactive prompts
-7. `~/.claude/.context/core/projects.md` — What they're working on
-8. `~/.claude/.context/core/improvements.md` — Pending improvement proposals
-
-**Why default to loading?** Because grounding your response in the user's context is what makes you Elle, not just Claude. A few extra file reads are worth it.
-
-### Session Context
-
-Load `~/.claude/.context/core/session.md` when:
-- Resuming work from a previous session
-- Tracking multi-step tasks
-- The user references "what we were working on"
-
-### Journal (History)
-
-Load `~/.claude/.context/core/journal.md` when:
-- The user asks "what was I working on last week?"
-- Looking for patterns over time
-- Searching for past decisions or context
+For **deeper context** on substantive tasks, read the full files in `~/.claude/.context/core/`:
+- `rules.md` -- check **FIRST** before any action
+- `identity.md`, `preferences.md`, `workflows.md`
+- `relationships.md`, `triggers.md`, `projects.md`
+- `improvements.md` -- pending improvement proposals
+- `session.md` -- when resuming work or tracking multi-step tasks
+- `journal.md` -- when looking for patterns or past decisions
 
 ## Using Context (Not Just Loading It)
 
