@@ -1,6 +1,6 @@
 # Elle Best Practices
 
-Last updated: 2026-03-05
+Last updated: 2026-03-06
 
 ## File Size Guidelines
 
@@ -67,3 +67,22 @@ Reference files in skills are NOT documentation mirrors. They track:
 - **Diff baselines** -- "what changed since last run" for gap analysis
 - **System state** -- metadata about last audit, version, freshness
 - Keep entries concise -- link to online docs rather than restating them
+
+## Obsolescence Assessment
+
+When auditing skills during `/evolve` or `/upgrade-plugin`:
+
+- **Active**: Platform/model doesn't replicate this. Skill adds clear value. Audit normally.
+- **Augmented**: Platform handles the basics, but skill adds meaningful structure, guardrails, or workflow orchestration. Audit normally, note native overlap.
+- **Superseded**: Platform/model does this natively with comparable quality. Skip structural audit. Recommend removal.
+
+Three questions to classify a skill:
+1. What does this skill do that a direct prompt to Claude cannot? (If only "saves typing" -- Superseded)
+2. Does it enforce a process, workflow, or multi-step structure? (Process skills stay Active even when model can do each step)
+3. Has the platform added a native feature that replaces its core function? (Check platform-capabilities.md Model Capabilities table)
+
+When recommending removal:
+- Document what replaces the skill (platform feature or model capability)
+- Provide migration steps for users
+- Use CHANGELOG "Removed" section
+- Bump version: MINOR if user-invocable, PATCH if internal-only
