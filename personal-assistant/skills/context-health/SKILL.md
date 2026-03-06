@@ -74,6 +74,31 @@ Read `~/.claude/.context/core/improvements.md`:
 - Flag Friction Log entries with 2+ occurrences not yet promoted
 - Report total pending proposals
 
+### 7. System Freshness Check
+
+Locate the evolve skill's platform capabilities reference:
+
+```bash
+EVOLVE_REF=""
+# Source mode (marketplace repo)
+if [ -f "<cwd>/personal-assistant/skills/evolve/references/platform-capabilities.md" ]; then
+  EVOLVE_REF="<cwd>/personal-assistant/skills/evolve/references/platform-capabilities.md"
+else
+  # Deployed mode (plugin cache)
+  EVOLVE_REF=$(find ~/.claude/plugins/cache -path "*/personal-assistant/*/skills/evolve/references/platform-capabilities.md" 2>/dev/null | sort -V | tail -1)
+fi
+```
+
+If found, read the `## System State` section and check:
+- Flag if "Last evolve run" is > 60 days ago or missing
+- Flag if "Claude Code version at last audit" is "unknown" or differs from current
+- Flag if "Platform docs last fetched" is > 60 days ago
+- If System State section doesn't exist, flag as "never audited"
+
+If reference file not found, skip with note: "Evolve reference files not found -- cannot check system freshness"
+
+Recommend running `/evolve` if any flags are raised.
+
 ## Report Format
 
 Present findings as:
@@ -86,5 +111,6 @@ Present findings as:
 | Gaps | OK / Warning | [empty sections] |
 | Sync | OK / Warning | [sync status] |
 | Improvements | OK / Warning | [stale proposals] |
+| System Freshness | OK / Warning | [evolve run recency, version drift] |
 
 **Recommended actions:** List specific fixes the user can take, prioritized by impact.

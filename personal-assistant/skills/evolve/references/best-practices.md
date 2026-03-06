@@ -37,3 +37,33 @@ Last updated: 2026-03-05
 
 - Always bump version in plugin.json when making changes
 - Use semver: major for breaking changes, minor for features, patch for fixes
+
+## Skill Design
+
+- Set `disable-model-invocation: true` for skills with side effects (setup, migrate, evolve)
+- Set `model: claude-sonnet-4-6` for lightweight, deterministic workflows to save cost
+- Use `${CLAUDE_SKILL_DIR}` and `${CLAUDE_PLUGIN_ROOT}` for portable paths -- never hardcode
+- Descriptions should be specific and include trigger phrases so Claude invokes the skill
+
+## Output Style Design
+
+- Keep under 120 lines -- loaded on every session
+- Define persona, tone, communication preferences
+- Include clear boundaries (what the output style owns vs. auto memory)
+- Test with varied prompts to ensure consistent behavior
+
+## Plugin Component Design
+
+- **skills/** -- Primary capability delivery. Each skill is self-contained with SKILL.md + optional references/
+- **hooks/** -- Non-blocking event handlers. SessionStart for bootstrap, Stop/Notification for UX
+- **output-styles/** -- Persona and formatting. One per plugin typically
+- **agents/** -- Dedicated subagents for isolated, repeatable tasks. Consider when a task is always delegated
+- **MCP servers** -- Expose plugin data/capabilities as MCP tools/resources. Consider for inter-plugin communication
+
+## Reference File Philosophy
+
+Reference files in skills are NOT documentation mirrors. They track:
+- **Elle's decisions** -- what she uses, doesn't use, and why
+- **Diff baselines** -- "what changed since last run" for gap analysis
+- **System state** -- metadata about last audit, version, freshness
+- Keep entries concise -- link to online docs rather than restating them

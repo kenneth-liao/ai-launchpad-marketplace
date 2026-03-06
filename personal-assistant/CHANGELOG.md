@@ -2,6 +2,23 @@
 
 All notable changes to the Personal Assistant (Elle) plugin.
 
+## [2.3.0] - 2026-03-06
+
+### Changed
+
+- **Evolve Phase 1 research** -- Replaced hardcoded documentation URLs with discovery-driven approach. Fetches docs index and discovers pages by category (skills, hooks, subagents, agent teams, commands, CLAUDE.md, memory, MCP servers, output styles, settings, plugin architecture) instead of prescribing specific URLs.
+- **Evolve Phase 2 audit** -- Expanded to check all plugin components (output styles, plugin.json, agents/, MCP servers) not just skills and hooks. Added system state check for evolve run recency and version drift.
+
+### Added
+
+- **Evolve Phase 1E: Plugin Architecture research** -- New research task that examines CONVENTIONS.md and other installed plugins to identify structural patterns and unused capabilities.
+- **Evolve system state tracking** -- Platform-capabilities.md now includes a System State section (Elle version, last evolve run, Claude Code version, platform docs freshness) updated on each evolve run.
+- **Context-health check 7: System Freshness** -- Reads evolve's system state and flags if evolve hasn't run in 60+ days, Claude Code version drift, or missing audit data.
+- **Platform capabilities reference** -- Added 7 new sections: Subagent/Agent Tool, Agent Teams, Commands System, Output Styles, MCP Servers in Plugins, Plugin Architecture, Settings & Permissions.
+- **Best practices reference** -- Added sections for Skill Design, Output Style Design, Plugin Component Design, and Reference File Philosophy.
+
+---
+
 ## [2.2.0] - 2026-03-05
 
 ### Changed

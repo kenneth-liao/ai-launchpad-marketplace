@@ -33,7 +33,7 @@ Set `ELLE_ROOT`:
 
 ## Phase 1: Research
 
-Run four research tasks in parallel using subagents. Each subagent summarizes its findings.
+Run five research tasks in parallel using subagents. Each subagent summarizes its findings.
 
 ### 1A. Claude Code Changelog
 
@@ -57,22 +57,29 @@ Extract from the last 3-5 releases:
 - Deprecations or breaking changes
 - Performance improvements relevant to skill design
 
-### 1B. Anthropic Documentation
+### 1B. Claude Code Documentation (Discovery-Driven)
 
-Search for and fetch latest Claude Code docs:
+Discover the Claude Code documentation landscape. Do NOT hardcode doc page URLs -- discover them dynamically.
 
-```
-WebSearch: "Claude Code skills hooks rules" site:docs.anthropic.com
-WebFetch: https://docs.anthropic.com/en/docs/claude-code/skills
-WebFetch: https://docs.anthropic.com/en/docs/claude-code/hooks
-```
+1. Find available documentation:
+   ```
+   WebSearch: "Claude Code" site:docs.anthropic.com
+   WebFetch: https://docs.anthropic.com/en/docs/claude-code/overview
+   ```
 
-Look for:
-- Skill best practices and writing guidelines
-- Hook configuration patterns
-- Rules and context delivery mechanisms
-- New features not covered in the changelog
-- Model-specific guidance
+2. From the search results and overview page, identify and fetch pages covering these categories:
+   - **Core infrastructure**: skills, hooks, rules, CLAUDE.md
+   - **Agent capabilities**: subagents/Agent tool, agent teams
+   - **Plugin system**: commands, output styles, MCP servers, plugin architecture
+   - **Memory & context**: auto memory, context management
+   - **Configuration**: settings, permissions, tool gating
+   - **Workflow**: worktrees, session management
+
+3. For each fetched page, extract:
+   - Current best practices and recommended patterns
+   - New features not in `${CLAUDE_SKILL_DIR}/references/platform-capabilities.md`
+   - Deprecated patterns Elle might still use
+   - Capabilities Elle doesn't leverage yet
 
 ### 1C. Skill-Creator Best Practices
 
@@ -98,12 +105,34 @@ Glob: ~/.claude/plugins/cache/*/superpowers/*/skills/*/SKILL.md
 
 Note structural patterns, frontmatter conventions, or composition techniques.
 
+### 1E. Plugin Architecture
+
+Understand the full plugin specification and what Elle could be using:
+
+1. Read the marketplace conventions (source mode only):
+   ```
+   Read: <cwd>/CONVENTIONS.md
+   ```
+
+2. Examine other installed plugins for structural patterns:
+   ```
+   Glob: ~/.claude/plugins/cache/*/*/skills/*/SKILL.md
+   Bash: ls ~/.claude/plugins/cache/*/*/ | head -50
+   ```
+   Focus on: plugin.json fields, agents/ directories, MCP server integration, output style patterns.
+
+3. Compare Elle's plugin structure against the full spec:
+   - What directories does Elle have vs. what's available?
+   - What plugin.json fields exist vs. what Elle uses?
+   - Are other plugins using agents/ or MCP servers effectively?
+
 ### Research Output
 
 After all research completes, compile a Research Summary with sections:
 - **New Claude Code Features** (from changelog + docs)
 - **Updated Skill Best Practices** (from skill-creator)
 - **Platform Patterns** (from superpowers and other plugins)
+- **Plugin Architecture Gaps** (capabilities Elle doesn't use yet)
 - **Deprecations & Breaking Changes**
 
 In source mode: save to `<cwd>/.docs/upgrade-research/personal-assistant-<date>.md`
@@ -150,6 +179,8 @@ Compare current state against Phase 1 research:
 | Patterns | Uses latest Claude Code features? No deprecated patterns? |
 | Composition | Follows `plugin:skill` invocation syntax? |
 | Hook design | Non-blocking? SessionStart < 2 seconds? Uses `additionalContext`? |
+| Plugin architecture | Using all beneficial plugin components (agents, MCP, output styles)? |
+| System state | Platform capabilities and best practices references current? |
 
 ### 2D. Reference Freshness
 
@@ -157,6 +188,34 @@ Compare `${CLAUDE_SKILL_DIR}/references/platform-capabilities.md` and `best-prac
 - Outdated (platform has changed)
 - Missing (new capabilities not listed)
 - Wrong (deprecated patterns still listed as current)
+
+### 2E. Full Plugin Inventory
+
+Check all plugin components, not just skills:
+
+```bash
+echo "=== Skills ===" && ls ${ELLE_ROOT}/skills/
+echo "=== Hooks ===" && cat ${ELLE_ROOT}/hooks/hooks.json 2>/dev/null
+echo "=== Output Styles ===" && ls ${ELLE_ROOT}/output-styles/ 2>/dev/null
+echo "=== Plugin.json ===" && cat ${ELLE_ROOT}/.claude-plugin/plugin.json
+echo "=== Agents ===" && ls ${ELLE_ROOT}/agents/ 2>/dev/null || echo "No agents/ directory"
+```
+
+Evaluate:
+- **Output styles**: leveraging latest features? Under 120 lines?
+- **Plugin.json**: all available fields used correctly?
+- **Missing components**: would agents/ or MCP servers benefit Elle?
+- **Structural patterns**: anything other plugins do that Elle should adopt?
+
+### 2F. System State Check
+
+Read `${CLAUDE_SKILL_DIR}/references/platform-capabilities.md` System State section:
+- Last evolve run date -- flag if > 60 days ago
+- Claude Code version at last audit -- compare against latest from Phase 1A
+- Elle version -- compare against plugin.json
+- Platform docs last fetched -- flag if > 60 days ago
+
+If System State section is missing, flag as "first evolve run" and note that all findings are new.
 
 ## Phase 3: Plan
 
@@ -205,6 +264,17 @@ Apply approved changes:
 ### Reference File Updates
 
 Update `${CLAUDE_SKILL_DIR}/references/platform-capabilities.md` and `best-practices.md` with findings from Phase 1. These files serve as "last known state" for future evolve runs.
+
+### System State Update
+
+After all changes are applied, update the System State section in `${CLAUDE_SKILL_DIR}/references/platform-capabilities.md`:
+
+| Field | Value |
+|-------|-------|
+| Elle version | [from plugin.json after bump] |
+| Last evolve run | [today's date] |
+| Claude Code version at last audit | [latest version from Phase 1A research] |
+| Platform docs last fetched | [today's date] |
 
 ### Version and Changelog (Source Mode Only)
 
