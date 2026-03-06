@@ -1,6 +1,6 @@
 ---
 name: repurpose-video
-description: "Repurpose a completed YouTube video into newsletter issues, social media posts, and other content formats. This is a thin orchestrator — it sequences creator-stack:write invocations with different platform references. Use when the user wants to distribute video content across platforms, create social posts from a video, turn a video into a newsletter, or maximize reach of existing content."
+description: "Repurpose a completed YouTube video into newsletter issues, social media posts, and other content formats. Use when the user says 'repurpose this video', 'turn this video into a newsletter', 'create social posts from my video', 'distribute this content', or wants to maximize reach of existing video content across platforms."
 ---
 
 # Repurpose Video
@@ -13,7 +13,7 @@ This orchestrator takes a completed video's content and transforms it into multi
 
 ## How Reference Delegation Works
 
-Each platform step below invokes `creator-stack:write` and specifies a content type. The copywriting skill then loads its own reference file for that platform (e.g., `references/newsletter.md`, `references/twitter.md`). Those files live in the copywriting skill's directory, not here — this orchestrator doesn't need its own references because all content generation is delegated.
+Each platform step below invokes `creator-stack:write` and specifies a content type. The writing skill then loads its own reference file for that platform (e.g., `references/newsletter.md`, `references/twitter.md`). Those files live in the writing skill's directory, not here — this orchestrator doesn't need its own references because all content generation is delegated.
 
 ## When to Use
 
@@ -48,7 +48,7 @@ If the user provides additional notes or key points, incorporate those as well.
 
 ### Step 2: Extract Key Content
 
-Synthesize the source material into a content brief. This brief becomes the shared context for every downstream copywriting invocation — it's what keeps the message consistent across platforms even as the format changes.
+Synthesize the source material into a content brief. This brief becomes the shared context for every downstream writing skill invocation — it's what keeps the message consistent across platforms even as the format changes.
 
 - **Core thesis**: The main argument or insight from the video
 - **Key takeaways**: 3-5 actionable insights or lessons
@@ -66,7 +66,7 @@ Provide the content brief and specify:
 - Include the key takeaways in a scannable format
 - Link back to the YouTube video
 
-The copywriting skill loads its own `references/newsletter.md` and automatically invokes `creator-stack:voice`.
+The writing skill loads its own `references/newsletter.md` and automatically invokes `creator-stack:voice`.
 
 ### Step 4: Twitter Thread
 
@@ -144,7 +144,7 @@ Verify completion before finalizing:
 - [ ] `creator-stack:write` invoked for Twitter — thread drafted
 - [ ] `creator-stack:write` invoked for LinkedIn — post drafted
 - [ ] `creator-stack:write` invoked for Substack Note — note drafted
-- [ ] Voice consistency maintained across all platforms (handled by copywriting skill)
+- [ ] Voice consistency maintained across all platforms (handled by writing skill)
 - [ ] Each platform's content adapts the message to its audience and format
 - [ ] Video link included in all platform content
 - [ ] All content presented to user for review
@@ -152,7 +152,7 @@ Verify completion before finalizing:
 
 ## Common Pitfalls
 
-1. **Copy-pasting across platforms**: Each platform needs content adapted to its format and audience — the copywriting skill handles this through platform-specific references, so always invoke it separately per platform.
+1. **Copy-pasting across platforms**: Each platform needs content adapted to its format and audience — the writing skill handles this through platform-specific references, so always invoke it separately per platform.
 2. **Skipping the content brief**: Jumping straight to writing without extracting key points leads to unfocused content that drifts between platforms.
 3. **Missing voice consistency**: Always let `creator-stack:write` handle voice through its built-in `creator-stack:voice` invocation.
 4. **Forgetting video links**: Every platform piece should drive traffic back to the video.

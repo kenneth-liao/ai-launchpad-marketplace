@@ -1,6 +1,6 @@
 ---
 name: thumbnail
-description: Create high-performing thumbnails and cover images for any platform. Uses creator-stack:nanobanana for generation, follows proven design patterns for CTR optimization, and integrates with brand guidelines for consistency.
+description: Create high-performing thumbnails and cover images optimized for click-through rate. Use when asked to create a thumbnail, design a cover image, generate a YouTube thumbnail, or when the user mentions "thumbnail", "cover image", "CTR", or needs a visual asset for video or course content.
 ---
 
 # Thumbnail Skill

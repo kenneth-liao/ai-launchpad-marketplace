@@ -1,6 +1,6 @@
 ---
 name: research
-description: Conduct topic and competitor research for any content type. Analyzes existing content landscape, identifies gaps, and produces actionable insights. This is a generalized research skill — platform-specific tools and output locations are provided by orchestrator skills.
+description: Conduct topic and competitor research for any content type. Use when researching a topic before creating content, analyzing the competitive landscape, identifying content gaps, or when the user says "research this", "what's out there on", "analyze competitors", or needs to understand a content landscape before writing.
 ---
 
 # Content Research
@@ -40,9 +40,9 @@ When no platform-specific tools are available, use web search as a general-purpo
 
 ## Research Subagents
 
-You can invoke research subagents using the `Task` tool to conduct specific, focused research tasks in parallel. Each `Task` prompt should be focused and specific, with a clear objective.
+You can invoke research subagents using the `Agent` tool with `run_in_background: true` to conduct specific, focused research tasks in parallel. Each agent prompt should be focused and specific, with a clear objective.
 
-Bias towards using the `Task` tool rather than executing all research sequentially. Parallel research greatly improves performance.
+Bias towards using the `Agent` tool rather than executing all research sequentially. Parallel research greatly improves performance.
 
 ## Research Workflow
 

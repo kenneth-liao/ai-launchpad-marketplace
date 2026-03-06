@@ -1,6 +1,6 @@
 ---
 name: ideate-notes
-description: "Scan published YouTube videos, Substack newsletter issues, and Substack Notes to generate high-quality note ideas. This is a thin orchestrator — it sequences source scanning, creator-stack:extract-ideas invocation, and output management, but delegates all ideation logic to the extract-ideas skill via references/substack-notes-ideation.md."
+description: "Generate Substack Note ideas by scanning published YouTube videos, newsletters, and Notes. Use when the user says 'generate note ideas', 'what should I post on Notes', 'note ideas from my content', 'mine my videos for Notes', or wants to maintain a consistent Notes posting cadence."
 ---
 
 # Generate Substack Note Ideas
@@ -246,5 +246,5 @@ Verify completion before finalizing:
 2. **Re-scanning processed sources**: Always check the processed log first. Skip sources already scanned.
 3. **Ignoring the notes history**: Past notes feed gap analysis. Always load them in Step 2.
 4. **Skipping web trends**: Trending topics provide timely ideas even when no new content exists. Step 3 always runs.
-5. **Auto-invoking create-note**: This skill generates ideas only. The user decides when to write.
+5. **Auto-invoking write-note**: This skill generates ideas only. The user decides when to write.
 6. **Saving before user approval**: Always present ideas and get explicit approval before writing to files.

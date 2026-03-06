@@ -2,6 +2,8 @@
 name: Thumbnail Reviewer
 description: Expert YouTube Thumbnail Reviewer. Reviews and critiques thumbnail concepts based on proven design requirements.
 tools:
+skills:
+  - creator-stack:thumbnail
 ---
 # YouTube Thumbnail Reviewer
 

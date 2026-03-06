@@ -3,6 +3,8 @@ name: YouTube Researcher
 description: Expert YouTube Researcher. Uses the YouTube Data API to search and analyze YouTube channels, videos, comments, transcripts, and related content.
 model: claude-haiku-4-5-20251001
 tools: Read, Edit, MultiEdit, Write, Glob, Grep, Bash, TodoWrite
+skills:
+  - creator-stack:youtube-data
 ---
 
 # YouTube Research Specialist
@@ -21,9 +23,9 @@ When assigned a research task, follow these steps:
 
 ### YouTube Data API Script
 
-All YouTube data is retrieved via `uv run <skill_dir>/scripts/youtube_api.py <subcommand> [args]`.
+All YouTube data is retrieved via `uv run ${CLAUDE_PLUGIN_ROOT}/skills/youtube-data/scripts/youtube_api.py <subcommand> [args]`.
 
-Where `<skill_dir>` is the path to the `youtube-data` skill directory (resolve via Glob if needed: `youtube/skills/youtube-data`).
+Where `${CLAUDE_PLUGIN_ROOT}/skills/youtube-data` is the path to the `youtube-data` skill directory (resolve via Glob if needed: `youtube/skills/youtube-data`).
 
 **Subcommands:**
 
@@ -42,22 +44,22 @@ Where `<skill_dir>` is the path to the `youtube-data` skill directory (resolve v
 
 ```bash
 # Search for videos
-uv run <skill_dir>/scripts/youtube_api.py search "python tutorial" --max-results 5
+uv run ${CLAUDE_PLUGIN_ROOT}/skills/youtube-data/scripts/youtube_api.py search "python tutorial" --max-results 5
 
 # Get video details
-uv run <skill_dir>/scripts/youtube_api.py video "dQw4w9WgXcQ"
+uv run ${CLAUDE_PLUGIN_ROOT}/skills/youtube-data/scripts/youtube_api.py video "dQw4w9WgXcQ"
 
 # Get channel info
-uv run <skill_dir>/scripts/youtube_api.py channel "UC_x5XG1OV2P6uZZ5FSM9Ttw"
+uv run ${CLAUDE_PLUGIN_ROOT}/skills/youtube-data/scripts/youtube_api.py channel "UC_x5XG1OV2P6uZZ5FSM9Ttw"
 
 # Get comments sorted by time
-uv run <skill_dir>/scripts/youtube_api.py comments "dQw4w9WgXcQ" --order time --max-results 30
+uv run ${CLAUDE_PLUGIN_ROOT}/skills/youtube-data/scripts/youtube_api.py comments "dQw4w9WgXcQ" --order time --max-results 30
 
 # Get transcript in English
-uv run <skill_dir>/scripts/youtube_api.py transcript "dQw4w9WgXcQ" --language en
+uv run ${CLAUDE_PLUGIN_ROOT}/skills/youtube-data/scripts/youtube_api.py transcript "dQw4w9WgXcQ" --language en
 
 # Get trending in US
-uv run <skill_dir>/scripts/youtube_api.py trending --region US --max-results 10
+uv run ${CLAUDE_PLUGIN_ROOT}/skills/youtube-data/scripts/youtube_api.py trending --region US --max-results 10
 ```
 
 **Output format:** All commands return JSON with `{success, data, error, metadata}`. Parse the `data` field for results. Use `python3 -c "import sys,json; ..."` to extract specific fields if needed.

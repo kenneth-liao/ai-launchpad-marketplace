@@ -1,6 +1,6 @@
 ---
 name: extract-ideas
-description: Extract structured content ideas from published material. Mines existing videos, newsletters, notes, and web trends for note-worthy angles, maps them to content types, and quality-filters against platform criteria. This is a generalized ideation skill — platform-specific extraction frameworks and output formats are provided via reference files.
+description: Extract structured content ideas from published material. Use when you have source material (transcripts, newsletters, notes, web trends) and need to mine it for repurposable angles, map raw material to content types, or identify underused content types. Not for competitor research (use creator-stack:research) or writing finished content (use creator-stack:write).
 ---
 
 # Content Ideation
@@ -44,9 +44,9 @@ When invoked, read the reference file provided by the orchestrator. The referenc
 
 ## Ideation Subagents
 
-You can invoke ideation subagents using the `Task` tool to extract ideas from different sources in parallel. Each `Task` prompt should focus on a single source (one transcript, one newsletter issue, one trend cluster) and include the relevant extraction categories from the reference.
+You can invoke ideation subagents using the `Agent` tool with `run_in_background: true` to extract ideas from different sources in parallel. Each agent prompt should focus on a single source (one transcript, one newsletter issue, one trend cluster) and include the relevant extraction categories from the reference.
 
-Bias toward using the `Task` tool for multi-source extraction rather than processing all sources sequentially. Parallel extraction greatly improves performance and prevents context bleed between sources.
+Bias toward using the `Agent` tool for multi-source extraction rather than processing all sources sequentially. Parallel extraction greatly improves performance and prevents context bleed between sources.
 
 Each subagent should receive:
 - The source material to extract from
@@ -156,4 +156,4 @@ Verify completion before finalizing ideation:
 3. **Skipping gap analysis**: Content type variety prevents audience fatigue. Always check history and bias toward underused types.
 4. **Forcing weak ideas to hit volume targets**: If sources don't yield enough strong ideas, say so. Five strong ideas beat eight padded ones.
 5. **Ignoring the reference file**: The reference file IS the extraction framework. Don't improvise your own categories, criteria, or output format — use what the reference specifies.
-6. **Processing all sources sequentially**: Use `Task` tool subagents for parallel extraction across sources. Sequential processing is slower and causes context bleed between unrelated sources.
+6. **Processing all sources sequentially**: Use `Agent` tool subagents for parallel extraction across sources. Sequential processing is slower and causes context bleed between unrelated sources.

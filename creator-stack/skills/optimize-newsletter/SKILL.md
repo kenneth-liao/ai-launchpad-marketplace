@@ -1,6 +1,6 @@
 ---
 name: optimize-newsletter
-description: "Orchestrate foundation skills to optimize a newsletter draft or write a full issue from an outline. Use when asked to 'optimize this draft', 'polish this newsletter', 'write from this outline', 'improve this issue', or when transforming an existing newsletter draft or outline into a publication-ready issue. This is distinct from plan-newsletter which starts from a topic — optimize-newsletter starts from existing content."
+description: "Optimize a newsletter draft or write a full issue from an outline. Use when asked to 'optimize this draft', 'polish this newsletter', 'write from this outline', 'improve this issue', or when transforming an existing draft or outline into a publication-ready issue. Distinct from plan-newsletter which starts from a topic — this starts from existing content."
 ---
 
 # Optimize Newsletter Issue
@@ -45,13 +45,13 @@ Present the assessment to the user: input type, detected issue type, and the wor
 **From outline:**
 1. Invoke `creator-stack:write` with content type "newsletter" to write the full draft.
    - Pass the outline as source material
-   - The copywriting skill loads its own `references/newsletter.md` for section rules, issue types, and writing conventions
+   - The writing skill loads its own `references/newsletter.md` for section rules, issue types, and writing conventions
 2. The draft follows the Newsletter Arc: Hook → Context → Value → Close
 
 **From rough draft:**
 1. Invoke `creator-stack:write` with content type "newsletter" to audit and optimize each section.
    - Pass the draft as source material with instruction to optimize
-   - The copywriting skill checks against its section rules and body writing rules
+   - The writing skill checks against its section rules and body writing rules
 2. Present findings: what works, what needs improvement, and specific recommendations
 3. Rewrite/optimize sections that fall short
 
@@ -118,7 +118,7 @@ Each foundation skill owns its own reference files. When you invoke a skill, it 
 | Newsletter prose (draft + optimize) | `creator-stack:write` | Owns section rules, body writing conventions, voice invocation |
 | Subject lines | `creator-stack:title` | Owns subject line formulas and open rate patterns |
 | Opening hooks | `creator-stack:hook` | Owns hook patterns and curiosity extension logic |
-| Voice consistency | `creator-stack:voice` | Invoked automatically by copywriting — no manual call needed |
+| Voice consistency | `creator-stack:voice` | Invoked automatically by writing skill — no manual call needed |
 
 ## Quality Checklist
 
@@ -136,4 +136,4 @@ Each foundation skill owns its own reference files. When you invoke a skill, it 
 1. **Writing content manually**: Generating newsletter prose instead of delegating to `creator-stack:write` — the foundation skill has all the section rules and voice handling built in.
 2. **Single option**: Presenting one subject line or hook instead of multiple options — users need choices to make good decisions.
 3. **Skipping the pre-publish checklist**: The checklist catches issues the draft workflow misses.
-4. **Fat orchestrator**: Adding copywriting techniques, section rules, or formatting guidance here instead of keeping them in foundation skill references — that logic belongs in the skill that owns it.
+4. **Fat orchestrator**: Adding writing techniques, section rules, or formatting guidance here instead of keeping them in foundation skill references — that logic belongs in the skill that owns it.

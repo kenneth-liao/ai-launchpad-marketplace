@@ -1,6 +1,6 @@
 ---
 name: plan-newsletter
-description: "Orchestrate foundation skills to plan a complete newsletter issue including research, draft, subject line, opening hook, and social promotion posts. This is a thin orchestrator — it sequences skill invocations and manages the user review workflow. Use when the user wants to plan a newsletter from a topic, create a newsletter content plan, or turn an idea into a full issue plan with social promotion."
+description: "Plan a complete newsletter issue from a topic or idea, including research, draft, subject line, opening hook, and social promotion posts. Use when the user says 'plan a newsletter', 'create a newsletter about', 'newsletter plan', 'write a newsletter issue', or wants to turn an idea into a full issue plan."
 ---
 
 # Plan Newsletter Issue
@@ -47,8 +47,8 @@ Invoke `creator-stack:research` to understand the content landscape and identify
 
 Invoke `creator-stack:write` with content type "newsletter" to draft the full issue.
 
-- The copywriting skill loads its own `references/newsletter.md` for newsletter structure and conventions.
-- The copywriting skill automatically invokes `creator-stack:voice` for voice consistency.
+- The writing skill loads its own `references/newsletter.md` for newsletter structure and conventions.
+- The writing skill automatically invokes `creator-stack:voice` for voice consistency.
 - Pass the research findings (or source material) and topic context.
 - The draft follows the newsletter reference structure including sections, formatting, and CTAs.
 
@@ -80,7 +80,7 @@ Invoke `creator-stack:write` separately for each platform:
 2. **LinkedIn post** — specify content type "linkedin"
 3. **Substack Note** — specify content type "substack-note"
 
-Each promotion post should tease the newsletter content and drive subscriptions/reads. The copywriting skill loads the appropriate platform reference for each invocation.
+Each promotion post should tease the newsletter content and drive subscriptions/reads. The writing skill loads the appropriate platform reference for each invocation.
 
 ### Step 6: Generate Header Image (Optional)
 
@@ -139,7 +139,7 @@ Each foundation skill owns its own reference files and loads them automatically:
 | Twitter thread | `creator-stack:write` | `twitter.md` |
 | LinkedIn post | `creator-stack:write` | `linkedin.md` |
 | Substack Note | `creator-stack:write` | `substack-notes.md` |
-| Voice | `creator-stack:voice` | Invoked automatically by copywriting |
+| Voice | `creator-stack:voice` | Invoked automatically by writing skill |
 
 ## Quality Checklist
 
@@ -149,17 +149,17 @@ Verify completion before presenting the plan:
 - [ ] `creator-stack:title` invoked for subject lines
 - [ ] `creator-stack:hook` invoked for opening hooks
 - [ ] `creator-stack:write` invoked for social promotion posts (all 3 platforms)
-- [ ] All written content goes through `creator-stack:voice` (handled by copywriting skill)
+- [ ] All written content goes through `creator-stack:voice` (handled by writing skill)
 - [ ] All options presented with star ratings
 - [ ] Complete plan presented to user
 
 ## Common Pitfalls
 
-1. **Writing content directly**: Drafting newsletter text or social posts without invoking the copywriting skill — the foundation skill has all the section rules and voice handling built in.
+1. **Writing content directly**: Drafting newsletter text or social posts without invoking the writing skill — the foundation skill has all the section rules and voice handling built in.
 2. **Skipping research without reason**: If research is skipped, document why (e.g., "Repurposing video transcript provided by user").
 3. **Single option only**: Presenting one subject line or one hook — always provide multiple options with ratings so the user can choose.
 4. **Missing social promotion**: Forgetting one of the three platforms (Twitter/X, LinkedIn, Substack Notes).
-5. **No voice consistency**: The copywriting skill handles this automatically via `creator-stack:voice`, but verify the output reads consistently.
+5. **No voice consistency**: The writing skill handles this automatically via `creator-stack:voice`, but verify the output reads consistently.
 
 ## Example Execution
 

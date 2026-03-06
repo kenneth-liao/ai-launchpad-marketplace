@@ -1,6 +1,6 @@
 ---
 name: plan-video
-description: "Orchestrate foundation skills to create a complete YouTube video plan. This is a thin orchestrator — it sequences skill invocations and manages the user selection workflow, but delegates all content generation to foundation skills. Use when planning a new video, creating title/thumbnail/hook options, or producing a production-ready video plan."
+description: "Create a complete YouTube video plan with title options, thumbnail concepts, hooks, and content outline. Use when planning a new video, creating title/thumbnail/hook options, or when the user says 'plan a video', 'video plan', 'plan my next YouTube video', or 'I want to make a video about'."
 ---
 
 # Plan Video
@@ -199,7 +199,7 @@ Each foundation skill owns its own reference files and loads them automatically:
 | Thumbnails | `creator-stack:thumbnail` | `thumbnail-formulas.md` |
 | Hooks | `creator-stack:hook` | `youtube-hooks.md` |
 | Outline | `creator-stack:write` | `youtube-script.md` |
-| Voice | `creator-stack:voice` | Invoked automatically by copywriting |
+| Voice | `creator-stack:voice` | Invoked automatically by writing skill |
 
 ## Complementarity Check
 

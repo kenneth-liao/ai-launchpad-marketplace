@@ -1,6 +1,6 @@
 ---
 name: social-graphic
-description: "Create social media graphics and visual assets for any platform. Handles platform-specific dimensions, safe zones, and design constraints. Integrates with creator-stack:nanobanana for image generation and brand guidelines for consistency."
+description: "Create social media graphics and visual assets for any platform. Use when asked to create a social media image, newsletter header, blog feature image, OG image, profile banner, or when the user mentions 'social graphic', 'header image', 'banner', or needs a platform-specific visual asset (not thumbnails — use creator-stack:thumbnail for those)."
 ---
 
 # Social Graphic Skill

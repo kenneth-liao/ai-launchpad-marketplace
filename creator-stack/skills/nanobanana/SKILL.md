@@ -1,6 +1,6 @@
 ---
 name: nanobanana
-description: AI image generation and editing using Google Gemini models (Nano Banana). Use when the user asks to generate an image, create an image, edit an image, or references "nano banana", "nanobanana", or "gemini image". Supports text-to-image, image editing, multi-image references, and 1K/2K/4K resolution.
+description: AI image generation and editing using Google Gemini models. Use when the user asks to generate an image, create an image, edit an image, or mentions "nano banana", "nanobanana", "gemini image", "AI image", "generate a picture", or needs any image created or modified.
 ---
 
 # Nano Banana - AI Image Generation
@@ -20,7 +20,7 @@ Dependencies are declared inline via PEP 723 and auto-installed on first run. Ju
 
 **With pip (fallback):**
 ```bash
-pip install -r <skill_dir>/requirements.txt
+pip install -r ${CLAUDE_SKILL_DIR}/requirements.txt
 ```
 
 ## Quick Start
@@ -29,33 +29,33 @@ pip install -r <skill_dir>/requirements.txt
 
 ### Generate an image:
 ```bash
-uv run <skill_dir>/scripts/generate.py "a cute robot mascot, pixel art style"
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py "a cute robot mascot, pixel art style"
 ```
 
 ### Edit an existing image:
 ```bash
-uv run <skill_dir>/scripts/generate.py "make the background blue" -i input.jpg
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py "make the background blue" -i input.jpg
 ```
 
 ### Use Flash model for fast iteration:
 ```bash
-uv run <skill_dir>/scripts/generate.py "quick sketch of a cat" --model flash
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py "quick sketch of a cat" --model flash
 ```
 
 ### Multi-image reference (style + subject):
 ```bash
-uv run <skill_dir>/scripts/generate.py "apply the style of the first image to the second" \
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py "apply the style of the first image to the second" \
   -i style_ref.png subject.jpg
 ```
 
 ### Generate with specific aspect ratio and resolution:
 ```bash
-uv run <skill_dir>/scripts/generate.py "cinematic landscape" --ratio 21:9 --size 4K
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py "cinematic landscape" --ratio 21:9 --size 4K
 ```
 
 ### Save to a specific location:
 ```bash
-uv run <skill_dir>/scripts/generate.py "logo design" -o ~/Projects/brand/logo.png
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py "logo design" -o ~/Projects/brand/logo.png
 ```
 
 ## Model Selection Guide
@@ -133,7 +133,7 @@ Options:
 
 **Example:**
 ```bash
-uv run <skill_dir>/scripts/batch_generate.py "pixel art logo" -n 20 --model flash -d ./logos -p logo
+uv run ${CLAUDE_SKILL_DIR}/scripts/batch_generate.py "pixel art logo" -n 20 --model flash -d ./logos -p logo
 ```
 
 ## Python API
@@ -145,7 +145,7 @@ uv run <skill_dir>/scripts/batch_generate.py "pixel art logo" -n 20 --model flas
 ```python
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path("<skill_dir>/scripts")))
+sys.path.insert(0, str(Path("${CLAUDE_SKILL_DIR}/scripts")))
 from generate import generate_image, edit_image, batch_generate
 
 # Generate image
@@ -199,7 +199,7 @@ result = generate_image(
 
 ```bash
 # In your skill's script:
-uv run <nanobanana_dir>/scripts/generate.py "{prompt}" --model flash --ratio 16:9 -o output.png
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py "{prompt}" --model flash --ratio 16:9 -o output.png
 ```
 
 ### Pattern 2: Python import with custom defaults
@@ -215,7 +215,7 @@ uv run <nanobanana_dir>/scripts/generate.py "{prompt}" --model flash --ratio 16:
 import sys
 from pathlib import Path
 
-NANOBANANA_DIR = Path("<nanobanana_dir>/scripts")
+NANOBANANA_DIR = Path("${CLAUDE_SKILL_DIR}/scripts")
 sys.path.insert(0, str(NANOBANANA_DIR))
 from generate import generate_image
 
@@ -344,7 +344,7 @@ Generate a single anchor image that establishes the visual identity for a series
 
 1. Generate the anchor image with a prompt emphasizing style, palette, and mood:
 ```bash
-uv run <skill_dir>/scripts/generate.py \
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py \
   "modern flat illustration style, warm earth tones, soft gradients, clean lines, \
   minimal detail, cozy atmosphere" \
   --model pro -o anchor.png
@@ -352,7 +352,7 @@ uv run <skill_dir>/scripts/generate.py \
 
 2. Generate each subsequent image referencing the anchor:
 ```bash
-uv run <skill_dir>/scripts/generate.py \
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py \
   "a laptop on a desk with coffee, matching the visual style, color palette, \
   and lighting of the reference image exactly" \
   -i anchor.png --model pro -o image_01.png
@@ -372,7 +372,7 @@ Keep the same character or subject looking consistent across different scenes an
 
 1. Generate the initial subject with clear, detailed appearance description:
 ```bash
-uv run <skill_dir>/scripts/generate.py \
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py \
   "a friendly robot mascot with round blue body, orange antenna, large expressive eyes, \
   simple geometric design, standing front-facing on white background" \
   --model pro -o subject_front.png
@@ -380,7 +380,7 @@ uv run <skill_dir>/scripts/generate.py \
 
 2. Generate new scenes referencing the subject:
 ```bash
-uv run <skill_dir>/scripts/generate.py \
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py \
   "the same robot character from the reference image, now sitting at a desk typing, \
   same proportions and colors, office background" \
   -i subject_front.png --model pro -o subject_office.png
@@ -388,7 +388,7 @@ uv run <skill_dir>/scripts/generate.py \
 
 3. For stronger consistency, reference 2-3 of the best previous outputs:
 ```bash
-uv run <skill_dir>/scripts/generate.py \
+uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py \
   "the same robot character from the reference images, now outdoors in a park, \
   same proportions and colors, waving at the viewer" \
   -i subject_front.png subject_office.png --model pro -o subject_park.png
@@ -445,7 +445,7 @@ See [references/prompts.md](./references/prompts.md) for detailed prompt templat
 
 **"Error: google-genai package not installed"**
 - Use `uv run` instead of `python3` to auto-install dependencies
-- Or install manually: `pip install -r <skill_dir>/requirements.txt`
+- Or install manually: `pip install -r ${CLAUDE_SKILL_DIR}/requirements.txt`
 
 **"GEMINI_API_KEY environment variable not set"**
 - Set `GEMINI_API_KEY` in your environment before running

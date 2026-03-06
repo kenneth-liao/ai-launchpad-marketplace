@@ -1,6 +1,6 @@
 ---
 name: design-system
-description: Use when users want to create, update, or refresh a visual design system or art style guide. Produces a complete style guide document with color palette, typography, illustration rules, character system, and an 8-element style board generated via the creator-stack:nanobanana skill.
+description: Create, update, or refresh a visual design system or art style guide. Use when the user wants to define a visual style, create a design system, build a style guide, or when they mention "design system", "art style", "style guide", "visual identity", or "color palette".
 ---
 
 # Design System Generator

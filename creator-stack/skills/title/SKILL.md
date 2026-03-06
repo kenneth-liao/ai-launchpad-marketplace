@@ -1,6 +1,6 @@
 ---
 name: title
-description: Generate optimized titles and headlines for any content type. Maximizes engagement through curiosity, complementarity with visual assets, and audience targeting.
+description: Generate optimized titles, headlines, and subject lines for any content type. Use when asked to create a title, headline, subject line, or when the user says "title ideas", "what should I call this", "subject line options", or needs engagement-optimized naming for videos, newsletters, or social posts.
 ---
 
 # Title Generation

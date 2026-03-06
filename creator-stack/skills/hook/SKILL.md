@@ -1,6 +1,6 @@
 ---
 name: hook
-description: Create retention-optimized opening hooks for any content type. Extends curiosity from title/headline, prevents common opening mistakes, and maximizes early engagement.
+description: Create retention-optimized opening hooks for any content type. Use when designing a video intro, newsletter opening paragraph, social post hook, or when the user mentions "hook", "opening", "intro", "first 15 seconds", "retention", or "how should I start this".
 ---
 
 # Hook Creation

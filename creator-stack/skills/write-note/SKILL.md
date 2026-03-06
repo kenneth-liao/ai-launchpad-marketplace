@@ -1,6 +1,6 @@
 ---
 name: write-note
-description: Create high-engagement Substack Notes for standalone audience engagement, authority-building, and newsletter promotion. This is a thin orchestrator — it sequences creator-stack:research and creator-stack:write invocations for Substack Note creation.
+description: Create high-engagement Substack Notes. Use when asked to write a Substack Note, create a note for Substack, share an insight on Notes, promote a newsletter issue via Notes, or post between newsletter issues. Also use when the user mentions "note", "Substack Note", or "short-form Substack content".
 ---
 
 # Create Substack Note

@@ -1,6 +1,6 @@
 ---
 name: community-post
-description: "Create high-engagement YouTube community posts that drive views, build audience loyalty, and maximize conversion. This is a thin orchestrator — it sequences creator-stack:research and creator-stack:write invocations for community post creation. Use when the user asks to create a community post, promote a video on the community tab, run a poll, or engage their YouTube audience between uploads."
+description: "Create YouTube community posts that drive views and audience engagement. Use when asked to create a community post, promote a video on the community tab, run a poll, or engage the YouTube audience between uploads. Also use when the user mentions 'community tab', 'YouTube poll', or 'post to community'."
 ---
 
 # Create Community Post
@@ -79,7 +79,7 @@ Include the research skill's recommendation for which type best fits the context
 
 **Default to polls when unsure** — they have the lowest friction and highest engagement.
 
-### Step 3: Invoke Copywriting for Content
+### Step 3: Invoke Writing Skill for Content
 
 Invoke `creator-stack:write` with content type "youtube community post" to draft the post.
 
@@ -89,7 +89,7 @@ Provide:
 - The episode context from Step 0 (if applicable)
 - The lifecycle phase and user's stated goal
 
-The copywriting skill automatically invokes `creator-stack:voice` for voice consistency. Its reference file contains all templates, formatting rules, and the 288-character hook rule.
+The writing skill automatically invokes `creator-stack:voice` for voice consistency. Its reference file contains all templates, formatting rules, and the 288-character hook rule.
 
 ### Step 4: Quality Checklist
 
@@ -148,16 +148,16 @@ Verify completion before finalizing:
 - [ ] `creator-stack:research` invoked — strategic context determined
 - [ ] Post type options presented and user selection received
 - [ ] `creator-stack:write` invoked — post drafted
-- [ ] Voice consistency maintained (handled by copywriting skill)
+- [ ] Voice consistency maintained (handled by writing skill)
 - [ ] All 8 quality criteria passed (Step 4)
 - [ ] Post presented to user for approval
 - [ ] Output saved to episode directory or presented inline
 
 ## Common Pitfalls
 
-1. **Writing templates inline**: All templates live in copywriting's `references/youtube-community-post.md` — don't duplicate them here.
+1. **Writing templates inline**: All templates live in the writing skill's `references/youtube-community-post.md` — don't duplicate them here.
 2. **Embedding strategy logic**: All strategy lives in research's `references/youtube-community-strategy.md` — don't hardcode timing, cadence, or algorithm advice here.
-3. **Skipping foundation skill invocations**: Both research and copywriting should be invoked — they have the proven patterns and quality logic.
+3. **Skipping foundation skill invocations**: Both research and writing skills should be invoked — they have the proven patterns and quality logic.
 4. **Ignoring episode context**: Always check for an episode directory first — it changes the entire strategic approach.
 5. **Defaulting to "new video out" posts**: The research and writing skills are specifically designed to avoid generic link dumps — trust the foundation skills.
 6. **Skipping the quality checklist**: Every post should pass all 8 criteria before presenting to the user.

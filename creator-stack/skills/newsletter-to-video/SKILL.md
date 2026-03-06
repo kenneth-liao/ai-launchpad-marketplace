@@ -1,6 +1,6 @@
 ---
 name: newsletter-to-video
-description: Repurpose a newsletter issue into a high-level YouTube video outline. Use when asked to "create a YouTube outline", "turn this newsletter into a video", "repurpose for YouTube", "video outline from newsletter", or when converting any AI Launchpad newsletter issue into video format.
+description: Repurpose a newsletter issue into a high-level YouTube video outline. Use when asked to "create a YouTube outline from this newsletter", "turn this newsletter into a video", "repurpose for YouTube", "video outline from newsletter", or when converting any newsletter issue into video format.
 ---
 
 # Newsletter to YouTube Video Outline

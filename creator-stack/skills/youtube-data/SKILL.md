@@ -1,6 +1,6 @@
 ---
 name: youtube-data
-description: "Retrieve YouTube data using the YouTube Data API. Use when you need to search videos, get video/channel details, fetch transcripts, read comments, or discover trending/related content."
+description: "Retrieve YouTube data using the YouTube Data API. Use when you need to search videos, get video or channel details, fetch transcripts, read comments, find trending or related content, or when the user mentions 'YouTube data', 'video stats', 'transcript', or 'channel info'."
 ---
 
 # YouTube Data
@@ -29,49 +29,49 @@ Dependencies are declared inline via PEP 723 and auto-installed on first run. Ju
 
 **With pip (fallback):**
 ```bash
-pip install -r <skill_dir>/requirements.txt
+pip install -r ${CLAUDE_SKILL_DIR}/requirements.txt
 ```
 
 ## Quick Start
 
 ### Search for videos:
 ```bash
-uv run <skill_dir>/scripts/youtube_api.py search "python tutorial" --max-results 5
+uv run ${CLAUDE_SKILL_DIR}/scripts/youtube_api.py search "python tutorial" --max-results 5
 ```
 
 ### Get video details:
 ```bash
-uv run <skill_dir>/scripts/youtube_api.py video "dQw4w9WgXcQ"
+uv run ${CLAUDE_SKILL_DIR}/scripts/youtube_api.py video "dQw4w9WgXcQ"
 ```
 
 ### Get transcript:
 ```bash
-uv run <skill_dir>/scripts/youtube_api.py transcript "dQw4w9WgXcQ" --language en
+uv run ${CLAUDE_SKILL_DIR}/scripts/youtube_api.py transcript "dQw4w9WgXcQ" --language en
 ```
 
 ### Get channel info:
 ```bash
-uv run <skill_dir>/scripts/youtube_api.py channel "UC_x5XG1OV2P6uZZ5FSM9Ttw"
+uv run ${CLAUDE_SKILL_DIR}/scripts/youtube_api.py channel "UC_x5XG1OV2P6uZZ5FSM9Ttw"
 ```
 
 ### Get comments:
 ```bash
-uv run <skill_dir>/scripts/youtube_api.py comments "dQw4w9WgXcQ" --max-results 10 --include-replies
+uv run ${CLAUDE_SKILL_DIR}/scripts/youtube_api.py comments "dQw4w9WgXcQ" --max-results 10 --include-replies
 ```
 
 ### Find related videos:
 ```bash
-uv run <skill_dir>/scripts/youtube_api.py related "dQw4w9WgXcQ" --max-results 5
+uv run ${CLAUDE_SKILL_DIR}/scripts/youtube_api.py related "dQw4w9WgXcQ" --max-results 5
 ```
 
 ### Get trending videos:
 ```bash
-uv run <skill_dir>/scripts/youtube_api.py trending --region US --max-results 10
+uv run ${CLAUDE_SKILL_DIR}/scripts/youtube_api.py trending --region US --max-results 10
 ```
 
 ### Enhanced multi-video transcript:
 ```bash
-uv run <skill_dir>/scripts/youtube_api.py enhanced-transcript "vid1" "vid2" \
+uv run ${CLAUDE_SKILL_DIR}/scripts/youtube_api.py enhanced-transcript "vid1" "vid2" \
   --format merged --include-metadata --language en
 ```
 
@@ -215,7 +215,7 @@ On failure, `success` is `false`, `data` is `null`, and `error` contains the mes
 ```python
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path("<skill_dir>/scripts")))
+sys.path.insert(0, str(Path("${CLAUDE_SKILL_DIR}/scripts")))
 from youtube_api import search_videos, get_video_details, get_video_transcript
 
 # Search videos
@@ -248,7 +248,7 @@ All functions return the same `{success, data, error, metadata}` dict.
 ### Pattern 1: CLI wrapper (recommended for agents)
 
 ```bash
-result=$(uv run <skill_dir>/scripts/youtube_api.py search "AI tutorials" --max-results 5)
+result=$(uv run ${CLAUDE_SKILL_DIR}/scripts/youtube_api.py search "AI tutorials" --max-results 5)
 echo "$result" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['data']['items'][0]['title'])"
 ```
 
@@ -266,7 +266,7 @@ echo "$result" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['d
 
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path("<skill_dir>/scripts")))
+sys.path.insert(0, str(Path("${CLAUDE_SKILL_DIR}/scripts")))
 from youtube_api import search_videos, get_video_transcript
 
 def research_topic(topic: str, count: int = 10) -> list:
@@ -294,7 +294,7 @@ def research_topic(topic: str, count: int = 10) -> list:
 
 **"Required packages not installed"**
 - Use `uv run` instead of `python3` to auto-install dependencies
-- Or install manually: `pip install -r <skill_dir>/requirements.txt`
+- Or install manually: `pip install -r ${CLAUDE_SKILL_DIR}/requirements.txt`
 
 **"YOUTUBE_API_KEY environment variable not set"**
 - Set `YOUTUBE_API_KEY` in your shell, `~/.claude/.env`, or local `.env`

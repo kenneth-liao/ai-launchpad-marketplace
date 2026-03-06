@@ -1,6 +1,6 @@
 ---
 name: brand-guidelines
-description: Use when users want to define, codify, or update their brand identity and connect it to design systems. Produces a self-contained user-level skill at ~/.claude/skills/{brand-slug}/SKILL.md that enforces brand guidelines whenever visual assets or written content are created.
+description: Define, codify, or update brand identity and connect it to design systems. Use when the user wants to create brand guidelines, define their brand, update brand identity, or when the user mentions "brand", "brand guidelines", "brand identity", "brand voice", or "brand compliance".
 ---
 
 # Brand Guidelines Generator

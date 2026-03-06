@@ -2,6 +2,19 @@
 
 All notable changes to the Creator Stack plugin.
 
+## [1.2.0] - 2026-03-05
+
+### Changed
+
+- **Fixed 30+ stale "copywriting" references** across 8 skills left over from the v1.1.0 rename — all now correctly reference the `write` skill
+- **Fixed stale "branding-kit plugin" reference** in write skill — now references `creator-stack:brand-guidelines`
+- **Fixed stale "create-note" reference** in ideate-notes skill — now references `write-note`
+- **Adopted `${CLAUDE_SKILL_DIR}`** in nanobanana and youtube-data skills — replaces `<skill_dir>` placeholders with Claude Code's built-in portable path variable (v2.1.69+)
+- **Adopted `${CLAUDE_PLUGIN_ROOT}`** in youtube-researcher agent for portable script paths
+- **Updated "Task tool" references to "Agent tool"** in research and extract-ideas skills — corrects outdated subagent parallelism guidance
+- **Rewrote all 21 skill descriptions** to follow latest best practices: removed workflow summaries from descriptions (prevents Claude from shortcutting the full SKILL.md), added explicit trigger phrases for more reliable auto-invocation
+- **Added `skills` field to both agent definitions** — thumbnail-reviewer now preloads `creator-stack:thumbnail`, youtube-researcher preloads `creator-stack:youtube-data`
+
 ## [1.1.0] - 2026-03-05
 
 ### Changed

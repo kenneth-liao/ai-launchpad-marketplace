@@ -1,9 +1,9 @@
 ---
 name: write
-description: Generalized writing skill that produces written content for any platform and format. Determines content type from context, loads platform-specific references, drafts content, and applies voice and brand compliance.
+description: Generalized writing skill that produces written content for any platform and format. Use when asked to write, draft, or create a newsletter, YouTube script, guide, sales page, Twitter thread, LinkedIn post, Substack Note, or community post. Also use when the user says "write this up", "draft a post", "create content about", or needs any written output.
 ---
 
-# Copywriting
+# Write
 
 Generalized writing skill for producing written content across all platforms and formats. This skill handles the structure, format, and platform conventions for each content type. Voice and brand compliance are applied through explicit skill invocation.
 
@@ -78,7 +78,7 @@ Deliver the final draft with:
 
 This skill explicitly invokes `creator-stack:voice` as part of every content production workflow. Voice is applied after the structural draft is complete but before brand compliance.
 
-**Why voice is separate:** Keeping voice rules in a dedicated personality skill means they stay consistent across all content types. The copywriting skill handles *what* to write and *how to structure it*. The voice skill handles *how it sounds*.
+**Why voice is separate:** Keeping voice rules in a dedicated personality skill means they stay consistent across all content types. The writing skill handles *what* to write and *how to structure it*. The voice skill handles *how it sounds*.
 
 **Invocation point:** Step 5 of the standard workflow. Never skip this step.
 
@@ -86,7 +86,7 @@ This skill explicitly invokes `creator-stack:voice` as part of every content pro
 
 This skill explicitly invokes `creator-stack:brand-guidelines` as the final quality gate before presenting content to the user.
 
-**Why brand compliance is separate:** Brand guidelines (logos, colors, terminology, visual identity) are maintained centrally in the branding-kit plugin. This skill delegates that check rather than duplicating brand rules.
+**Why brand compliance is separate:** Brand guidelines (logos, colors, terminology, visual identity) are maintained centrally in the `creator-stack:brand-guidelines` skill. This skill delegates that check rather than duplicating brand rules.
 
 **Invocation point:** Step 6 of the standard workflow. Runs after voice application.
 

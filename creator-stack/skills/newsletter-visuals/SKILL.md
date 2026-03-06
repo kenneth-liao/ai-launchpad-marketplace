@@ -1,6 +1,6 @@
 ---
 name: newsletter-visuals
-description: "Audit a newsletter draft for visual opportunities, score and rank them, and generate on-brand visual assets using AI. Use when enhancing a newsletter draft with visuals, when a draft has [screenshot] placeholders, when asked to 'add visuals to the newsletter', 'create images for this issue', 'make this more visual', or when any newsletter draft needs strategic visual enhancement."
+description: "Audit a newsletter draft for visual opportunities and generate on-brand visual assets. Use when enhancing a newsletter draft with visuals, when a draft has [screenshot] placeholders, or when the user says 'add visuals', 'create images for this issue', 'make this more visual', or 'add diagrams to the newsletter'."
 ---
 
 # Newsletter Visual Assets
