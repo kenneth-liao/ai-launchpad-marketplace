@@ -144,6 +144,13 @@ Read the transcript at: ${RUN_DIR}/eval-${eval.id}/with_skill/transcript.md
 Read outputs at: ${RUN_DIR}/eval-${eval.id}/with_skill/outputs/
 
 Grade each expectation as PASS or FAIL with evidence.
+
+IMPORTANT: Executors simulate skill execution -- they read the skill and
+produce the output it would generate, but do not run live commands against
+real backends. When an expectation says "runs command X", grade PASS if the
+executor correctly constructed and presented the command in its output.
+Do not penalize for simulated vs actual execution.
+
 Save results to: ${RUN_DIR}/eval-${eval.id}/with_skill/grading.json
 
 Use the grading.json schema from references/schemas.md:

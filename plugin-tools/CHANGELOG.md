@@ -2,6 +2,12 @@
 
 All notable changes to the Plugin Tools plugin.
 
+## [1.2.1] - 2026-03-06
+
+### Fixed
+
+- **`/test-skill` grader instructions** -- Added guidance that simulated execution is expected and valid. Graders now evaluate based on correct command construction, not whether commands were actually run against a live backend. Fixes false negatives on skills that delegate to scripts (e.g., scheduler:manage).
+
 ## [1.2.0] - 2026-03-06
 
 ### Added
