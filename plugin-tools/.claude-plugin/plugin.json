@@ -1,0 +1,9 @@
+{
+  "name": "plugin-tools",
+  "description": "Developer tools for maintaining Claude Code plugins. Upgrade skills, audit structure, and align with latest platform capabilities.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Kenny Liao (The AI Launchpad)",
+    "url": "https://www.youtube.com/@KennethLiao"
+  }
+}
