@@ -2,6 +2,23 @@
 
 All notable changes to the Personal Assistant (Elle) plugin.
 
+## [2.1.0] - 2026-03-05
+
+### Added
+
+- **`/migrate` skill** -- Version-aware migration system with sequential, idempotent upgrade chains. Replaces the old `/upgrade` command. Handles any version-to-version upgrade path with backup, chain execution, and verification. Migration steps use Check/Action/Verify pattern for idempotency.
+- **Migration references** -- Individual migration files for v1.0.0→v1.8.0, v1.8.0→v1.9.0, v1.9.0→v1.10.0, and v1.10.0→v2.0.0 at `skills/migrate/references/migrations/`.
+
+### Changed
+
+- **`/evolve` skill** -- Complete rewrite from static audit checklist to 5-phase research-driven upgrade pipeline. Fetches live data from Claude Code changelog, Anthropic docs, skill-creator, and superpowers plugins. Includes context detection (source vs deployed mode), structured upgrade planning with approval gates, execution, and verification. Auto-updates reference files (`platform-capabilities.md`, `best-practices.md`).
+
+### Removed
+
+- **`commands/upgrade.md`** -- Replaced by `/migrate` skill which provides continuous version-to-version upgrades instead of one-time v1→v2 migration.
+
+---
+
 ## [2.0.0] - 2026-03-05
 
 ### Major: Native Context Delivery
