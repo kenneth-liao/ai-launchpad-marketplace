@@ -28,7 +28,7 @@ Individual plugins may have additional requirements — refer to each plugin's R
 |--------|-------------|
 | [Personal Assistant (Elle)](./personal-assistant) | Persistent-memory personal assistant that learns your preferences and context |
 | [Creator Stack](./creator-stack) | Complete content creation toolkit — writing, content strategy, visual design, AI image generation, branding, YouTube, and Substack workflows |
-| [Plugin Tools](./plugin-tools) | Developer tools for maintaining Claude Code plugins — upgrade skills, audit structure, align with latest platform capabilities |
+| [Plugin Tools](./plugin-tools) | Developer tools for maintaining Claude Code plugins — upgrade skills, test skills for regressions, audit structure, align with latest platform capabilities |
 | [Agent Teams](./agent-teams) | Agent team session viewing and analysis |
 | [Scheduler](./scheduler) | Cross-platform scheduled automation — recurring skills, prompts, and scripts |
 

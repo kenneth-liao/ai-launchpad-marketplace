@@ -213,6 +213,7 @@ echo "=== Skills ===" && find ${PLUGIN_ROOT}/skills -name "SKILL.md" -type f 2>/
 echo "=== Hooks ===" && cat ${PLUGIN_ROOT}/hooks/hooks.json 2>/dev/null || echo "No hooks"
 echo "=== Output Styles ===" && ls ${PLUGIN_ROOT}/output-styles/ 2>/dev/null || echo "No output styles"
 echo "=== Agents ===" && ls ${PLUGIN_ROOT}/agents/ 2>/dev/null || echo "No agents"
+echo "=== Test Suites ===" && find ${PLUGIN_ROOT}/skills -path "*/tests/evals.json" -type f 2>/dev/null || echo "No test suites"
 echo "=== All Files ===" && find ${PLUGIN_ROOT} -type f -not -path "*/.DS_Store" -not -path "*/node_modules/*"
 ```
 
@@ -243,6 +244,7 @@ Compare current state against research findings:
 | Scripts | Bundled scripts use best practices? No reinventing common patterns? |
 | Plugin architecture | Using all beneficial plugin components (agents, MCP, output styles)? |
 | Component coverage | All existing components up to date with latest conventions? |
+| Test coverage | Skills have `tests/evals.json`? Flag untested skills as a gap. |
 
 ### 2C. Project Conventions Check
 
@@ -349,6 +351,10 @@ done
 3. **Line count check** -- no SKILL.md over 500 lines
 4. **Convention check** -- all changes follow CONVENTIONS.md
 5. **Cross-reference check** -- any `plugin:skill` references still valid
+6. **Test suite check** -- If any modified skills have `tests/evals.json`, offer to run them:
+   - "N skills were modified. M have test suites. Run them now?"
+   - If user approves, invoke `plugin-tools:test-skill` for each skill with tests
+   - Surface any regressions before the user approves the upgrade
 
 Present a final summary:
 - Changes made (with file paths)

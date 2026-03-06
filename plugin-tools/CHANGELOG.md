@@ -2,6 +2,13 @@
 
 All notable changes to the Plugin Tools plugin.
 
+## [1.2.0] - 2026-03-06
+
+### Added
+
+- **`/test-skill` skill** -- Run or generate test suites for any skill (task, discipline, or orchestrator). Features auto-detection of skill type, test generation from skill content, subagent-based execution with parallel eval runs, regression tracking via snapshots.json, and skill-creator-compatible JSON schemas. Supports interactive (subagent) and headless (CLI) execution modes.
+- **Test suite integration in `/upgrade-plugin`** -- Phase 2 (Audit) now checks for test coverage gaps. Phase 5 (Verify) offers to run test suites for modified skills and surfaces regressions before approval.
+
 ## [1.1.0] - 2026-03-06
 
 ### Added
