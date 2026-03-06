@@ -33,7 +33,7 @@ Set `ELLE_ROOT`:
 
 ## Phase 1: Research
 
-Run five research tasks in parallel using subagents. Each subagent summarizes its findings.
+Run six research tasks in parallel using subagents. Each subagent summarizes its findings.
 
 ### 1A. Claude Code Changelog
 
@@ -126,6 +126,33 @@ Understand the full plugin specification and what Elle could be using:
    - What plugin.json fields exist vs. what Elle uses?
    - Are other plugins using agents/ or MCP servers effectively?
 
+### 1F. Model Capability Assessment
+
+Check for model-level improvements that may supersede Elle's skills:
+
+1. Search for recent Anthropic model releases:
+   ```
+   WebSearch: "Anthropic Claude" model release OR capability update site:anthropic.com
+   WebSearch: "Claude" new capabilities 2026
+   ```
+
+2. Fetch the models overview page:
+   ```
+   WebFetch: https://docs.anthropic.com/en/docs/about-claude/models
+   ```
+
+3. Extract capabilities relevant to skill obsolescence:
+   - Built-in tool use improvements (web search, code execution)
+   - Reasoning and planning improvements
+   - Multi-step task handling
+   - Areas where dedicated prompting/orchestration adds less value
+
+4. Compare against Elle's skill inventory:
+   - For each skill, ask: "Does the model now do this well enough without specialized prompting?"
+   - Flag skills where the answer is "yes" or "probably"
+
+5. Cross-reference against `${CLAUDE_SKILL_DIR}/references/platform-capabilities.md` Model Capabilities table to detect changes since last run.
+
 ### Research Output
 
 After all research completes, compile a Research Summary with sections:
@@ -134,10 +161,52 @@ After all research completes, compile a Research Summary with sections:
 - **Platform Patterns** (from superpowers and other plugins)
 - **Plugin Architecture Gaps** (capabilities Elle doesn't use yet)
 - **Deprecations & Breaking Changes**
+- **Model Capability Overlap** (skills potentially superseded by model improvements)
 
 In source mode: save to `<cwd>/.docs/upgrade-research/personal-assistant-<date>.md`
 
 In deployed mode: present in-session only.
+
+## Phase 1.5: Obsolescence Screen
+
+Using research findings from Phase 1 (especially 1A, 1B, and 1F), evaluate whether each skill, agent, and major component in Elle is still necessary.
+
+### Classification
+
+For each skill and agent, assign one of:
+
+| Rating | Meaning | Action |
+|--------|---------|--------|
+| **Active** | Platform/model doesn't replicate this. Skill adds clear value. | Proceed to structural audit in Phase 2 |
+| **Augmented** | Platform/model handles the basics, but skill adds meaningful structure, guardrails, or workflow orchestration on top. | Audit normally, but note what the platform handles natively |
+| **Superseded** | Platform/model now does this natively with comparable quality. Skill adds marginal value over a direct prompt. | Skip structural audit. Recommend removal in Phase 3 plan. |
+
+### How to Evaluate
+
+For each skill, answer these three questions:
+
+1. **What does this skill do that a direct prompt to Claude cannot?**
+   If the answer is only "it saves typing a prompt" -- likely Superseded.
+
+2. **Does this skill enforce a process, workflow, or multi-step structure?**
+   Process skills (TDD, debugging, code review) remain valuable even when the model can do each step -- the skill enforces discipline. Likely Active.
+
+3. **Has the platform added a native feature that replaces this skill's core function?**
+   Example: Claude Code added native web search -> a "web research" skill that just wraps web search is Superseded. But a "competitor analysis" skill that orchestrates multiple searches into a structured report may be Augmented.
+
+### Output
+
+Present results as a table:
+
+| Component | Type | Rating | Rationale |
+|-----------|------|--------|-----------|
+| [name] | skill/agent | Active/Augmented/Superseded | [1-line reason] |
+
+If any component is rated **Superseded**, flag it for the user:
+
+> **Obsolescence flag:** [N] component(s) appear superseded by platform/model capabilities. These will appear in the "Recommend Removal" section of the upgrade plan. Review the rationale -- override to Active or Augmented if you disagree.
+
+Proceed to Phase 2, skipping structural audit for Superseded components.
 
 ## Phase 2: Audit
 
@@ -149,6 +218,7 @@ For each skill in `${ELLE_ROOT}/skills/`, read the SKILL.md and evaluate:
 - Whether it uses `references/` or `scripts/` for progressive disclosure
 - Composition patterns (`plugin:skill` syntax used correctly?)
 - Hardcoded paths or stale assumptions
+- Obsolescence rating from Phase 1.5 (skip detailed audit for Superseded components)
 
 ### 2B. Architecture Audit
 
@@ -236,6 +306,15 @@ Present a structured upgrade plan:
    - **What**: [Specific change]
    - **Risk**: [What could break]
 
+### Superseded (Recommend Removal)
+Components flagged as Superseded in Phase 1.5. Review before approving removal.
+
+1. [Component name] ([type])
+   - **What it does**: [1-line summary]
+   - **What replaces it**: [platform feature or model capability]
+   - **Migration**: [user-facing steps if any -- update docs, remove references]
+   - **Risk**: [what's lost if removed]
+
 ### Medium Priority (New Features)
 1. [Change]
    - **Why**: [What capability this enables]
@@ -247,6 +326,10 @@ Present a structured upgrade plan:
 ### Not Recommended
 - [Considered but rejected, and why]
 ```
+
+For removed components in source mode:
+- Add CHANGELOG entry under "Removed"
+- Version bump: MINOR if user-invocable skill, PATCH if internal-only component
 
 <REQUIRED>
 Wait for user approval before proceeding to Phase 4. The user may adjust priorities, skip items, or add their own.
@@ -265,6 +348,10 @@ Apply approved changes:
 
 Update `${CLAUDE_SKILL_DIR}/references/platform-capabilities.md` and `best-practices.md` with findings from Phase 1. These files serve as "last known state" for future evolve runs.
 
+### Model Capabilities Update
+
+Update the Model Capabilities table in `${CLAUDE_SKILL_DIR}/references/platform-capabilities.md` with findings from Phase 1F. Add new capabilities, update proficiency levels, and revise skill design implications.
+
 ### System State Update
 
 After all changes are applied, update the System State section in `${CLAUDE_SKILL_DIR}/references/platform-capabilities.md`:
@@ -275,6 +362,7 @@ After all changes are applied, update the System State section in `${CLAUDE_SKIL
 | Last evolve run | [today's date] |
 | Claude Code version at last audit | [latest version from Phase 1A research] |
 | Platform docs last fetched | [today's date] |
+| Model capabilities last assessed | [today's date] |
 
 ### Version and Changelog (Source Mode Only)
 
