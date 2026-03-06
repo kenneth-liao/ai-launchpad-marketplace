@@ -69,7 +69,7 @@ Point the analysis skill at the exported file:
 Use the analyze-team-session skill to analyze .claude/output/<session-export>.md
 ```
 
-This produces a structured report with a suitability verdict, 8-category scorecard, actionable recommendations, and an improved prompt rewrite. The report is saved to `.claude/output/<team-name>-analysis.md`.
+This produces a structured report with a suitability verdict, 10-category scorecard (including task dependencies and quality gates evaluation), actionable recommendations, and an improved prompt rewrite. The report is saved to `.claude/output/<team-name>-analysis.md`.
 
 ## Skills
 

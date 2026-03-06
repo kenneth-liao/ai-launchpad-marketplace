@@ -1,9 +1,12 @@
 {
   "name": "agent-teams",
   "description": "A plugin for Claude Code agent team workflows — session viewing, analysis, and best practice evaluation",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "Kenny Liao (The AI Launchpad)",
     "url": "https://www.youtube.com/@KennethLiao"
-  }
+  },
+  "repository": "https://github.com/KennethLiao/ai-launchpad-marketplace",
+  "license": "MIT",
+  "keywords": ["agent-teams", "session-viewer", "analysis", "multi-agent", "workflow"]
 }

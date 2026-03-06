@@ -5,7 +5,7 @@
 """Generate a self-contained HTML viewer for Claude Code session logs.
 
 Usage:
-    uv run {SKILL_DIR}/scripts/generate.py SESSION_ID [--output path] [--no-open]
+    uv run ${CLAUDE_SKILL_DIR}/scripts/generate.py SESSION_ID [--output path] [--no-open]
 
 Discovers JSONL files in ~/.claude/projects/*, parses conversation events,
 handles agent team sessions with inter-agent DM deduplication, and embeds
@@ -26,6 +26,9 @@ AGENT_COLORS = [
 ]
 
 TOOL_RESULT_MAX_CHARS = 10_000
+
+# Tool names that represent task management operations
+TASK_MANAGEMENT_TOOLS = {"TaskCreate", "TaskUpdate", "TaskGet", "TaskList", "TaskStop"}
 
 
 def find_session_files(session_id: str) -> list[Path]:
@@ -49,10 +52,21 @@ def read_first_metadata(path: Path) -> dict:
     return {}
 
 
-def discover_team_files(lead_path: Path) -> tuple[str | None, str | None, list[tuple[Path, str, str]]]:
+def load_team_config(team_name: str) -> dict:
+    """Load team config from ~/.claude/teams/{team-name}/config.json if it exists."""
+    config_path = Path.home() / ".claude" / "teams" / team_name / "config.json"
+    if config_path.exists():
+        try:
+            return json.loads(config_path.read_text())
+        except (json.JSONDecodeError, OSError):
+            pass
+    return {}
+
+
+def discover_team_files(lead_path: Path) -> tuple[str | None, str | None, list[tuple[Path, str, str]], dict]:
     """Given the lead's JSONL, find all teammate files with same teamName.
 
-    Returns: (team_name, project_name, [(path, session_id, agent_name), ...])
+    Returns: (team_name, project_name, [(path, session_id, agent_name), ...], team_config)
     """
     project_dir = lead_path.parent
     project_name = project_dir.name
@@ -71,7 +85,10 @@ def discover_team_files(lead_path: Path) -> tuple[str | None, str | None, list[t
                 break
 
     if not team_name:
-        return None, project_name, []
+        return None, project_name, [], {}
+
+    # Load team config for richer metadata (member roles, models, etc.)
+    team_config = load_team_config(team_name)
 
     # Scan all JSONL files in the same project dir for matching teamName
     teammates = []
@@ -84,7 +101,7 @@ def discover_team_files(lead_path: Path) -> tuple[str | None, str | None, list[t
             session_id = meta.get("sessionId", jsonl_path.stem)
             teammates.append((jsonl_path, session_id, agent_name))
 
-    return team_name, project_name, teammates
+    return team_name, project_name, teammates, team_config
 
 
 def parse_jsonl(path: Path, agent_id: str, agent_name: str) -> list[dict]:
@@ -212,11 +229,13 @@ def parse_jsonl(path: Path, agent_id: str, agent_name: str) -> list[dict]:
                                 })
                             else:
                                 input_str = json.dumps(tool_input, indent=2)
+                                # Classify task management tools separately
+                                event_type = "task_management" if tool_name in TASK_MANAGEMENT_TOOLS else "tool_call"
                                 events.append({
                                     "timestamp": timestamp,
                                     "agentId": agent_id,
                                     "agentName": agent_name,
-                                    "type": "tool_call",
+                                    "type": event_type,
                                     "content": input_str,
                                     "metadata": {
                                         "toolName": tool_name,
@@ -330,17 +349,25 @@ def build_session_data(session_id: str) -> dict:
         sys.exit(1)
 
     lead_path = lead_files[0]
-    team_name, project_name, teammates = discover_team_files(lead_path)
+    team_name, project_name, teammates, team_config = discover_team_files(lead_path)
 
     agents = [{"id": "lead", "name": "team-lead", "color": AGENT_COLORS[0]}]
     all_events = parse_jsonl(lead_path, "lead", "team-lead")
 
+    # Build a lookup from team config for member metadata (model, role, etc.)
+    config_members = {}
+    for member in team_config.get("members", []):
+        config_members[member.get("name", "")] = member
+
     for idx, (tm_path, tm_session_id, tm_agent_name) in enumerate(teammates):
         color = AGENT_COLORS[(idx + 1) % len(AGENT_COLORS)]
+        member_info = config_members.get(tm_agent_name, {})
         agents.append({
             "id": tm_session_id,
             "name": tm_agent_name,
             "color": color,
+            "model": member_info.get("model", ""),
+            "agentType": member_info.get("agent_type", ""),
         })
         tm_events = parse_jsonl(tm_path, tm_session_id, tm_agent_name)
         all_events.extend(tm_events)
@@ -361,6 +388,9 @@ def build_session_data(session_id: str) -> dict:
 
     session_type = "team" if team_name else "solo"
 
+    # Count task management events
+    task_events = [e for e in all_events if e["type"] == "task_management"]
+
     return {
         "sessionId": session_id,
         "sessionType": session_type,
@@ -373,6 +403,7 @@ def build_session_data(session_id: str) -> dict:
             "totalEvents": len(all_events),
             "durationSeconds": duration_seconds,
             "agentCount": len(agents),
+            "taskManagementEvents": len(task_events),
         },
     }
 

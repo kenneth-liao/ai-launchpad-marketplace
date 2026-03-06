@@ -2,6 +2,27 @@
 
 All notable changes to the Agent Teams plugin.
 
+## [1.1.0] - 2026-03-06
+
+### Added
+
+- **Task management event type** -- `generate.py` now classifies TaskCreate, TaskUpdate, TaskGet, TaskList, TaskStop as dedicated `task_management` events (distinct from generic tool calls)
+- **Team config discovery** -- `generate.py` reads `~/.claude/teams/{team-name}/config.json` for richer teammate metadata (model, agent type)
+- **2 new rubric categories** in `analyze-team-session`:
+  - **Task Dependencies** -- evaluates whether task dependency tracking was used effectively
+  - **Quality Gates** -- evaluates use of TaskCompleted hooks, TeammateIdle hooks, and plan approval workflows
+- **Rubric reference file** -- extracted evaluation rubric to `references/rubric.md` for progressive disclosure
+
+### Changed
+
+- **`${CLAUDE_SKILL_DIR}`** -- `view-team-session` now uses the auto-resolved variable instead of a manual `{SKILL_DIR}` placeholder
+- **Skill frontmatter** -- both skills now include `user-invocable: true` and `argument-hint`
+- **Improved triggering** -- `view-team-session` description expanded with additional trigger phrases ("show me what my agents did", "session replay", "team timeline")
+- **Cost Efficiency rubric** expanded to **Model Selection & Cost Efficiency** -- now evaluates per-teammate model selection (Opus vs Sonnet vs Haiku)
+- **Lead Orchestration rubric** updated to evaluate plan approval workflow usage
+- **Doc URL discovery** -- `analyze-team-session` now uses WebSearch-first approach with fallback to known URLs, more resilient to URL changes
+- **plugin.json** -- added `repository`, `license`, `keywords` fields; bumped to 1.1.0
+
 ## [1.0.0] - 2026-02-20
 
 ### Added
