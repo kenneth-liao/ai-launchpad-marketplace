@@ -1,6 +1,6 @@
 # Claude Code Platform Capabilities
 
-Last updated: 2026-03-05
+Last updated: 2026-03-06
 
 ## Hook Lifecycle Events
 
@@ -97,6 +97,27 @@ Last updated: 2026-03-05
 | agents/ | No | Could define dedicated subagents |
 | .claude-plugin/plugin.json | Yes | Name, description, version, author |
 
+## Model Capabilities (Relevant to Skill Design)
+
+Tracks model-level capabilities that affect whether skills remain necessary.
+Updated during each `/evolve` run from Phase 1F research.
+
+| Capability | Proficiency | Skill Design Implications |
+|------------|-------------|--------------------------|
+| Web search & synthesis | High (native tool) | Research wrappers likely unnecessary; orchestration skills that structure multi-search workflows still add value |
+| Code generation & review | High | Review skills add value through process enforcement, not raw capability |
+| Multi-step reasoning | High | Complex workflow skills remain valuable for discipline; simple sequential skills less so |
+| Image generation | Via MCP only | Still needs skill orchestration for prompt engineering and iteration |
+| File manipulation | Native tools | Skills that just wrap Read/Write/Edit are unnecessary |
+| Data analysis | High | Skills add value through structured output formats and domain frameworks, not raw analysis |
+
+### How to Use This Table
+
+During `/evolve` Phase 1.5 and `/upgrade-plugin` Phase 1.5:
+- Compare each skill's core function against this table
+- If a skill's primary value is something listed as "High" proficiency with no structural value-add, flag as potentially Superseded
+- If a skill adds orchestration, process, or domain structure on top, it's likely Active or Augmented even if the underlying capability is native
+
 ## Settings & Permissions
 
 | Feature | Elle Uses? | Notes |
@@ -113,3 +134,4 @@ Last updated: 2026-03-05
 | Last evolve run | 2026-03-05 |
 | Claude Code version at last audit | unknown |
 | Platform docs last fetched | 2026-03-05 |
+| Model capabilities last assessed | 2026-03-06 |
