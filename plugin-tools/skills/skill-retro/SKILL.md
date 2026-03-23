@@ -39,6 +39,12 @@ Spawn an analysis sub-agent (using the Agent tool):
 
 Parse the agent's response into structured findings.
 
+Once the analysis agent has finished, **delete the temp file** created in Step 1:
+
+```bash
+rm <transcript_file>
+```
+
 **If the agent returns 0 findings**, tell the user: "All skills performed well this session. No improvements identified." Show the `well_executed` list and stop.
 
 ### Step 3: Interpret and Recommend
