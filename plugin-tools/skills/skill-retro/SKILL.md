@@ -20,8 +20,10 @@ node ${CLAUDE_SKILL_DIR}/scripts/preprocess.mjs --cwd <current-working-directory
 ```
 
 Capture the JSON output. Key fields:
-- `transcript` — the cleaned session text
+- `transcript_file` — path to the temp file containing the full transcript (at `~/.claude/tmp/skill-retro-<session-id>.json`)
 - `stats.skill_invocations` — count of skills used
+
+The script writes the full transcript to a temp file to avoid flooding the main thread's context window. Only the summary (stats + file path) appears in stdout.
 
 **If the script fails** (e.g., no session files found), report the error and stop.
 
@@ -31,7 +33,7 @@ Capture the JSON output. Key fields:
 
 Spawn an analysis sub-agent (using the Agent tool):
 - Load the prompt from `${CLAUDE_SKILL_DIR}/references/analysis-prompt.md`
-- Append the full transcript from Step 1 after the prompt
+- Tell the agent to read the transcript file at the path from `transcript_file` in Step 1's output
 - The agent should read the SKILL.md file for each invoked skill to compare intended vs. actual behavior. Skill paths are discoverable from the transcript's system-reminder blocks (which list installed skill base directories) or from `[SKILL INVOCATION]` markers combined with installed plugin cache paths.
 - The agent returns a JSON object with `findings`, `well_executed`, and `severity_summary`
 
@@ -149,6 +151,7 @@ After all implementation agents complete, present a summary:
 ## Important Notes
 
 - This skill is designed to run late in sessions when context may be full. All analysis and implementation happens in sub-agents to preserve main thread context.
+- The preprocessing script writes the full transcript to `~/.claude/tmp/skill-retro-*.json` and only outputs a summary to stdout. Clean up the temp file after the analysis sub-agent has finished reading it.
 - The preprocessing script has zero dependencies beyond Node.js.
 - Never edit a skill without user confirmation of the source path.
 - When invoking skill-creator in implementation agents, let it guide the process — don't bypass its workflow.

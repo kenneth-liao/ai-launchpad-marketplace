@@ -7,10 +7,14 @@
  *   node preprocess.mjs [--cwd <path>] [--session-id <id>]
  *
  * Discovers the current session JSONL from ~/.claude/projects/ based on cwd,
- * parses it, and outputs a cleaned JSON transcript to stdout.
+ * parses it, writes the cleaned transcript to a temp file, and outputs
+ * a short summary (with file path) to stdout.
+ *
+ * Output (stdout): JSON with stats + transcript_file path
+ * Output (file):   Full transcript at .claude/tmp/skill-retro-<session-id>.json
  */
 
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { homedir } from 'node:os';
 
@@ -237,7 +241,14 @@ function main() {
 
   const transcript = transcriptParts.join('\n\n');
 
-  const output = {
+  // Write full transcript to temp file
+  const tmpDir = join(homedir(), '.claude', 'tmp');
+  mkdirSync(tmpDir, { recursive: true });
+
+  const shortId = (sessionId || 'unknown').slice(0, 8);
+  const transcriptFile = join(tmpDir, `skill-retro-${shortId}.json`);
+
+  const fullOutput = {
     session_id: sessionId,
     project_dir: args.cwd,
     timestamp: firstTimestamp,
@@ -250,7 +261,18 @@ function main() {
     },
   };
 
-  process.stdout.write(JSON.stringify(output, null, 2) + '\n');
+  writeFileSync(transcriptFile, JSON.stringify(fullOutput, null, 2), 'utf-8');
+
+  // Output only summary + file path to stdout (keeps main agent context lean)
+  const summary = {
+    session_id: sessionId,
+    project_dir: args.cwd,
+    timestamp: firstTimestamp,
+    transcript_file: transcriptFile,
+    stats: fullOutput.stats,
+  };
+
+  process.stdout.write(JSON.stringify(summary, null, 2) + '\n');
 }
 
 main();
