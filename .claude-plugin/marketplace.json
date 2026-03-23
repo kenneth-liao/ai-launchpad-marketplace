@@ -22,7 +22,7 @@
     {
       "name": "plugin-tools",
       "source": "./plugin-tools",
-      "description": "Developer tools for maintaining Claude Code plugins — upgrade skills, audit structure, align with latest platform capabilities"
+      "description": "Developer tools for maintaining Claude Code plugins — upgrade skills, session retrospectives, audit structure, align with latest platform capabilities"
     },
     {
       "name": "scheduler",

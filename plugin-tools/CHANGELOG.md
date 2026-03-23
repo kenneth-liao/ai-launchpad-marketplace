@@ -2,6 +2,17 @@
 
 All notable changes to the Plugin Tools plugin.
 
+## [1.4.0] - 2026-03-23
+
+### Removed
+
+- **`/test-skill` archived** -- Moved to `archive/test-skill/`. Superseded by Anthropic's official `skill-creator` evals framework, which provides richer grading (claims extraction, eval feedback, execution metrics), baseline comparison, browser-based review UI, and iterative improvement loops. The archived skill retains its reference files (test-generation.md, schemas.md) for future reference. Discipline skill pressure-testing concepts may be revisited as a skill-creator extension if needed.
+
+### Changed
+
+- **Plugin description** -- Removed "test skills" from description since test-skill is archived
+- **`/upgrade-plugin`** -- Test suite integration references in Phase 2/5 may reference archived skill; use skill-creator evals instead
+
 ## [1.3.0] - 2026-03-22
 
 ### Added
