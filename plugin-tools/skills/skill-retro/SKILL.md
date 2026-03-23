@@ -31,7 +31,7 @@ The script writes the full transcript to a temp file to avoid flooding the main 
 
 ### Step 2: Analyze (Sub-Agent)
 
-Spawn an analysis sub-agent (using the Agent tool):
+Spawn an analysis sub-agent (using the Agent tool, model: sonnet):
 - Load the prompt from `${CLAUDE_SKILL_DIR}/references/analysis-prompt.md`
 - Tell the agent to read the transcript file at the path from `transcript_file` in Step 1's output
 - The agent should read the SKILL.md file for each invoked skill to compare intended vs. actual behavior. Skill paths are discoverable from the transcript's system-reminder blocks (which list installed skill base directories) or from `[SKILL INVOCATION]` markers combined with installed plugin cache paths.
