@@ -41,34 +41,56 @@ Parse the agent's response into structured findings.
 
 **If the agent returns 0 findings**, tell the user: "All skills performed well this session. No improvements identified." Show the `well_executed` list and stop.
 
-### Step 3: Present Findings
+### Step 3: Interpret and Recommend
 
-Display findings to the user, grouped by skill:
+Don't just present raw findings — interpret them. For each finding, add your own reasoning:
+
+1. **What the fix looks like** — Is it a one-line description tweak? A new section in SKILL.md? A script rewrite? Be specific about what changes would actually be made.
+2. **Effort estimate** — Quick fix (description/wording change), moderate (new section or error handling), or high-lift (architectural change, script rewrite, new scripts).
+3. **Recommendation** — Whether to action it now, defer it, or skip it entirely. Explain why.
+
+Group findings by skill and present with your interpretation:
 
 ```
 ## Skill Performance Report
 
-### superpowers:brainstorming (2 findings)
+### scheduler:manage (3 findings)
 
-| # | Severity | Dimension         | Observation                                    |
-|---|----------|-------------------|------------------------------------------------|
-| 1 | medium   | gap_coverage      | No guidance for context-efficiency constraints |
-| 2 | low      | execution_quality | Asked 5 clarifying questions before proposing  |
+**1. [high] gap_coverage — pause command doesn't verify unload succeeded**
+The `_launchctl_unload` helper silently swallows errors, so the registry can say "paused" while the job is still running.
+- **Fix:** Add return-code checking to `_launchctl_unload` in the manage script, and add a post-unload verification step in SKILL.md's Pause operation.
+- **Effort:** Moderate — script change + SKILL.md update
+- **Recommend: Action** — This caused real user confusion in this session.
 
-### cold-email (1 finding)
+**2. [medium] gap_coverage — No error recovery entry for "task still runs after pausing"**
+The assistant had to improvise the entire investigation.
+- **Fix:** Add a new row to the Error Recovery table in SKILL.md.
+- **Effort:** Quick — one table row addition
+- **Recommend: Action** — Low effort, high value.
 
-| # | Severity | Dimension         | Observation                                          |
-|---|----------|-------------------|------------------------------------------------------|
-| 3 | low      | trigger_accuracy  | Skill didn't trigger when user discussed subject lines |
+**3. [low] execution_quality — list command shows registry status without cross-checking launchd**
+Would require the list command to shell out to `launchctl list` and reconcile.
+- **Fix:** Add launchd state reconciliation to the list operation in the manage script.
+- **Effort:** High-lift — requires new script logic and testing across platforms.
+- **Recommend: Defer** — Nice-to-have but significant work. Not worth addressing now.
 
 ### Well Executed
-- superpowers:writing-plans — Produced clean, actionable plan with correct task ordering
+- list presented clean, accurate registry data
+- Assistant correctly went outside the skill to diagnose the real issue
 
 ---
-Select findings to action (comma-separated numbers, "all", or "none"):
+I recommend actioning findings 1 and 2. Finding 3 is high-lift and better deferred.
+
+Proceed with these? (y/adjust/none)
 ```
 
-Wait for user selection. If "none", show summary and stop.
+**Key principles:**
+- Lead with your recommendation — don't make the user figure out what's worth doing
+- Be honest about high-lift items — don't propose changes that would require major rewrites unless they're clearly worth it
+- Group related findings that would be addressed together
+- The user can adjust your recommendation (add/remove items) or accept it
+
+Wait for user confirmation. If "none", show summary and stop.
 
 ### Step 4: Resolve Source Locations
 
@@ -138,14 +160,14 @@ After all implementation agents complete, present a summary:
 ### Changes Applied
 | Skill | Source Path | Changes |
 |-------|------------|---------|
-| superpowers:brainstorming | /path/to/SKILL.md | Added context-efficiency section |
-| cold-email | /path/to/SKILL.md | Added trigger keywords: "subject line", "email subject" |
+| scheduler:manage | /path/to/SKILL.md | Added return-code checking to _launchctl_unload, post-unload verification step |
+| scheduler:manage | /path/to/SKILL.md | Added "task still runs after pausing" to Error Recovery table |
 
-### Skipped
-- copywriting: user chose not to action
+### Deferred
+- scheduler:manage #3 (launchd state reconciliation) — high-lift, deferred
 
-### Well Executed (no changes needed)
-- superpowers:writing-plans — Produced clean, actionable plan with correct task ordering
+### Well Executed
+- list operation presented clean, accurate registry data
 ```
 
 ## Important Notes
