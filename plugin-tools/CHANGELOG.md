@@ -2,6 +2,12 @@
 
 All notable changes to the Plugin Tools plugin.
 
+## [1.3.0] - 2026-03-22
+
+### Added
+
+- **`/skill-retro` skill** -- Analyze how skills performed in a session and apply improvements. Features session JSONL preprocessing (Node.js, zero dependencies), sub-agent-based analysis across three dimensions (trigger accuracy, execution quality, gap coverage), smart source location resolution (project-level, user-level, installed plugins, marketplace repos), and parallel implementation via skill-creator. Designed for context efficiency — all heavy work runs in sub-agents.
+
 ## [1.2.1] - 2026-03-06
 
 ### Fixed
